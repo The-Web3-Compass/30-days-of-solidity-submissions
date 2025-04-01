@@ -1,6 +1,7 @@
 
 # 30 Days of Solidity — Community Submissions
 
+
 Welcome to the official submissions repo for 30 Days of Solidity!
 
 Every day in April, we're building one smart contract at a time — together.
