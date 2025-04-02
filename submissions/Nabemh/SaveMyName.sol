@@ -16,4 +16,8 @@ contract saveData {
             bio: _bio
         });
     }
+
+    function getProfile() public view returns (string){
+        return (_name, _bio);
+    }
 }
