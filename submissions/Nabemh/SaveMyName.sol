@@ -13,7 +13,7 @@ contract saveData {
     function createProfile(string memory _name, string memory _bio) public {
         Profile[msg.sender] = User({
             name: _name,
-            bio
-        })
+            bio: _bio
+        });
     }
 }
