@@ -13,18 +13,12 @@ Whether you’re just getting started or already vibing with Solidity, this is y
 
 ## How This Repo Works
 
-Each day, we’ll add a new folder (Day01, Day02, ..., Day30) that contains:
-
-- A short challenge description (explaining what to build)
-- A submissions folder — where you’ll upload your solution
-
 Inside the `submissions` folder, everyone can create their **own folder named after their GitHub username**, and drop their code in there.
 
 Example:
 
-    Day03/
-    ├── challenge.md
-    └── submissions/
+   
+     submissions/
         ├── dev-sethu/
         │   └── MyToken.sol
         └── alice-dev/
@@ -35,7 +29,7 @@ Example:
 ## How to Submit Your Code
 
 1. Fork this repo
-2. Navigate to the correct day folder (e.g., Day05)
+2. Navigate to the `submissions` folder
 3. Inside the `submissions` folder, create a new folder with your **GitHub username**
 4. Drop your `.sol` contract file(s) inside your folder
 5. Commit and push the changes to your fork

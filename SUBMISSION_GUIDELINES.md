@@ -14,30 +14,31 @@ If you want to work locally, use:
 
 `git clone https://github.com/your-username/30-days-of-solidity-submissions.git`
 
-**3. Go to the correct folder**
-
-Navigate to the folder for the current challenge day, e.g., `Day04`.
-
-**4. Inside `submissions/`, create a folder with your GitHub username**
+**3. Inside `submissions/`, create a folder with your GitHub username**
 
 This helps us keep track of everyone's submissions.
 
 Example:
 
 ```
-
-Day04/
-└── submissions/
+submissions/
     └── dev-sethu/
-        └── VotingContract.sol
+```
+
+**4. Add your code**
+
+Drop your `.sol` file (or multiple files if needed) into your folder.
+Example:
+
+```
+submissions/
+    └── dev-sethu/
+        └── day1-contract.sol
+        └── day2-contract.sol
 
 ```
 
-**5. Add your code**
-
-Drop your `.sol` file (or multiple files if needed) into your folder.
-
-**6. Commit and push your changes**
+**5. Commit and push your changes**
 
 ```bash
 
@@ -47,7 +48,7 @@ git push origin main
 
 ```
 
-**7. Open a Pull Request**
+**6. Open a Pull Request**
 
 Go to your fork on GitHub and open a PR to this main repo.
 
