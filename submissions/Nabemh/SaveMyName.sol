@@ -11,6 +11,8 @@ contract saveData {
     mapping (address => User) public profile;
 
     function createProfile(string memory _name, string memory _bio) public {
-        Profile[msg.sender] = U
+        Profile[msg.sender] = User({
+            
+        })
     }
 }
