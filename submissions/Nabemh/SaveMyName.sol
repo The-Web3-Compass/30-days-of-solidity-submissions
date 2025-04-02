@@ -18,7 +18,7 @@ contract saveData {
     }
 
     function getProfile(address UserAdd) public view returns (string memory, string memory){
-        User memory User1 = Profile(UserAdd)
-        return (User1.name, User1.bio)
+        User memory User1 = Profile[UserAdd];
+        return (User1.name, User1.bio);
     }
 }
