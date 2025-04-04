@@ -27,7 +27,7 @@ contract PollStation {
         voteCount[_candidatesNames] += 1;
         hasVoted[msg.sender] = true;
     }
-
+// 
     function getVote(string memory _candidatesNames) public view returns (uint256){
         return voteCount[_candidatesNames];
     }
