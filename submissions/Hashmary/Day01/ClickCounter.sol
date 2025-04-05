@@ -15,7 +15,7 @@ contract ClickCounter {
     uint256 private count;
 
     // When incrementing or decrementing an over- or underflow 
-    // can happen
+    // can happen, at least in versions < 0.8.0
     error OverflowError();
     error UnderflowError();
 
