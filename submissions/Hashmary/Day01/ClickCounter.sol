@@ -11,33 +11,33 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.26;
 
-/// @title Simple Counter Contract
 contract ClickCounter {
-    uint256 private _count;
+    uint256 private count;
 
-    // Custom Errors (gas-efficient)
+    // When incrementing or decrementing an over- or underflow 
+    // can happen
     error OverflowError();
     error UnderflowError();
 
-    /// @notice current count
+    // To check count
     function getCount() external view returns (uint256) {
-        return _count;
+        return count;
     }
 
-    /// @notice Similar to a click (with Overflow Protection)
+    // Similar to a click (with Overflow Protection)
     function increment() external {
-        if (_count == type(uint256).max) revert OverflowError();
-        _count += 1;
+        if (count == type(uint256).max) revert OverflowError();
+           count += 1;
     }
 
-    /// @notice Decrement by 1 (with Underflow Protection)
+    // Decrement by 1 (with Underflow Protection)
     function decrement() external {
-        if (_count == 0) revert UnderflowError();
-        _count -= 1;
+        if (count == 0) revert UnderflowError();
+           count -= 1;
     }
 
-    /// @notice Initialize counter
+    // Initialize counter
     function reset() external {
-        _count = 0;
+        count = 0;
     }
 }
