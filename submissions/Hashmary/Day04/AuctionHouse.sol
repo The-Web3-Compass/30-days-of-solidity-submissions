@@ -15,81 +15,56 @@ pragma solidity ^0.8.26;
 
 contract AuctionHouse {
     // Auction parameters
-    address payable public auctionOwner;
-    uint public auctionEndTime;
-    uint public highestBid;
+    address public auctionOwner;
+    string public auctionItem;
+    uint256 public auctionEndTime;
+
+    // Current state
+    uint256 public highestBid;
     address public highestBidder;
-    
-    // Auction state
     bool public ended;
+
     
-    // Events
-    event BidIncreased(address bidder, uint amount);
-    event AuctionEnded(address winner, uint amount);
-    
-    // Errors
-    error AuctionAlreadyEnded();
-    error BidNotHighEnough(uint highestBid);
-    error AuctionNotYetEnded();
-    error AuctionEndAlreadyCalled();
-    
-    // Initialize auction with duration (in seconds)
-    constructor(uint biddingTime) {
-        auctionOwner = payable(msg.sender);
-        auctionEndTime = block.timestamp + biddingTime;
+    // Track funds to be refunded to overbid participants
+    mapping(address => uint256) public returnsOwed;
+
+    // Constructor to initialize auction with item and duration
+    constructor(string memory _auctionItem, uint256 _durationInSeconds) {
+        auctionOwner = msg.sender; // The address deploying the contract is the auction owner
+        auctionItem = _auctionItem; // The item being auctioned
+        auctionEndTime = block.timestamp + _durationInSeconds; // Auction end time is calculated
     }
-    
-    // Function to place a bid
-    function bid() external payable {
-        // Check if auction is still open
-        if (block.timestamp > auctionEndTime) {
-            revert AuctionAlreadyEnded();
+
+    // Place a bid on the auction
+    function placeBid(uint256 bidAmount) public {
+        require(block.timestamp < auctionEndTime, "Auction has already ended.");
+        require(bidAmount > highestBid, "Bid is not higher than the current highest bid.");
+
+        // If there was a previous highest bidder, refund them the previous bid amount
+        if (highestBid > 0) {
+            returnsOwed[highestBidder] += highestBid;
         }
-        
-        // Check if bid is higher than current highest bid
-        if (msg.value <= highestBid) {
-            revert BidNotHighEnough(highestBid);
-        }
-        
-        // Update highest bid and bidder
-        if (highestBidder != address(0)) {
-            // Return previous highest bid
-            payable(highestBidder).transfer(highestBid);
-        }
-        
+
+        // Update the highest bid and highest bidder
+        highestBid = bidAmount;
         highestBidder = msg.sender;
-        highestBid = msg.value;
-        
-        emit BidIncreased(msg.sender, msg.value);
     }
-    
-    // Function to end the auction
-    function endAuction() external {
-        // Check if auction end time has been reached
-        if (block.timestamp < auctionEndTime) {
-            revert AuctionNotYetEnded();
-        }
-        
-        // Check if auction has already been ended
-        if (ended) {
-            revert AuctionEndAlreadyCalled();
-        }
-        
-        // Mark auction as ended
-        ended = true;
-        
-        // Send the highest bid to the auction owner
-        auctionOwner.transfer(highestBid);
-        
-        emit AuctionEnded(highestBidder, highestBid);
+
+    // Allow overbid participants to withdraw their previous bids
+    function collectRefund() public {
+        uint256 amount = returnsOwed[msg.sender];
+        require(amount > 0, "No funds available for refund.");
+
+        returnsOwed[msg.sender] = 0;
+        // Refund logic removed (no payable transfers)
     }
-    
-    // Helper function to check time remaining
-    function timeRemaining() external view returns (uint) {
-        if (block.timestamp >= auctionEndTime) {
-            return 0;
-        } else {
-            return auctionEndTime - block.timestamp;
-        }
+
+    // End the auction
+    function finishAuction() public {
+        require(block.timestamp >= auctionEndTime, "Auction has not ended yet.");
+        require(!ended, "Auction has already been concluded.");
+
+        ended = true; // Mark the auction as ended
+        // Transfer logic removed (no payment to auction owner)
     }
 }
