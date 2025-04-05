@@ -16,71 +16,55 @@ pragma solidity ^0.8.26;
 
 contract PollStation {
     // Candidate structure
+    // Candidate structure
     struct Candidate {
-        uint id;
         string name;
         uint voteCount;
     }
 
-    // Array to store all candidates
+    // List of all candidates
     Candidate[] public candidates;
-    
-    // Mapping to track which address has voted
-    mapping(address => bool) public voters;
-    
-    // Mapping to track which candidate each voter chose
-    mapping(address => uint) public votes;
-    
-    // Event to log when a vote is cast
-    event VoteCast(address indexed voter, uint indexed candidateId);
-    
-    // Constructor to initialize with some candidates
-    constructor(string[] memory candidateNames) {
-        for (uint i = 0; i < candidateNames.length; i++) {
-            candidates.push(Candidate({
-                id: i,
-                name: candidateNames[i],
-                voteCount: 0
-            }));
-        }
+
+    // Track if an address has already voted
+    mapping(address => bool) public hasVoted;
+
+    // Add a new candidate by name
+    function addCandidate(string memory _name) public {
+        candidates.push(Candidate({
+            name: _name,
+            voteCount: 0
+        }));
     }
-    
-    // Function to vote for a candidate
-    function vote(uint candidateId) public {
-        require(candidateId < candidates.length, "Invalid candidate ID");
-        require(!voters[msg.sender], "You have already voted");
-        
-        candidates[candidateId].voteCount++;
-        voters[msg.sender] = true;
-        votes[msg.sender] = candidateId;
-        
-        emit VoteCast(msg.sender, candidateId);
-    }
-    
-    // Function to get the total number of candidates
-    function getCandidateCount() public view returns (uint) {
-        return candidates.length;
-    }
-    
-    // Function to get all candidates with their vote counts
-    function getAllCandidates() public view returns (Candidate[] memory) {
-        return candidates;
-    }
-    
-    // Function to check if an address has voted
-    function hasVoted(address voter) public view returns (bool) {
-        return voters[voter];
-    }
-    
-    // Function to get the winner (returns first candidate if tie)
-    function getWinner() public view returns (uint winnerId) {
-        uint winningVoteCount = 0;
-        
+
+    // Get all candidate names
+    function getCandidateNames() public view returns (string[] memory) {
+        string[] memory names = new string[](candidates.length);
         for (uint i = 0; i < candidates.length; i++) {
-            if (candidates[i].voteCount > winningVoteCount) {
-                winningVoteCount = candidates[i].voteCount;
-                winnerId = i;
+            names[i] = candidates[i].name;
+        }
+        return names;
+    }
+
+    // Vote for a candidate by name
+    function vote(string memory _name) public {
+        require(!hasVoted[msg.sender], "Already voted.");
+        for (uint i = 0; i < candidates.length; i++) {
+            if (keccak256(bytes(candidates[i].name)) == keccak256(bytes(_name))) {
+                candidates[i].voteCount += 1;
+                hasVoted[msg.sender] = true;
+                return;
             }
         }
+        revert("Candidate not found.");
+    }
+
+    // Get vote count for a candidate by name
+    function getVotes(string memory _name) public view returns (uint) {
+        for (uint i = 0; i < candidates.length; i++) {
+            if (keccak256(bytes(candidates[i].name)) == keccak256(bytes(_name))) {
+                return candidates[i].voteCount;
+            }
+        }
+        revert("Candidate not found.");
     }
 }
