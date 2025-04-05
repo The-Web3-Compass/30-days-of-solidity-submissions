@@ -16,7 +16,6 @@ pragma solidity ^0.8.26;
 
 contract PollStation {
     // Candidate structure
-    // Candidate structure
     struct Candidate {
         string name;
         uint voteCount;
