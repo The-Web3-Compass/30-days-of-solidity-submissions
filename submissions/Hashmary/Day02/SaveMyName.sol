@@ -14,8 +14,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.26;
 
-/// @title Simple Profile Storage
-/// @notice User can store names and biographies
+// Simple Profile Storage
+// User can store names and biographies
 contract SaveMyName {
     
     struct UserProfile {
@@ -23,35 +23,31 @@ contract SaveMyName {
         string bio;
     }
 
-    // Mapping: Address → Profile
-    mapping(address => UserProfile) private _profiles;
+    mapping(address => UserProfile) private profiles;
 
     // Event for transparency
-    event ProfileUpdated(address indexed user, string name, string bio);
+    // event ProfileUpdated(address indexed user, string name, string bio);
 
-    /// @notice stores/updates the profile of the given address
-    /// @param name (e.g. "Alice")
-    /// @param bio (e.g. "I build dApps")
+    // name (e.g. "Alice")
+    // bio (e.g. "I build dApps")
     function setProfile(string calldata name, string calldata bio) 
              external {
 
-        _profiles[msg.sender] = UserProfile(name, bio);
-        emit ProfileUpdated(msg.sender, name, bio);
+        profiles[msg.sender] = UserProfile(name, bio);
+       // emit ProfileUpdated(msg.sender, name, bio);
     }
 
-    /// @notice returns the profile of the given address
     function getProfile() external view returns 
             (string memory name, string memory bio) {
 
-        UserProfile memory profile = _profiles[msg.sender];
+        UserProfile memory profile = profiles[msg.sender];
         return (profile.name, profile.bio);
     }
 
-    /// @notice returns the profile of any address (publicly readable)
-    function getProfileOf(address user) external view returns 
+    /*function getProfileOf(address user) external view returns 
              (string memory name, string memory bio) {
                 
-        UserProfile memory profile = _profiles[user];
+        UserProfile memory profile = profiles[user];
         return (profile.name, profile.bio);
-    }
+    } */
 }
