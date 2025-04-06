@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------
-  File:   EtherPiggyBank.sol
+  File:   EtherPiggyBank-Simulation.sol
   Author: Marion Bohr
   Date:   04/06/2025
   Description:
