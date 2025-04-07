@@ -1,6 +1,6 @@
 /*---------------------------------------------------------------------------
   File:   SaveMyName.sol
-  Author: Marion Bohr
+  Author: Natzsmart 
   Date:   04/02/2025
   Description:
     Imagine creating a basic profile. You'll make a contract where users can 
@@ -15,43 +15,28 @@
 pragma solidity ^0.8.26;
 
 /// @title Simple Profile Storage
-/// @notice User can store names and biographies
 contract SaveMyName {
-    
-    struct UserProfile {
+
         string name;
         string bio;
+
+    
+    function add(string memory _name, string memory _bio) 
+             public {
+
+        name = _name;
+        bio = _bio;
     }
 
-    // Mapping: Address → Profile
-    mapping(address => UserProfile) private _profiles;
-
-    // Event for transparency
-    event ProfileUpdated(address indexed user, string name, string bio);
-
-    /// @notice stores/updates the profile of the given address
-    /// @param name (e.g. "Alice")
-    /// @param bio (e.g. "I build dApps")
-    function setProfile(string calldata name, string calldata bio) 
-             external {
-
-        _profiles[msg.sender] = UserProfile(name, bio);
-        emit ProfileUpdated(msg.sender, name, bio);
+    function retrieve() public view returns(string memory, string memory) {
+        return(name, bio);
     }
 
-    /// @notice returns the profile of the given address
-    function getProfile() external view returns 
-            (string memory name, string memory bio) {
+    function SaveAndRetrieve(string memory _name, string memory _bio) public returns(string memory, string memory){
+        name = _name;
+        bio=_bio;
 
-        UserProfile memory profile = _profiles[msg.sender];
-        return (profile.name, profile.bio);
+        return (name, bio); 
     }
 
-    /// @notice returns the profile of any address (publicly readable)
-    function getProfileOf(address user) external view returns 
-             (string memory name, string memory bio) {
-                
-        UserProfile memory profile = _profiles[user];
-        return (profile.name, profile.bio);
-    }
 }
