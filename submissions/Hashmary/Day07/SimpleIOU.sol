@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------
   File:   SimpleIOU.sol
   Author: Marion Bohr
-  Date:   04/06/2025
+  Date:   04/07/2025
   Description:
     Build a simple IOU contract for a private group of friends. Each user 
     can deposit ETH, track personal balances, log who owes who, and settle 
