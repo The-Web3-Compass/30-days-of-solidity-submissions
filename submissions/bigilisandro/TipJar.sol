@@ -3,7 +3,11 @@ pragma solidity ^0.8.0;
 
 contract TipJar {
     address public owner;
-    uint256 public tipAmount;
+    uint256 public totalTipsReceived;
+    mapping(string => uint256) public conversionRates;
+    string[] public supportedCurrencies;
+    mapping(address => uint256) public tipperContributions;
+    mapping(string => uint256) public tipsPerCurrency;
 
     constructor() {
         owner = msg.sender;
@@ -16,17 +20,17 @@ contract TipJar {
 
     function addTip() public payable {
         require(msg.value > 0, "Must send ETH");
-        tipAmount += msg.value;
+        totalTipsReceived += msg.value;
     }
 
     function getTipAmount() public view returns (uint256) {
-        return tipAmount;
+        return totalTipsReceived;
     }
 
     function withdrawTip() public onlyOwner {
-        require(tipAmount > 0, "No tips to withdraw");
-        payable(owner).transfer(tipAmount);
-        tipAmount = 0;
+        require(totalTipsReceived > 0, "No tips to withdraw");
+        payable(owner).transfer(totalTipsReceived);
+        totalTipsReceived = 0;
     }
 
     function getBalance() public view returns (uint256) {
