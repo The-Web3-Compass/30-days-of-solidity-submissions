@@ -1,44 +1,56 @@
 // SPDX-License-Identifier: MIT
-
 pragma solidity ^0.8.0;
 
-contract auctionHouse {
+contract AuctionHouse {
 
     struct Item {
-        uint[] id;
+        uint256 id;
         uint256 deadline;
-        uint[] bids;
-        address[] bidders;
+        mapping(address => uint256) bids;
         uint256 highestBid;
         address highestBidder;
+        bool exists;
     }
 
-    Item[] public items;
+    mapping(uint256 => Item) public items;
+    uint256 public itemCount;
 
-    function createItem(uint256 _id, uint256 _deadline) public {
-        Item storage newItem = items.push();
-        newItem.id.push(_id);
-        newItem.deadline = block.timestamp + _deadline;
+    function createItem(uint256 _itemId, uint256 _duration) public {
+        require(!items[_itemId].exists, "Item already exists");
+
+        Item storage newItem = items[_itemId];
+        newItem.id = _itemId;
+        newItem.deadline = block.timestamp + _duration;
         newItem.highestBid = 0;
+        newItem.highestBidder = address(0);
+        newItem.exists = true;
+
+        itemCount++;
     }
 
-    function placeBid(uint256 _i, uint256 bid) public {
-        require(_i < items.length, "Item does not exist");        
-        Item storage currentItem = items[_i];
+    function placeBid(uint256 _itemId, uint256 _bidAmount) public {
+        require(items[_itemId].exists, "Item does not exist");
+        Item storage currentItem = items[_itemId];
 
-        require(block.timestamp < currentItem.deadline, "Auction is over!");
+        require(block.timestamp < currentItem.deadline, "Auction has ended");
+        require(_bidAmount > currentItem.highestBid, "Bid must be higher than the current highest");
 
-        currentItem.bids.push(bid);
-        currentItem.bidders.push(msg.sender);
+        // Update bid mapping
+        currentItem.bids[msg.sender] = _bidAmount;
 
-        if (bid > currentItem.highestBid) {
-            currentItem.highestBid = bid;
-            currentItem.highestBidder = msg.sender;
-        }
+        // Update highest bid and bidder
+        currentItem.highestBid = _bidAmount;
+        currentItem.highestBidder = msg.sender;
     }
 
-    function getHighestBidder(uint256 _i) public view returns (address, uint256) {
-        Item storage currentItem = items[_i];
+    function getHighestBidder(uint256 _itemId) public view returns (address, uint256) {
+        require(items[_itemId].exists, "Item does not exist");
+        Item storage currentItem = items[_itemId];
         return (currentItem.highestBidder, currentItem.highestBid);
+    }
+
+    function getMyBid(uint256 _itemId) public view returns (uint256) {
+        require(items[_itemId].exists, "Item does not exist");
+        return items[_itemId].bids[msg.sender];
     }
 }
