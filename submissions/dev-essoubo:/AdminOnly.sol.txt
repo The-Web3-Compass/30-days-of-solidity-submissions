@@ -1,0 +1,102 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract AdminOnly {
+    // Variables d'état
+    address public owner;
+    uint public treasureAmount;
+    
+    // Mapping pour suivre les allocations approuvées par l'administrateur
+    mapping(address => uint) public allowances;
+    
+    // Mapping pour suivre si un utilisateur a déjà retiré son allocation
+    mapping(address => bool) public hasWithdrawn;
+    
+    // Événements
+    event TreasureAdded(uint amount);
+    event WithdrawalApproved(address user, uint amount);
+    event TreasureWithdrawn(address user, uint amount);
+    event OwnershipTransferred(address previousOwner, address newOwner);
+    event WithdrawalStatusReset(address user);
+    
+    // Modificateur pour limiter l'accès à certaines fonctions à l'administrateur uniquement
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Seul le proprietaire peut executer cette fonction");
+        _;
+    }
+    
+    // Constructeur - définit le créateur du contrat comme propriétaire initial
+    constructor() {
+        owner = msg.sender;
+    }
+    
+    // Fonction pour ajouter du trésor (ETH) au contrat
+    function addTreasure() public payable onlyOwner {
+        treasureAmount += msg.value;
+        emit TreasureAdded(msg.value);
+    }
+    
+    // Fonction pour approuver un utilisateur à retirer une certaine quantité de trésor
+    function approveWithdrawal(address _user, uint _amount) public onlyOwner {
+        require(_amount <= treasureAmount, "Montant superieur au tresor disponible");
+        require(_user != address(0), "Adresse utilisateur invalide");
+        
+        allowances[_user] = _amount;
+        emit WithdrawalApproved(_user, _amount);
+    }
+    
+    // Fonction pour qu'un utilisateur puisse retirer son allocation approuvée
+    function withdrawTreasure() public {
+        uint amount = allowances[msg.sender];
+        require(amount > 0, "Aucune allocation approuvee pour cet utilisateur");
+        require(!hasWithdrawn[msg.sender], "Vous avez deja retire votre allocation");
+        require(amount <= treasureAmount, "Tresor insuffisant dans le contrat");
+        
+        // Marquer comme retiré avant le transfert pour éviter les ré-entrées
+        hasWithdrawn[msg.sender] = true;
+        treasureAmount -= amount;
+        
+        // Transférer le montant à l'utilisateur
+        payable(msg.sender).transfer(amount);
+        
+        emit TreasureWithdrawn(msg.sender, amount);
+    }
+    
+    // Fonction pour que le propriétaire puisse retirer du trésor
+    function ownerWithdraw(uint _amount) public onlyOwner {
+        require(_amount <= treasureAmount, "Montant superieur au tresor disponible");
+        
+        treasureAmount -= _amount;
+        
+        // Transférer le montant au propriétaire
+        payable(owner).transfer(_amount);
+        
+        emit TreasureWithdrawn(owner, _amount);
+    }
+    
+    // Fonction pour réinitialiser le statut de retrait d'un utilisateur
+    function resetWithdrawalStatus(address _user) public onlyOwner {
+        hasWithdrawn[_user] = false;
+        emit WithdrawalStatusReset(_user);
+    }
+    
+    // Fonction pour transférer la propriété du contrat
+    function transferOwnership(address _newOwner) public onlyOwner {
+        require(_newOwner != address(0), "Nouvelle adresse proprietaire invalide");
+        
+        address previousOwner = owner;
+        owner = _newOwner;
+        
+        emit OwnershipTransferred(previousOwner, _newOwner);
+    }
+    
+    // Fonction pour obtenir le solde actuel du contrat
+    function getContractBalance() public view returns (uint) {
+        return address(this).balance;
+    }
+    
+    // Fonction pour vérifier si un utilisateur est autorisé à retirer
+    function canWithdraw(address _user) public view returns (bool) {
+        return allowances[_user] > 0 && !hasWithdrawn[_user] && allowances[_user] <= treasureAmount;
+    }
+}
