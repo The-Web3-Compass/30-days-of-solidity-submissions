@@ -91,11 +91,13 @@ contract SimpleIOU {
     }
 
 
-    function withdraw(address user, uint256 amount) onlyRegistered public {
+    function withdraw(address payable user, uint256 amount) onlyRegistered public {
         require (user != address(0), "Not a valid address!");
-        require (userBalance[user] > 0, "Insufficient funds!");
+        require (userBalance[user] > 0 && userBalance[user] >= amount, "Insufficient funds!");
 
+        (bool success, ) = user.call{value: amount}("");
         userBalance[user] -= amount;
+        require(success, "Withdrawal failed");
     }
 
     function getBalance(address user) onlyRegistered public view returns (uint256){
