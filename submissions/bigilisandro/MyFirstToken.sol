@@ -37,7 +37,7 @@ contract MyFirstToken {
         return _allowances[owner][spender];
     }
     
-    function approve(address spender, uint256 amount) public returns (bool) {
+    function approve(address spender, uint256 amount) public virtual returns (bool) {
         require(spender != address(0), "Approve to zero address");
         
         _allowances[msg.sender][spender] = amount;
@@ -45,7 +45,7 @@ contract MyFirstToken {
         return true;
     }
     
-    function transferFrom(address from, address to, uint256 amount) public returns (bool) {
+    function transferFrom(address from, address to, uint256 amount) public virtual returns (bool) {
         require(from != address(0), "Transfer from zero address");
         require(to != address(0), "Transfer to zero address");
         require(_balances[from] >= amount, "Insufficient balance");
