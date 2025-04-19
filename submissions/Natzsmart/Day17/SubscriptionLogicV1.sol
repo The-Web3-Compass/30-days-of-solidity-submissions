@@ -6,7 +6,7 @@ import "./SubscriptionStorage.sol";
 
 /**
  * @title SubscriptionLogicV1
- * @author Your Name
+ * @author Natzsmart
  * @notice Initial implementation of the subscription management logic.
  * @dev Contains functions for adding plans, subscribing, upgrading, and viewing subscription status.
  * @dev Designed to be called via delegatecall from SubscriptionManagerProxy.
