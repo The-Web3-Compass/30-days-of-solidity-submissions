@@ -31,6 +31,11 @@ contract SmartCalculator {
         return calc.divide(value1, value2);
     }
 
+    function power(uint value, uint256 exponent) public pure returns (uint256) {
+        if (exponent == 0) return 1;
+        else return (value ** exponent);
+    }
+
     function getResultValue() public view returns (uint256) {
         Calculator calc = Calculator(calculatorAdd);
         return calc.getResult();
