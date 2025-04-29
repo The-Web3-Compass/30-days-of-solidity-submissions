@@ -52,12 +52,31 @@ contract TipJar {
         string memory _currency,
         uint256 _rate
     ) public onlyOwner {
-        require(!registeredCurrencies[_currency], "currency already exists");
         require(_rate > 0, "rate must be grater than 0");
+        bool currencyExist = false;
 
-        supportedCurrencies.push(_currency);
+        for (uint i = 0; i < supportedCurrencies.length; i++) {
+            if (
+                keccak256(bytes(supportedCurrencies[i])) ==
+                keccak256(bytes(_currency))
+            ) {
+                currencyExist = true;
+                break;
+            }
+        }
+
+        if (!currencyExist) {
+            supportedCurrencies.push(_currency);
+        }
+
         currencyRates[_currency] = _rate;
         registeredCurrencies[_currency] = true;
+    }
+
+    function depositEther() external payable isRegistered {
+        require(msg.value > 0, "Invalid amount");
+
+        balance[msg.sender] += msg.value;
     }
 
     function convertToEth(
@@ -89,7 +108,17 @@ contract TipJar {
         balance[_receiver] += convertedAmount;
         tipsPerPerson[_receiver] += convertedAmount;
         tipsPerCountry[_currency] += convertedAmount;
-        contributions[_receiver].push(msg.sender);
+
+        bool hasDonated = false;
+        for (uint i = 0; i < contributions[_receiver].length; i++) {
+            if (contributions[_receiver][i] == msg.sender) {
+                hasDonated = true;
+            }
+        }
+
+        if (!hasDonated) {
+            contributions[_receiver].push(msg.sender);
+        }
     }
 
     function withdraw(uint _amount) public isRegistered validAmount(_amount) {
