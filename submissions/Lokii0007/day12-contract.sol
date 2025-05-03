@@ -2,8 +2,6 @@
 
 pragma solidity ^0.8.0;
 
-import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-
 contract MyFirstToken  {
    string public name = "Loki";
    string public symbol ="LOKI";
@@ -39,7 +37,7 @@ contract MyFirstToken  {
       return true;
    }
 
-   function _transferFrom(address _from, address _to, uint _value) public  returns(bool){
+   function transferFrom(address _from, address _to, uint _value) public  returns(bool){
       require(balanceOf[msg.sender] >= _value, "not enough balance");
       require(allowance[_from][msg.sender] >= _value, "not enough allowance");
 
