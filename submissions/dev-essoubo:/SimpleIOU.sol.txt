@@ -1,0 +1,224 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract SimpleIOU {
+    // Structure pour stocker les informations de dette entre utilisateurs
+    struct Debt {
+        uint amount;
+        string description;
+        bool settled;
+        uint createdAt;
+        uint settledAt;
+    }
+
+    // Mapping des dépôts d'ETH par utilisateur
+    mapping(address => uint) public deposits;
+    
+    // Mapping des dettes: de qui -> à qui -> ID de dette -> détails de la dette
+    mapping(address => mapping(address => mapping(uint => Debt))) public debts;
+    
+    // Nombre total de dettes par relation (de qui -> à qui)
+    mapping(address => mapping(address => uint)) public debtCounts;
+    
+    // Total de dettes actives: de qui -> à qui -> montant total
+    mapping(address => mapping(address => uint)) public totalActiveDebts;
+    
+    // Liste des amis pour chaque utilisateur
+    mapping(address => address[]) private friendsList;
+    mapping(address => mapping(address => bool)) private isFriend;
+    
+    // Événements
+    event Deposited(address indexed user, uint amount);
+    event Withdrawn(address indexed user, uint amount);
+    event DebtCreated(address indexed debtor, address indexed creditor, uint debtId, uint amount, string description);
+    event DebtSettled(address indexed debtor, address indexed creditor, uint debtId, uint amount);
+    event FriendAdded(address indexed user, address indexed friend);
+
+    // Modifier pour vérifier que l'utilisateur a suffisamment de fonds déposés
+    modifier hasSufficientDeposits(uint _amount) {
+        require(deposits[msg.sender] >= _amount, "Fonds insuffisants");
+        _;
+    }
+
+    // Déposer des ETH dans le contrat
+    function deposit() public payable {
+        require(msg.value > 0, "Le montant du depot doit etre superieur a zero");
+        
+        deposits[msg.sender] += msg.value;
+        
+        emit Deposited(msg.sender, msg.value);
+    }
+    
+    // Retirer des ETH du contrat
+    function withdraw(uint _amount) public hasSufficientDeposits(_amount) {
+        deposits[msg.sender] -= _amount;
+        
+        // Utiliser call pour transférer des ETH (méthode recommandée)
+        (bool success, ) = payable(msg.sender).call{value: _amount}("");
+        require(success, "Echec du transfert");
+        
+        emit Withdrawn(msg.sender, _amount);
+    }
+    
+    // Ajouter une nouvelle dette ("j'emprunte à quelqu'un")
+    function borrowFrom(address _creditor, uint _amount, string memory _description) public {
+        require(_creditor != msg.sender, "Vous ne pouvez pas emprunter a vous-meme");
+        require(_amount > 0, "Le montant doit etre superieur a zero");
+        
+        // Ajouter comme ami si ce n'est pas déjà le cas
+        addFriendIfNotExists(_creditor);
+        
+        // Créer la nouvelle dette
+        uint debtId = debtCounts[msg.sender][_creditor];
+        debts[msg.sender][_creditor][debtId] = Debt({
+            amount: _amount,
+            description: _description,
+            settled: false,
+            createdAt: block.timestamp,
+            settledAt: 0
+        });
+        
+        // Mettre à jour les compteurs
+        debtCounts[msg.sender][_creditor]++;
+        totalActiveDebts[msg.sender][_creditor] += _amount;
+        
+        emit DebtCreated(msg.sender, _creditor, debtId, _amount, _description);
+    }
+    
+    // Ajouter une nouvelle dette ("je prête à quelqu'un")
+    function lendTo(address _debtor, uint _amount, string memory _description) public {
+        require(_debtor != msg.sender, "Vous ne pouvez pas preter a vous-meme");
+        require(_amount > 0, "Le montant doit etre superieur a zero");
+        
+        // Ajouter comme ami si ce n'est pas déjà le cas
+        addFriendIfNotExists(_debtor);
+        
+        // Créer la nouvelle dette
+        uint debtId = debtCounts[_debtor][msg.sender];
+        debts[_debtor][msg.sender][debtId] = Debt({
+            amount: _amount,
+            description: _description,
+            settled: false,
+            createdAt: block.timestamp,
+            settledAt: 0
+        });
+        
+        // Mettre à jour les compteurs
+        debtCounts[_debtor][msg.sender]++;
+        totalActiveDebts[_debtor][msg.sender] += _amount;
+        
+        emit DebtCreated(_debtor, msg.sender, debtId, _amount, _description);
+    }
+    
+    // Régler une dette avec des fonds déposés
+    function settleDebt(address _creditor, uint _debtId) public hasSufficientDeposits(debts[msg.sender][_creditor][_debtId].amount) {
+        Debt storage debt = debts[msg.sender][_creditor][_debtId];
+        
+        require(!debt.settled, "Cette dette est deja reglee");
+        require(debt.amount > 0, "Dette invalide");
+        
+        uint amountToSettle = debt.amount;
+        
+        // Marquer la dette comme réglée
+        debt.settled = true;
+        debt.settledAt = block.timestamp;
+        
+        // Mettre à jour le total des dettes actives
+        totalActiveDebts[msg.sender][_creditor] -= amountToSettle;
+        
+        // Transférer les fonds du débiteur au créancier
+        deposits[msg.sender] -= amountToSettle;
+        deposits[_creditor] += amountToSettle;
+        
+        emit DebtSettled(msg.sender, _creditor, _debtId, amountToSettle);
+    }
+    
+    // Annuler une dette (en tant que créancier)
+    function forgiveDebt(address _debtor, uint _debtId) public {
+        Debt storage debt = debts[_debtor][msg.sender][_debtId];
+        
+        require(!debt.settled, "Cette dette est deja reglee");
+        require(debt.amount > 0, "Dette invalide");
+        
+        uint amountToForgive = debt.amount;
+        
+        // Marquer la dette comme réglée
+        debt.settled = true;
+        debt.settledAt = block.timestamp;
+        
+        // Mettre à jour le total des dettes actives
+        totalActiveDebts[_debtor][msg.sender] -= amountToForgive;
+        
+        emit DebtSettled(_debtor, msg.sender, _debtId, amountToForgive);
+    }
+    
+    // Ajouter un ami si ce n'est pas déjà le cas
+    function addFriendIfNotExists(address _friend) internal {
+        if (!isFriend[msg.sender][_friend]) {
+            friendsList[msg.sender].push(_friend);
+            isFriend[msg.sender][_friend] = true;
+            emit FriendAdded(msg.sender, _friend);
+        }
+    }
+    
+    // Ajouter explicitement un ami
+    function addFriend(address _friend) public {
+        require(_friend != msg.sender, "Vous ne pouvez pas vous ajouter vous-meme comme ami");
+        addFriendIfNotExists(_friend);
+    }
+    
+    // Obtenir la liste des amis
+    function getFriends() public view returns (address[] memory) {
+        return friendsList[msg.sender];
+    }
+    
+    // Obtenir les détails d'une dette spécifique
+    function getDebtDetails(address _debtor, address _creditor, uint _debtId) public view returns (
+        uint amount,
+        string memory description,
+        bool settled,
+        uint createdAt,
+        uint settledAt
+    ) {
+        Debt memory debt = debts[_debtor][_creditor][_debtId];
+        return (debt.amount, debt.description, debt.settled, debt.createdAt, debt.settledAt);
+    }
+    
+    // Obtenir le nombre total de dettes entre deux personnes
+    function getDebtCount(address _debtor, address _creditor) public view returns (uint) {
+        return debtCounts[_debtor][_creditor];
+    }
+    
+    // Obtenir le montant total que je dois à une personne
+    function getTotalIOweTo(address _creditor) public view returns (uint) {
+        return totalActiveDebts[msg.sender][_creditor];
+    }
+    
+    // Obtenir le montant total qu'une personne me doit
+    function getTotalOwedToMe(address _debtor) public view returns (uint) {
+        return totalActiveDebts[_debtor][msg.sender];
+    }
+    
+    // Fonction auxiliaire pour obtenir le solde global avec tous les amis
+    function getGlobalBalance() public view returns (int) {
+        int balance = 0;
+        
+        // Parcourir tous les amis
+        for (uint i = 0; i < friendsList[msg.sender].length; i++) {
+            address friend = friendsList[msg.sender][i];
+            
+            // Soustraire ce que je dois
+            balance -= int(totalActiveDebts[msg.sender][friend]);
+            
+            // Ajouter ce qu'on me doit
+            balance += int(totalActiveDebts[friend][msg.sender]);
+        }
+        
+        return balance;
+    }
+    
+    // Solde ETH actuellement déposé
+    function getMyDeposit() public view returns (uint) {
+        return deposits[msg.sender];
+    }
+}
