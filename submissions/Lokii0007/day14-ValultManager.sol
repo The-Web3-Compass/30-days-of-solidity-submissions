@@ -69,7 +69,7 @@ contract VaultManager {
 
        address[] storage boxes = userDepositBoxes[msg.sender];
        for(uint i=0; i<boxes.length;i++){
-          if(boxes[i] != _boxAddress) {
+          if(boxes[i] == _boxAddress) {
             boxes[i] = boxes[boxes.length-1];
             boxes.pop();
             break;
