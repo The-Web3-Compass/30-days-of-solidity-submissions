@@ -28,6 +28,6 @@ contract SubscriptionLogicV1 is StorageLayout {
 
     function isActive(address _user) public view returns(bool){
         Subscription memory sub = subscriptions[_user];
-        return (sub.expiry < block.timestamp && !sub.paused);
+        return (sub.expiry > block.timestamp && !sub.paused);
     }
 }
