@@ -59,7 +59,7 @@ contract SimpleStableCoin is ERC20, Ownable, ReentrancyGuard, AccessControl {
         uint collateralPriceUSD = getCurrentPrice();
         uint stablecoinScaleFactor = collateralPriceUSD * 10 ** decimals(); //* to match stable coin decimals
         uint requiredCollateralInUSD = (stablecoinScaleFactor * collateralizationRatio)/(100 * collateralPriceUSD);
-        uint requiredCollateralTokens = (requiredCollateralInUSD * (10 ** collateralDecimals) )/(10 * priceFeed.decimals());
+        uint requiredCollateralTokens = (requiredCollateralInUSD * (10 ** collateralDecimals) )/(10 ** priceFeed.decimals());
 
         collateralToken.safeTransferFrom(msg.sender, address(this), requiredCollateralTokens);
         _mint(msg.sender, _amount);
@@ -74,7 +74,7 @@ contract SimpleStableCoin is ERC20, Ownable, ReentrancyGuard, AccessControl {
         uint collateralPriceUSD = getCurrentPrice();
         uint stablecoinScaleFactor = collateralPriceUSD * 10 ** decimals(); //* to match stable coin decimals
         uint collateralToReturnInUSD = (stablecoinScaleFactor * 100)/(collateralizationRatio * collateralPriceUSD);
-        uint CollateralTokensToReturn = (collateralToReturnInUSD * (10 ** collateralDecimals) )/(10 * priceFeed.decimals());
+        uint CollateralTokensToReturn = (collateralToReturnInUSD * (10 ** collateralDecimals) )/(10 ** priceFeed.decimals());
 
         collateralToken.safeTransfer(msg.sender, CollateralTokensToReturn);
         _burn(msg.sender, _amount);
