@@ -66,7 +66,7 @@ You can keep submitting daily by repeating these steps for each new challenge.
 
 ## ❓ Need Help?
 
-- Stuck? Just reach out on Discord/Telegram.
+- Stuck? Just reach out on our [Telegram](https://t.me/+lnaaqX_ctkMxYzA1).
 - Submitted late? No problem — it’s all about learning at your pace.
 - Want feedback? Mention it in your PR comment!
 
@@ -77,12 +77,6 @@ You can keep submitting daily by repeating these steps for each new challenge.
 - Keep your code readable and clean.
 - Add comments if it helps explain your thought process.
 - Feel free to push updates to your submission anytime!
-
----
-
-## 📢 Note for Returning Participants
-
-Each day will have its own folder. Make sure you're submitting to the correct one!
 
 ---
 
