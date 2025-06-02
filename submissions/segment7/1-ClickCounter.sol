@@ -6,7 +6,7 @@ contract ClickCounter{
 
     uint256 public counter = 0;
 
-    function click() public 
+    function check() public 
     {
         counter ++;
     }
