@@ -42,4 +42,8 @@ contract SaveMyName{
         _person.name = _name;
     }
 
+    function getPerson(address _address) external view returns(Person memory){
+        return persons[_address];
+    }
+
 }
