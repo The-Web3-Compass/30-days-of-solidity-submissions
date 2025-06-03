@@ -4,3 +4,4 @@
 
 [day 1](./day1/README.md)
 [day 2](./day2/README.md)
+[day 3](./day3/README.md)
