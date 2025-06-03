@@ -45,7 +45,7 @@ contract admin{
   require(!ifwithdrawal[msg.sender], "you had already withdrawn");
   require(allowence <= treasure, "amount greater than the owner amount");
   require(allowence <= maxwithdrawal, "amount greater than the max limited");
-  require(block.timestamp >= lastwithdraw[msg.sender]+cooltime);
+  require(block.timestamp >= lastwithdraw[msg.sender]+cooltime,"not valid");
   ifwithdrawal[msg.sender] = true;
   treasure -= allowence;
   withdrawaltreasure[msg.sender] = 0;
