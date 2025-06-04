@@ -8,6 +8,9 @@ contract PollStation {
     error VoterAlreadyVoted();
     error NoCandidatesAvailable();
     error NoVoteCast();
+    error VotingIsClosed();
+    error NotOwner();
+    error VotingIsStillOpen();
 
     struct Candidate {
         uint256 id;
@@ -19,6 +22,8 @@ contract PollStation {
 
     uint256 public candidateCount;
     uint256 private votesCount;
+    bool public isVotingOpen = true;
+    address immutable i_owner;
 
     mapping(uint256 candidateId => Candidate) public candidates;
 
@@ -29,6 +34,16 @@ contract PollStation {
 
     event Vote(address indexed voter, string name);
     event CandidateCreated(uint256 indexed candidateId, string name, string party);
+
+    modifier checkIfVotingIsOpen() {
+        if (!isVotingOpen) revert VotingIsClosed();
+        _;
+    }
+
+    modifier onlyOwner() {
+        if (msg.sender != i_owner) revert NotOwner();
+        _;
+    }
 
     modifier checkIfCandidateExists(uint256 candidateId) {
         // because whenevery a candidate is added, they will be assigned an id that is not 0
@@ -43,7 +58,11 @@ contract PollStation {
         _;
     }
 
-    function vote(uint256 _candidateId) public checkIfCandidateExists(_candidateId) checkIfVoterVoted {
+    constructor() {
+        i_owner = msg.sender;
+    }
+
+    function vote(uint256 _candidateId) public checkIfCandidateExists(_candidateId) checkIfVoterVoted checkIfVotingIsOpen {
         voters[msg.sender] = _candidateId;
         candidates[_candidateId].voteCount++;
         votesCount++;
@@ -73,8 +92,12 @@ contract PollStation {
         return keccak256(abi.encode(_name, _party));
     }
 
+    function setVoting(bool _isVotingOpen) public onlyOwner {
+        isVotingOpen = _isVotingOpen;
+    }
+
     // GETTER FUNCTIONS
-    
+
     function getCandidate(uint256 _candidateId)
         public
         view
@@ -96,6 +119,9 @@ contract PollStation {
     // WINNERS IN CASE OF TIE
     function getWinners() public view returns (Candidate[] memory) {
         if (candidateCount == 0) revert NoCandidatesAvailable();
+        if (votesCount == 0) revert NoVoteCast();
+        if (isVotingOpen) revert VotingIsStillOpen();
+
         uint256 highestVoteCount = 0;
         uint256 winnerId = 1;
         uint256 tieCount = 0;
@@ -140,4 +166,5 @@ contract PollStation {
     function getTotalVotes() external view returns (uint256) {
         return votesCount;
     }
+
 }
