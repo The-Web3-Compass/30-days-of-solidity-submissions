@@ -8,4 +8,5 @@ contract Clickcounter{
 
     function click() public{
         counter++;
+
     }
