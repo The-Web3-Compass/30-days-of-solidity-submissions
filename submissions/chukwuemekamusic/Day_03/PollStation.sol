@@ -74,6 +74,7 @@ contract PollStation {
     }
 
     // GETTER FUNCTIONS
+    
     function getCandidate(uint256 _candidateId)
         public
         view
@@ -134,6 +135,7 @@ contract PollStation {
         if (_candidateId == 0) revert NoVoteCast();
         return candidates[_candidateId];
     }
+
 
     function getTotalVotes() external view returns (uint256) {
         return votesCount;
