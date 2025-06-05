@@ -30,7 +30,7 @@ contract PollStation {
     mapping(address voters => uint256 candidateId) public voters;
 
     // mapping for unique candidates check with name & party
-    mapping(bytes32 nameAndParty => bool) public uniqueCandidatesRegistered;
+    mapping(bytes32 nameAndParty => bool) private uniqueCandidatesRegistered;
 
     event Vote(address indexed voter, string name);
     event CandidateCreated(uint256 indexed candidateId, string name, string party);
@@ -95,6 +95,14 @@ contract PollStation {
     function setVoting(bool _isVotingOpen) public onlyOwner {
         isVotingOpen = _isVotingOpen;
     }
+
+    // function setVoting(bool _isVotingOpen) public onlyOwner {
+    //     // Only allow setting to false (closing voting)
+    //     // Once closed, it cannot be reopened
+    //     if (!_isVotingOpen) {
+    //         isVotingOpen = false;
+    //     }
+    // }
 
     // GETTER FUNCTIONS
 
