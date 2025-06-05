@@ -53,6 +53,7 @@ contract AdminOnly {
         treasureAmount -= allowance;
         withdrawalAllowance[msg.sender] = 0;
         
+        
     }
     
     // Only the owner can reset someone's withdrawal status
