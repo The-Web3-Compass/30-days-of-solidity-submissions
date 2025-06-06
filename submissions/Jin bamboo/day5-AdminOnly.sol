@@ -69,3 +69,4 @@ contract AdminOnly {
     function getTreasureDetails() public view onlyOwner returns (uint256) {
         return treasureAmount;
     }
+}
