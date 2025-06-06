@@ -55,7 +55,7 @@ contract EtherPiggyBank{
         require(_amount > 0, "Invalid amount");
         require(balance[msg.sender] >= _amount, "Insufficient balance");
         balance[msg.sender] = balance[msg.sender]-_amount;
-   
+
     }
 
     function getBalance(address _member) public view returns (uint256){
