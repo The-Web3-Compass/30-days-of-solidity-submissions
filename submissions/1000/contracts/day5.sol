@@ -6,7 +6,7 @@ contract AdminOnly{
 
     address public owner;
     uint256 public treasureAmount;
-    mapping (address => uint256) public withdrawalAllowance;
+    mapping (address => uint256)public withdrawalAllowance;
     mapping (address => bool) hasWithdrawn;
 
     constructor(){
