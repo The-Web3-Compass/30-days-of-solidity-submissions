@@ -41,9 +41,6 @@ contract SaveMyName{
         Person storage _person = persons[msg.sender];
         _person.name = _name;
     }
-
-    function getPerson(address _address) external view returns(Person memory){
-        return persons[_address];
-    }
+        
 
 }
