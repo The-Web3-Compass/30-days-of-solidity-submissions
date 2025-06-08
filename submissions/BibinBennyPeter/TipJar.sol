@@ -38,4 +38,6 @@ contract TipJar {
         uint256 amountInEth = (amountInEur * 1e18) / uint256(ethEurPrice);
         ethEur += amountInEth;
     }
+    
+    receive() external payable {}
 }
