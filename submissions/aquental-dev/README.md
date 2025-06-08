@@ -9,3 +9,4 @@
 - [day 5](./day5/README.md)
 - [day 6](./day6/README.md)
 - [day 7](./day7/README.md)
+- [day 8](./day8/README.md)
