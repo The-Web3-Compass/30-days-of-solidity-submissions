@@ -1,0 +1,43 @@
+{
+	"domain": {
+		"chainId": 1,
+		"name": "GuestVerifier",
+		"verifyingContract": "<DEPLOYED_CONTRACT_ADDRESS>",
+		"version": "1"
+	},
+	"message": {
+		"guest": "<TEST_GUEST_ADDRESS>",
+		"eventId": 1
+	},
+	"primaryType": "GuestApproval",
+	"types": {
+		"EIP712Domain": [
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"name": "version",
+				"type": "string"
+			},
+			{
+				"name": "chainId",
+				"type": "uint256"
+			},
+			{
+				"name": "verifyingContract",
+				"type": "address"
+			}
+		],
+		"GuestApproval": [
+			{
+				"name": "guest",
+				"type": "address"
+			},
+			{
+				"name": "eventId",
+				"type": "uint256"
+			}
+		]
+	}
+}
