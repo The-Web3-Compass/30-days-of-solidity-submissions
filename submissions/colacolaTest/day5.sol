@@ -28,7 +28,7 @@ contract AdminOnly{
     function withdrawTreasure(uint256 amount) public{  
         if(msg.sender == owner){
             require(amount <= treasureAmount, "Not enough treasure for this action!");
-            treasureAmount = amount;
+            treasureAmount -= amount;
 
             return;
         } 
