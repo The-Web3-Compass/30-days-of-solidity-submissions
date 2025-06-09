@@ -52,7 +52,7 @@ contract AdminOnly {
         require(allowance >= amount, "Cannot withdraw more than you are allowed"); // condition to check if user is withdrawing more than allowed
         
         hasWithdrawn[msg.sender] = true;
-        treasureAmount -= allowance;
+        treasureAmount -= amount;
         withdrawalAllowance[msg.sender] = 0;
         
     }
