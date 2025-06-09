@@ -1,0 +1,8 @@
+### macOS template
+# General
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
