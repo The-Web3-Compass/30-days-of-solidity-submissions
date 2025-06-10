@@ -55,7 +55,7 @@ contract ActivityTracker {
         return totalMinutes[_user];
     }
 
-    // Optional: get all workouts
+    //gets all workouts
     function getWorkouts(
         address _user
     ) external view returns (Workout[] memory) {
