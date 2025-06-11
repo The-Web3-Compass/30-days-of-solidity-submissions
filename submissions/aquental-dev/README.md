@@ -17,7 +17,7 @@
 - [<span style="color: rgb(19 78 74);">day 8</span>](./day8/README.md)
 - [<span style="color: rgb(19 78 74);">day 9</span>](./day9/README.md)
 - [<span style="color: rgb(19 78 74);">day 10</span>](./day10/README.md)
-- <span style="color: rgb(19 78 74);">day 11</span>
+- [<span style="color: rgb(19 78 74);">day 11</span>](./day11/README.md)
 - <span style="color: rgb(19 78 74);">day 12</span>
 - <span style="color: rgb(19 78 74);">day 13</span>
 
