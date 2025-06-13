@@ -1,60 +1,56 @@
-//SPDX-License-Identifier:MIT
+//SPDX-License-Identifier: MIT
+
 pragma solidity ^0.8.0;
 
-contract AdminOnly{
+contract EtherPiggyBank{
 
-    address public owner;
-    uint256 public treasureAmount;
-    mapping (address =>uint256) public withdrawalAllowance;
-    mapping(address => bool) public hasWithdrawn;
+    address public bankManager;
+    address[] members;
+    mapping(address => bool) public registeredMembers;
+    mapping(address => uint256) balance;
 
-    constructor (){
-        owner = msg.sender;
+    constructor(){
+        bankManager = msg.sender;
+        members.push(msg.sender);
     }
 
-    modifier onlyOwner(){
-        require(msg.sender == owner, "not the owner");
+    modifier onlyBankManager(){
+        require(msg.sender == bankManager, "Only bank manager can perform this action");
         _;
     }
 
-    function addTreasure (uint256 amount) public onlyOwner{
-        treasureAmount += amount;
+    modifier onlyRegisteredMember() {
+        require(registeredMembers[msg.sender], "Member not registered");
+        _;
+    }
+  
+    function addMembers(address _member)public onlyBankManager{
+        require(_member != address(0), "Invalid address");
+        require(_member != msg.sender, "Bank Manager is already a member");
+        require(!registeredMembers[_member], "Member already registered");
+        registeredMembers[_member] = true;
+        members.push(_member);
     }
 
-    function approveWithdrawal (address recipient, uint256 amount) public onlyOwner {
-        require(amount <= treasureAmount, "Not enough treasure available");
-        withdrawalAllowance [recipient] = amount;  
+    function getMembers() public view returns(address[] memory){
+        return members;
+    }
+ 
+    function depositAmountEther() public payable onlyRegisteredMember{  
+        require(msg.value > 0, "Invalid amount");
+        balance[msg.sender] = balance[msg.sender]+msg.value;
+   
     }
     
-    function withdrawTreasure (uint256 amount) public {
-
-        if (msg.sender == owner){
-            require (amount <= treasureAmount, "Not enough treasures to withdraw");
-            treasureAmount-= amount;
-            return;
-        }
-
-        uint256 allowance = withdrawalAllowance[msg.sender];    
-
-
-        require (allowance >0, "You don't have enough treasure");
-        require (!hasWithdrawn[msg.sender], "you already withdraw");
-        require (allowance <= treasureAmount,"Not enough treasure");
-        require (allowance >= amount, "withdrawal is too high");
-
-        hasWithdrawn [msg.sender] = true;
-        treasureAmount -= allowance;
-        withdrawalAllowance [msg.sender] =0;
-    }
+    function withdrawAmount(uint256 _amount) public onlyRegisteredMember{
+        require(_amount > 0, "Invalid amount");
+        require(balance[msg.sender] >= _amount, "Insufficient balance");
+        balance[msg.sender] = balance[msg.sender]-_amount;
    
-   function resetWithdrawalStatus (address user) public onlyOwner {
-        hasWithdrawn [user] = false;
-   }
-
-    function transferOwnership (address newOwner) public onlyOwner{
-        require (newOwner != address (0),"invalid address");
-        owner = newOwner;
     }
- }
 
-
+    function getBalance(address _member) public view returns (uint256){
+        require(_member != address(0), "Invalid address");
+        return balance[_member];
+    } 
+}
