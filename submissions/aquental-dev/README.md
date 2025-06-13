@@ -19,7 +19,7 @@
 - [<span style="color: rgb(19 78 74);">day 10</span>](./day10/README.md)
 - [<span style="color: rgb(19 78 74);">day 11</span>](./day11/README.md)
 - [<span style="color: rgb(19 78 74);">day 12</span>](./day12/README.md)
-- <span style="color: rgb(19 78 74);">day 13</span>
+- [<span style="color: rgb(19 78 74);">day 13</span>](./day13/README.md)
 
 ### <span style="color: rgb(120 53 15);">Advanced</span>
 
