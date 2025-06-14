@@ -23,7 +23,7 @@
 
 ### <span style="color: rgb(120 53 15);">Advanced</span>
 
-- <span style="color: rgb(120 53 15);">day 14</span>
+- [<span style="color: rgb(120 53 15);">day 14</span>](./day14/README.md)
 - <span style="color: rgb(120 53 15);">day 15</span>
 - <span style="color: rgb(120 53 15);">day 16</span>
 - <span style="color: rgb(120 53 15);">day 17</span>
