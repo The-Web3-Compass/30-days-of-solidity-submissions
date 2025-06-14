@@ -1,26 +1,49 @@
 //SPDX-License-Identifier:MIT
 pragma solidity ^0.8.0;
 
-contract ScientificCalculator{
+import "./day9-ScientificCalculator.sol";
 
-    function power(uint256 base, uint256 exponent) public pure returns(uint256) {
-        if(exponent == 0) {
-            return 1;
-        } 
-        else return (base ** exponent);
-        
+contract SmartCalculator{
+
+    address public owner;
+    ScientificCalculator public calculator;
+
+    constructor(){
+        owner = msg.sender;
     }
 
-    function squareRoot(uint256 number) public pure returns(uint256) {
-        if(number == 0) {
-            return 0;
+    modifier onlyOwner(){
+        require(owner == msg.sender, "Only owner can perform this action.");
+        _;
+    }
+
+    function setScientificCalculatorAddress(address _address) public onlyOwner{
+        calculator = ScientificCalculator(_address);
+    }
+
+
+    function add(int256 a, int256 b) public pure returns(int256){
+        return (a+b);
+    }
+
+    function subtract(int256 a, int256 b) public pure returns(int256){
+        return (a-b);
+    }
+
+    function multiply(int256 a, int256 b) public pure returns(int256){
+        return (a*b);
+    }
+
+    function divide(int256 a, int256 b) public pure returns(int256){
+        require(b != 0, "Division by zero is not allowed.");
+        return (a/b);
+    }
+
+    function calculatepower(uint256 base, uint256 exponent) public view returns(uint256){ 
+        return calculator.power(base, exponent);
         }
 
-        uint256 result = number/2;
-        for (uint256 i = 0; i<10; i++) {
-            result = (result + number / result)/2;
-        }
-
-        return result;
+    function calculateSquareRoot(uint256 number) public view returns(uint256){
+        return calculator.squareRoot(number);
     }
 }
