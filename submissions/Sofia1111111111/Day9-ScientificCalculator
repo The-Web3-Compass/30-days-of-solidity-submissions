@@ -1,0 +1,28 @@
+// SPDX-License-Identifier:MIT
+
+pragma solidity ^0.8.0;
+
+contract SientificCalculator{
+
+    //幂的运算，power是幂，base是底数，exponent是指数
+    function power(uint256 base, uint256 exponent) public pure returns(uint256){
+        if(exponent == 0) return 1; //指数为0，结果直接返回1
+        else return (base**exponent); //指数不为零则进行计算
+    }
+
+
+    //开平方根计算：使用牛顿近似法
+    function squareRoot(int256 number) public pure returns(int256){
+        require(number >= 0,"Cannot calculate square root of negative number"); //确保负数不能开平方根
+        if(number == 0) return 0; //0开平方根是0
+        //不为0的数用牛顿近似法求解
+        int256 result = number/2; //使用number/2作为第一个猜测数字
+        for(uint256 i = 0; i < 10; i++){//从0开始，循环计算10遍
+            result = (result + number / result)/2;
+        }
+
+        return result;
+    }
+
+    
+}
