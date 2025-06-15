@@ -9,7 +9,7 @@ contract MyToken{
     uint8 public decimals = 18;
     uint256 public totalSupply;
 
-    mapping(address => uint256) public balanceOf;
+    mapping(address => uingitt256) public balanceOf;
     mapping(address => mapping (address  => uint256)) public allowance;
 
     event Transfer(address indexed from, address indexed to, uint256 value);
