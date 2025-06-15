@@ -1,34 +1,31 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.18;
+pragma solidity ^0.8.20;
 
-
-contract Ownable {
-
-    address public Owner;
-
-    constructor() {
-        Owner = msg.sender;
-    }
-
-    modifier onlyOwner ()  {
-        require(Owner == msg.sender, "Not a owner");
-        _;
-    }
-
-    function transferOwnership(address _newOwner) public onlyOwner() {
-        require(_newOwner != address(0), "Not a valid address");
-        Owner = _newOwner;
-    }
-
-}
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract VaultMaster is Ownable {
 
-    function withdraw(uint _amount) public onlyOwner {
-    require(_amount <= address(this).balance, "Insufficient balance");
-    payable(msg.sender).transfer(_amount);
+    event DepositSuccessful(address indexed account, uint256 value);
+    event WithdrawSuccessful(address indexed recipient, uint256 value);
+
+    // Set deployer as owner using OpenZeppelin's constructor
+    constructor() Ownable(msg.sender) {}
+
+    function getBalance() public view returns (uint256) {
+        return address(this).balance;
     }
 
-    receive() external payable { }
+    function deposit() public payable {
+        require(msg.value > 0, "Enter a valid amount");
+        emit DepositSuccessful(msg.sender, msg.value);
+    }
 
+    function withdraw(address _to, uint256 _amount) public onlyOwner {
+        require(_amount <= getBalance(), "Insufficient balance");
+
+        (bool success, ) = payable(_to).call{value: _amount}("");
+        require(success, "Transfer failed");
+
+        emit WithdrawSuccessful(_to, _amount);
+    }
 }

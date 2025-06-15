@@ -1,60 +1,68 @@
-// SPDX-License-Identifier: MIT
+//SPDX-License-Identifier: MIT
+
 pragma solidity ^0.8.0;
 
-contract Calculator {
-    address public immutable owner;
+import "./ScientificCalculator.sol";
+
+contract Calculator{
+
+    address public owner;
     address public scientificCalculatorAddress;
 
-    constructor() {
+    constructor(){
         owner = msg.sender;
     }
 
     modifier onlyOwner() {
-        require(msg.sender == owner, "Only owner can perform this action");
-        _;
+        require(msg.sender == owner, "Only owner can do this action");
+         _; 
     }
 
-    /// @notice Set the address of the ScientificCalculator contract
-    function setScientificCalculator(address _address) external onlyOwner {
-        require(_address != address(0), "Invalid address");
+    function setScientificCalculator(address _address)public onlyOwner{
         scientificCalculatorAddress = _address;
+        }
+
+    function add(uint256 a, uint256 b)public pure returns(uint256){
+        uint256 result = a+b;
+        return result;
     }
 
-    /// @notice Add two numbers
-    function add(uint256 a, uint256 b) external pure returns (uint256) {
-        return a + b;
+    function subtract(uint256 a, uint256 b)public pure returns(uint256){
+        uint256 result = a-b;
+        return result;
     }
 
-    /// @notice Subtract second number from first
-    function subtract(uint256 a, uint256 b) external pure returns (uint256) {
-        return a - b;
+    function multiply(uint256 a, uint256 b)public pure returns(uint256){
+        uint256 result = a*b;
+        return result;
     }
 
-    /// @notice Multiply two numbers
-    function multiply(uint256 a, uint256 b) external pure returns (uint256) {
-        return a * b;
+    function divide(uint256 a, uint256 b)public pure returns(uint256){
+        require(b!= 0, "Cannot divide by zero");
+        uint256 result = a/b;
+        return result;
     }
 
-    /// @notice Divide first number by second
-    function divide(uint256 a, uint256 b) external pure returns (uint256) {
-        require(b != 0, "Cannot divide by zero");
-        return a / b;
-    }
+    function calculatePower(uint256 base, uint256 exponent)public view returns(uint256){
 
-    /// @notice Calculate power using ScientificCalculator
-    function calculatePower(uint256 base, uint256 exponent) external view returns (uint256) {
-        require(scientificCalculatorAddress != address(0), "ScientificCalculator not set");
-        return ScientificCalculator(scientificCalculatorAddress).power(base, exponent);
-    }
+    ScientificCalculator scientificCalc = ScientificCalculator(scientificCalculatorAddress);
 
-    /// @notice Calculate square root using low-level call to ScientificCalculator
-    function calculateSquareRoot(uint256 number) external returns (uint256) {
-        require(scientificCalculatorAddress != address(0), "ScientificCalculator not set");
+    //external call 
+    uint256 result = scientificCalc.power(base, exponent);
 
-        bytes memory data = abi.encodeWithSignature("squareRoot(int256)", int256(number));
+    return result;
+
+}
+
+    function calculateSquareRoot(uint256 number)public returns (uint256){
+        require(number >= 0 , "Cannot calculate square root of negative nmber");
+
+        bytes memory data = abi.encodeWithSignature("squareRoot(int256)", number);
         (bool success, bytes memory returnData) = scientificCalculatorAddress.call(data);
-
-        require(success, "External call to squareRoot failed");
-        return abi.decode(returnData, (uint256));
+        require(success, "External call failed");
+        uint256 result = abi.decode(returnData, (uint256));
+        return result;
     }
+
+    
 }

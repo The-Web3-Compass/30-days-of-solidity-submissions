@@ -1,112 +1,50 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.26;
+pragma solidity ^0.8.20;
 
-interface IERC20 {
-    function totalSupply() external view returns (uint256);
+contract SimpleERC20 {
+    string public name = "SimpleToken";
+    string public symbol = "SIM";
+    uint8 public decimals = 18;
+    uint256 public totalSupply;
 
-    function balanceOf(address account) external view returns (uint256);
+    mapping(address => uint256) public balanceOf;
+    mapping(address => mapping(address => uint256)) public allowance;
 
-    function transfer(
-        address recipient,
-        uint256 amount
-    ) external returns (bool);
-
-    function allowance(
-        address owner,
-        address spender
-    ) external view returns (uint256);
-
-    function approve(address spender, uint256 amount) external returns (bool);
-
-    function transferFrom(
-        address sender,
-        address recipient,
-        uint256 amount
-    ) external returns (bool);
-}
-
-contract MyFirstToken is IERC20 {
     event Transfer(address indexed from, address indexed to, uint256 value);
-    event Approval(
-        address indexed owner,
-        address indexed spender,
-        uint256 value
-    );
+    event Approval(address indexed owner, address indexed spender, uint256 value);
 
-    string public name;
-    string public symbol;
-    uint public initial_Supply;
-
-    mapping(address => uint) public balances;
-    mapping(address => mapping(address => uint)) public allowances;
-
-    constructor() {
-        name = "MyFirstToken";
-        symbol = "MT";
-        initial_Supply = 1000;
-        balances[msg.sender] = initial_Supply; // Assign all tokens to deployer
-        emit Transfer(address(0), msg.sender, initial_Supply);
+    constructor(uint256 _initialSupply) {
+        totalSupply = _initialSupply * (10 ** uint256(decimals));
+        balanceOf[msg.sender] = totalSupply;
+        emit Transfer(address(0), msg.sender, totalSupply);
     }
 
-    function totalSupply() external view returns (uint256) {
-        return initial_Supply;
-    }
-
-    function balanceOf(address account) external view returns (uint256) {
-        return balances[account];
-    }
-
-    function mint(uint amount) public {
-        balances[msg.sender] += amount;
-        initial_Supply += amount;
-        emit Transfer(address(0), msg.sender, amount);
-    }
-
-    function transfer(
-        address recipient,
-        uint256 amount
-    ) external returns (bool) {
-        require(balances[msg.sender] >= amount, "Insufficient balance");
-        balances[msg.sender] -= amount;
-        balances[recipient] += amount;
-        emit Transfer(msg.sender, recipient, amount);
+    function transfer(address _to, uint256 _value) public returns (bool) {
+        require(balanceOf[msg.sender] >= _value, "Not enough balance");
+        _transfer(msg.sender, _to, _value);
         return true;
     }
 
-    function allowance(
-        address owner,
-        address spender
-    ) external view returns (uint256) {
-        allowances[owner][spender];
-        return allowances[owner][spender];
-    }
-
-    function approve(address spender, uint256 amount) external returns (bool) {
-        allowances[msg.sender][spender] = amount;
-        emit Approval(msg.sender, spender, amount);
+    function approve(address _spender, uint256 _value) public returns (bool) {
+        allowance[msg.sender][_spender] = _value;
+        emit Approval(msg.sender, _spender, _value);
         return true;
     }
 
-    function transferFrom(
-        address sender,
-        address recipient,
-        uint256 amount
-    ) external returns (bool) {
-        require(balances[sender] >= amount, "Insufficient balance");
-        require(allowances[sender][msg.sender] >= amount, "Allowance exceeded");
+    function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {
+        require(balanceOf[_from] >= _value, "Not enough balance");
+        require(allowance[_from][msg.sender] >= _value, "Allowance too low");
 
-        balances[sender] -= amount;
-        balances[recipient] += amount;
-        allowances[sender][msg.sender] -= amount;
-
-        emit Transfer(sender, recipient, amount);
+        allowance[_from][msg.sender] -= _value;
+        _transfer(_from, _to, _value);
         return true;
     }
 
-    function burn(uint amount) public {
-        require(balances[msg.sender] >= amount, "Not enough tokens to burn");
-        balances[msg.sender] -= amount;
-        initial_Supply -= amount;
-        emit Transfer(msg.sender, address(0), amount);
+    function _transfer(address _from, address _to, uint256 _value) internal {
+        require(_to != address(0), "Invalid address");
+        balanceOf[_from] -= _value;
+        balanceOf[_to] += _value;
+        emit Transfer(_from, _to, _value);
     }
 }
+
