@@ -10,7 +10,7 @@ contract ScientificCalculator{
     }
 
     function squareRoot(int256 number)public pure returns(int256){
-        require(number >= 0, "Can't calculate square root of negative numbers");
+        require(number >= 0, "Can't calculate square root of negative number");
         if(number == 0)return 0;
 
         int256 result = number/2;

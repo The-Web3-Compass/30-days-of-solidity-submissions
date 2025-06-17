@@ -5,7 +5,7 @@ import "./SubscriptionStorageLayout.sol";
 
 contract SubscriptionStorage is SubscriptionStorageLayout {
     modifier onlyOwner() {
-        require(msg.sender == owner, "Not owner");
+        require(msg.sender == owner, "Not Owner");
         _;
     }
 
