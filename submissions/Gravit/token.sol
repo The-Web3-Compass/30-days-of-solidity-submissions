@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-contract BasicToken {
+contract SimpleERC20 {
     string public tokenName = "SimpleToken";
     string public tokenSymbol = "SIM";
     uint8 public tokenDecimals = 18;
