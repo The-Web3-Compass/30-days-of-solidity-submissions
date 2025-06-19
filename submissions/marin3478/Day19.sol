@@ -72,6 +72,7 @@ contract eventEntry {
             v += 27;
         }
 
+
         require(v == 27 || v == 28, "Invalid signature 'v' value");
 
         return ecrecover(_ethSignedMessageHash, v, r, s);
