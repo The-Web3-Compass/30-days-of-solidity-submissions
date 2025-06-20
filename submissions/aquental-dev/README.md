@@ -29,7 +29,7 @@
 - [<span style="color: rgb(120 53 15);">day 17</span>](./day17/README.md)
 - [<span style="color: rgb(120 53 15);">day 18</span>](./day18/README.md)
 - [<span style="color: rgb(120 53 15);">day 19</span>](./day19/README.md)
-- <span style="color: rgb(120 53 15);">day 20</span>
+- [<span style="color: rgb(120 53 15);">day 20</span>](./day20/README.md)
 
 ### <span style="color: rgb(136 19 55);">Ream-world</span>
 
