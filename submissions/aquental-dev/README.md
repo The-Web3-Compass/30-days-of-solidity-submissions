@@ -33,7 +33,7 @@
 
 ### <span style="color: rgb(136 19 55);">Ream-world</span>
 
-- <span style="color: rgb(136 19 55);">day 21</span>
+- [<span style="color: rgb(136 19 55);">day 21</span>](./day21/README.md)
 - <span style="color: rgb(136 19 55);">day 22</span>
 - <span style="color: rgb(136 19 55);">day 23</span>
 - <span style="color: rgb(136 19 55);">day 24</span>
