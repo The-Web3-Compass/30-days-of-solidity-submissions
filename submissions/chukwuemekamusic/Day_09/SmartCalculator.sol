@@ -14,6 +14,8 @@ interface IMathLibrary { // using the contract
 
 contract SmartCalculator {
     error SmartCalculator_InvalidOperation();
+    error SmartCalculator_UnAuthorized();
+
     bytes32 private constant ADD_HASH = keccak256(bytes("add"));
     bytes32 private constant POWER_HASH = keccak256(bytes("power"));
     bytes32 private constant MUL_HASH = keccak256(bytes("mul"));
@@ -33,7 +35,7 @@ contract SmartCalculator {
     }
 
     modifier onlyOwner() {
-        require(msg.sender == owner, "Not owner");
+        if (msg.sender != owner) revert SmartCalculator_UnAuthorized();
         _;
     }
 
@@ -85,7 +87,10 @@ contract SmartCalculator {
         emit CalculationPerformed(operation, a, b, result);
         return result;
 
+    }
 
+    function getOwner() public view returns(address) {
+        return owner;
     }
     
 }
