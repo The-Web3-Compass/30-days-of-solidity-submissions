@@ -35,7 +35,7 @@
 
 - [<span style="color: rgb(136 19 55);">day 21</span>](./day21/README.md)
 - [<span style="color: rgb(136 19 55);">day 22</span>](./day22/README.md)
-- <span style="color: rgb(136 19 55);">day 23</span>
+- [<span style="color: rgb(136 19 55);">day 23</span>](./day23/README.md)
 - <span style="color: rgb(136 19 55);">day 24</span>
 - <span style="color: rgb(136 19 55);">day 25</span>
 - <span style="color: rgb(136 19 55);">day 26</span>

@@ -41,5 +41,5 @@ Admin Address `0xc2572e65d61afa5dd6bcfac57305bb59ebd9a54e`
 ## game
 
 1- startLottery
-2- 
+2-
 3- endLottery
