@@ -1,7 +1,7 @@
 pragma solidity ^0.8.0;
 contract WeaponStorePlugin {
 
-    mapping(string => address) public equippedWeapon;
+    mapping(address => string) public equippedWeapon;
 
     function setWeapon(address user, string memory weapon) public {
         equippedWeapon[user] = weapon;
