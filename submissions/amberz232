@@ -1,0 +1,6 @@
+cd 30-days-of-solidity-submissions
+rm -r submissions/amberz232
+git add .
+git commit -m "Delete folder amberz232"
+git push origin main
+mkdir -p submissions/amberz232
