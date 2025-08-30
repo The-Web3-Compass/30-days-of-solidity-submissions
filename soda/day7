@@ -1,0 +1,42 @@
+//SPDX-License-Identifier:MIT
+
+pragma solidity^0.8.0;
+
+contract SimpleIOU{
+
+    address public owner;
+    mapping(address => bool) public registeredFriends;
+    address public friendList;
+    mapping(address =>uint256) public balances;
+    mapping(address => mapping(address => uint256)) public debts;
+
+    constructor(){
+        owner =msg.sender;
+        registeredFriends[msg.sender] =true;
+        friendList;msg.sender;
+    }
+
+    modifier onlyOwner(){
+        require (msg.sender ==owner,"Only the owner can call this function");
+        _;
+    }
+
+    modifier onlyRegistered(){
+        require(registeredFriends[msg.sender],"You are not registered");
+        _;
+    }
+
+    function addFriend(address _friend) public onlyOwner{
+        require(_friend !=address(0),"Invalid address");
+        require(!registeredFriends[_friend],"Already address as a friend");
+        registeredFriends[_friend]=true;
+        friendList;_friend;
+    }
+
+    function depositIntoWallet() public onlyRegistered{
+        require(msg.value > 0,"Must enter a valid amount");
+        balances[msg.sender] += msg.value;
+    }
+
+
+}
