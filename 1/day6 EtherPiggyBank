@@ -1,0 +1,54 @@
+//SPDX-License-Identifier: MIT
+
+pragma solidity ^0.8.0;
+
+contract EtherPiggyBank{
+
+    address public BankManager;
+    address[] Members;
+    mapping(address => bool) public RegisteredMembers;
+    mapping(address => uint256) Balance;
+
+    constructor(){
+        BankManager = msg.sender;
+        Members.push(msg.sender);
+    }
+
+    modifier OnlyBankManager(){
+        require(msg.sender == BankManager, "Only bank manager can perform this action");
+        _;
+    }
+
+    modifier OnlyRegisteredMember() {
+        require(RegisteredMembers[msg.sender], "Member not registered");
+        _;
+    }
+  
+    function AddMembers(address _member)public OnlyBankManager{
+        require(_member != address(0), "Invalid address");
+        require(_member != msg.sender, "Bank Manager is already a member");
+        require(!RegisteredMembers[_member], "Member already registered");
+        RegisteredMembers[_member] = true;
+        Members.push(_member);
+    }
+
+    function GetMembers() public view returns(address[] memory){
+        return Members;
+    }
+
+    function DepositAmountEther() public payable OnlyRegisteredMember{  
+        require(msg.value > 0, "Invalid amount");
+        Balance[msg.sender] = Balance[msg.sender]+msg.value;
+    }
+    
+    function WithdrawAmount(uint256 _amount) public OnlyRegisteredMember{
+        require(_amount > 0, "Invalid amount");
+        require(Balance[msg.sender] >= _amount, "Insufficient balance");
+        Balance[msg.sender] = Balance[msg.sender]-_amount;
+    }
+
+    function GetBalance(address _member) public view returns (uint256){
+        require(_member != address(0), "Invalid address");
+        return Balance[_member];
+    } 
+}
