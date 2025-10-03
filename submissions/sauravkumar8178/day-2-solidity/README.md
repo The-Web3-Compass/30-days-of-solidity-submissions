@@ -1,7 +1,3 @@
-Got it ✅ Here’s a **professional and simple README** for your **Day 2 of Solidity Challenge**.
-
----
-
 # Day 2 – Solidity Challenge 🚀
 
 ## 📌 Task: Enhanced User Profile Smart Contract
