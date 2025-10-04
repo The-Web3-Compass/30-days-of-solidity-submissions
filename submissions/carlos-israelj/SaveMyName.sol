@@ -4,7 +4,7 @@ pragma solidity ^0.8.26;
 
 /**
  * @title SaveMyName
- * @author [Your Name]
+ * @author Carlos I Jimenez
  * @notice A simple contract for storing a user's name and bio
  * @dev Allows a single user to save and retrieve their profile information
  */

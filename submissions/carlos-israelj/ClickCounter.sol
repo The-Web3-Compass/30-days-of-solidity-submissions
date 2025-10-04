@@ -4,7 +4,7 @@ pragma solidity ^0.8.26;
 
 /**
  * @title ClickCounter
- * @author Carlos Israel Jimenez
+ * @author Carlos I Jimenez
  * @notice A simple counter contract for educational purposes
  * @dev Implements basic counter functionality with increment, decrement, and reset operations
  */
