@@ -13,6 +13,6 @@ contract MyProfile {
     }
 
     function Retrieve() public view returns (string memory, string memory) {
-        return (name, bio); // Returning both name and bioname)
+        return (name, bio); // Returning both name and bioname
 }
 }
