@@ -1,0 +1,13 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+remapping = [
+    "@openzeppelin/=lib/openzeppelin-contracts",
+    "@forge-std/=lib/forge-std/src/"
+]
+
+[rpc_endpoints]
+injectiveEvm = "https://k8s.testnet.json-rpc.injective.network/"
+
+# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
