@@ -1,1 +1,45 @@
- 
+ //SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+import "@openzeppelin/contracts/access/Ownable.sol";
+interface ICalculator {
+    function add(uint256 a,uint256 b) external pure returns (uint256);
+    function sub(uint256 a,uint256 b) external pure returns (uint256);
+    function mul(uint256 a,uint256 b) external pure returns (uint256);
+    function div(uint256 a,uint256 b) external pure returns (uint256);
+}
+contract Calculator is ICalculator {
+    function add(uint256 a,uint256 b) external pure returns (uint256){return a + b;}
+    function sub(uint256 a,uint256 b) external pure returns (uint256){return a - b;}
+    function mul(uint256 a,uint256 b) external pure returns (uint256){return a * b;}
+    function div(uint256 a,uint256 b) external pure returns (uint256){require(b != 0);return a / b;}
+}
+contract SmartCalculator is Ownable {
+    address public calculator;
+    event CalculatorUpdated(address indexed oldAddr, address indexed newAddr);
+    constructor(address _calculator) {calculator = _calculator;}
+    function setCalculator(address _calculator) external onlyOwner {
+        emit CalculatorUpdated(calculator, _calculator);
+        calculator = _calculator;
+    }
+    function add(uint256 a, uint256 b) external view returns (uint256) {
+        ICalculator calc = ICalculator(calculator);
+        return calc.add(a, b);
+    }
+    function sub(uint256 a, uint256 b) external view returns (uint256) {
+        return ICalculator(calculator).sub(a, b);
+    }
+    function mul(uint256 a, uint256 b) external view returns (uint256) {
+        return ICalculator(calculator).mul(a, b);
+    }
+    function div(uint256 a, uint256 b) external view returns (uint256) {
+        return ICalculator(calculator).div(a, b);
+    }
+    function tryLowLevelMul(uint256 a, uint256 b) external returns (bool, uint256) {
+        bytes memory data = abi.encodeWithSelector(ICalculator.mul.selector, a, b);
+        (bool success, bytes memory ret) = address(calculator).call(data);
+        if (!success) return (false, 0);
+        uint256 result = abi.decode(ret, (uint256));
+        return (true, result);
+    }
+}
