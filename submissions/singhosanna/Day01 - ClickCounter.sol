@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract clickcounter {
+contract ClickCounter {
 
     uint256 public counter;
 
@@ -11,5 +11,10 @@ contract clickcounter {
 
     function reset() public {
         counter = 0;
+    }
+
+    function decrement() public {
+        require(counter > 0, "Counter can't be negative");
+        counter--;
     }
 }
