@@ -17,3 +17,4 @@ contract SaveMyInformation {
         return (name,bio,age,job);
     }
 }
+
