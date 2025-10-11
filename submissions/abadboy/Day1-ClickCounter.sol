@@ -8,4 +8,8 @@ contract ClickCounter {
         counter++;
      }
 
+     function unclick() public {
+        counter--;
+     }
+
 }
