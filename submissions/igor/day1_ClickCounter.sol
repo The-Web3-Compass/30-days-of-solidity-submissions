@@ -13,3 +13,4 @@ contract ClickCounter{
     }
 
 }
+
