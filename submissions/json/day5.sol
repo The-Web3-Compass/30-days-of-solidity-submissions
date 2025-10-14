@@ -40,7 +40,6 @@ contract AdminOnly {
 
         // 1. 当前合约宝藏有额度
         // 2. 提取金额小于宝藏额度
-        // 3. 宝藏额度小于总额度
         require(allowance > 0 
                 && amount <= allowance, "You don't have enough allowance");
 
