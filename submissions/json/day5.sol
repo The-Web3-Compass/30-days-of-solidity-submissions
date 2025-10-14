@@ -42,8 +42,7 @@ contract AdminOnly {
         // 2. 提取金额小于宝藏额度
         // 3. 宝藏额度小于总额度
         require(allowance > 0 
-                && amount <= allowance
-                && allowance <= treasureAmount, "You don't have enough allowance");
+                && amount <= allowance, "You don't have enough allowance");
 
         treasureAmount -= amount;
         withdrawalAllowance[msg.sender] -= amount;
