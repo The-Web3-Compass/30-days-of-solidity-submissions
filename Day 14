@@ -1,0 +1,164 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+interface IDepositBox {
+    function deposit(bytes32 secretHash) external;
+    function readSecretHash() external view returns (bytes32);
+    function transferBoxOwnership(address newOwner) external;
+    function owner() external view returns (address);
+    function boxType() external pure returns (string memory);
+}
+
+abstract contract DepositBox is IDepositBox {
+    address private _owner;
+    uint8 private _status;
+    uint8 private constant _NOT_ENTERED = 1;
+    uint8 private constant _ENTERED = 2;
+
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+
+    constructor(address initialOwner) {
+        require(initialOwner != address(0), "owner zero");
+        _owner = initialOwner;
+        _status = _NOT_ENTERED;
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == _owner, "only owner");
+        _;
+    }
+
+    modifier nonReentrant() {
+        require(_status != _ENTERED, "reentrant");
+        _status = _ENTERED;
+        _;
+        _status = _NOT_ENTERED;
+    }
+
+    function owner() public view virtual returns (address) {
+        return _owner;
+    }
+
+    function transferBoxOwnership(address newOwner) public virtual onlyOwner {
+        require(newOwner != address(0), "new owner zero");
+        address old = _owner;
+        _owner = newOwner;
+        emit OwnershipTransferred(old, newOwner);
+    }
+}
+
+contract BasicDepositBox is DepositBox {
+    bytes32 private _secretHash;
+
+    event SecretDeposited(address indexed depositor, bytes32 secretHash);
+    event SecretCleared(address indexed caller);
+
+    constructor(address initialOwner) DepositBox(initialOwner) {}
+
+    function deposit(bytes32 secretHash) external override nonReentrant {
+        _secretHash = secretHash;
+        emit SecretDeposited(msg.sender, secretHash);
+    }
+
+    function readSecretHash() external view override returns (bytes32) {
+        require(msg.sender == owner(), "not owner");
+        return _secretHash;
+    }
+
+    function clearSecret() external onlyOwner nonReentrant {
+        _secretHash = 0;
+        emit SecretCleared(msg.sender);
+    }
+
+    function boxType() external pure override returns (string memory) {
+        return "BASIC";
+    }
+}
+
+contract TimeLockedDepositBox is DepositBox {
+    bytes32 private _secretHash;
+    uint256 public unlockTimestamp;
+
+    event SecretDeposited(address indexed depositor, bytes32 secretHash, uint256 unlockTimestamp);
+
+    constructor(address initialOwner, uint256 _unlockTimestamp) DepositBox(initialOwner) {
+        require(_unlockTimestamp > block.timestamp, "unlock must be future");
+        unlockTimestamp = _unlockTimestamp;
+    }
+
+    function deposit(bytes32 secretHash) external override nonReentrant {
+        _secretHash = secretHash;
+        emit SecretDeposited(msg.sender, secretHash, unlockTimestamp);
+    }
+
+    function readSecretHash() external view override returns (bytes32) {
+        require(msg.sender == owner(), "not owner");
+        require(block.timestamp >= unlockTimestamp, "locked");
+        return _secretHash;
+    }
+
+    function extendLock(uint256 newUnlockTimestamp) external onlyOwner {
+        require(newUnlockTimestamp > unlockTimestamp, "must extend");
+        unlockTimestamp = newUnlockTimestamp;
+    }
+
+    function boxType() external pure override returns (string memory) {
+        return "TIMELOCKED";
+    }
+}
+
+contract VaultManager {
+    mapping(address => bool) public isBox;
+    address[] public allBoxes;
+
+    event BoxRegistered(address indexed box);
+    event BoxDeregistered(address indexed box);
+    event ForwardedDeposit(address indexed box, address indexed caller, bytes32 secretHash);
+    event ForwardedTransfer(address indexed box, address indexed oldOwner, address indexed newOwner);
+
+    modifier onlyIfBox(address box) {
+        require(isBox[box], "not a registered box");
+        _;
+    }
+
+    function registerBox(address box) external {
+        require(box != address(0), "zero");
+        require(!isBox[box], "already registered");
+        address boxOwner = IDepositBox(box).owner();
+        require(boxOwner != address(0), "invalid box owner");
+        isBox[box] = true;
+        allBoxes.push(box);
+        emit BoxRegistered(box);
+    }
+
+    function deregisterBox(address box) external onlyIfBox(box) {
+        isBox[box] = false;
+        for (uint i = 0; i < allBoxes.length; ++i) {
+            if (allBoxes[i] == box) {
+                allBoxes[i] = allBoxes[allBoxes.length - 1];
+                allBoxes.pop();
+                break;
+            }
+        }
+        emit BoxDeregistered(box);
+    }
+
+    function forwardDeposit(address box, bytes32 secretHash) external onlyIfBox(box) {
+        IDepositBox(box).deposit(secretHash);
+        emit ForwardedDeposit(box, msg.sender, secretHash);
+    }
+
+    function transferBoxOwnership(address box, address newOwner) external onlyIfBox(box) {
+        address oldOwner = IDepositBox(box).owner();
+        IDepositBox(box).transferBoxOwnership(newOwner);
+        emit ForwardedTransfer(box, oldOwner, newOwner);
+    }
+
+    function readSecretHash(address box) external view onlyIfBox(box) returns (bytes32) {
+        return IDepositBox(box).readSecretHash();
+    }
+
+    function countBoxes() external view returns (uint256) {
+        return allBoxes.length;
+    }
+}
