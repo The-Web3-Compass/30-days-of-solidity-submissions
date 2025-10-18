@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.20;
 
 interface IDepositBox {
     function getOwner() external view returns (address);
@@ -8,5 +8,4 @@ interface IDepositBox {
     function getSecret() external view returns (string memory);
     function getBoxType() external pure returns (string memory);
     function getDepositTime() external view returns (uint256);
-    
-} 
+}
