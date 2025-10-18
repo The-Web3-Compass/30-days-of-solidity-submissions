@@ -88,7 +88,7 @@ contract SimpleIOU {
     }
 
     function withdraw(uint256 _amount) public onlyRegistered {
-        require(friendToBalance[msg.sender] > _amount, "Insufficient balance");
+        require(friendToBalance[msg.sender] >= _amount, "Insufficient balance");
 
         friendToBalance[msg.sender] -= _amount;
         (bool success,) = payable(msg.sender).call{value: _amount}("");
