@@ -44,6 +44,7 @@ contract Calculator{
         uint256 result = scientificCalc.power(base,exponent);
         return result;
     }
+    
     //低级调用，不导入其他源码的情况下
     function calculateSquareRoot(uint256 number) public returns (uint256){
         require(number>=0,"Cannot calculate square root of negative number");
