@@ -1,0 +1,124 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+//VRFConsumerBaseV2Plus是一个合约，需要继承使用（继承该合约为了使用“可验证随机函数”功能）
+import {VRFConsumerBaseV2Plus} from "@chainlink/contracts/src/v0.8/vrf/dev/VRFConsumerBaseV2Plus.sol";
+// {VRFConsumerBaseV2Plus}：花括号表示“只引入”该文件中的 VRFConsumerBaseV2Plus 合约（或库）。
+//from：表示从哪一个路径中导入。
+
+//VRFV2PlusClient是一个库，需要引入使用（用于构造随机数请求）
+import {VRFV2PlusClient} from "@chainlink/contracts/src/v0.8/vrf/dev/libraries/VRFV2PlusClient.sol";
+//libraries：表示导入的是一个“库（library）”，不是合约。
+//📌 注意：像这种写法 VRFV2PlusClient.X 属于“库名.函数或结构体名”，这就是 library 的典型调用方式。
+
+
+//奖池玩法：合约奖金来自玩家付的入场费，不用额外存钱函数。中奖者领取全部合约余额作为奖金。
+contract FairChainLottery is VRFConsumerBaseV2Plus { //is是继承的写法，引用的库不需要在此出现
+    //enum是一种枚举类型，用于定义一组固定的可选值，像选项菜单。（类比：struct是一种结构类型，用来定义一组多类型的变量）
+    //为抽奖定义开放、关闭、计算赢家三种状态
+    enum LOTTERY_STATE { OPEN, CLOSED, CALCULATING } //语法结构：enum 自定义的枚举名字 {自定义的状态名称} //状态名称用逗号隔开，理论上最多可以定义256个状态，但为了避免逻辑混乱，现实中一般最多不超过5~10个
+    LOTTERY_STATE public lotteryState;//声明一个LOTTERY_STATE枚举类型的变量，叫lotteryState，用来记录储存抽奖的当前状态
+    address payable[] public players; //声明玩家地址数组变量，payable化确保玩家都能支付以太币参与抽奖
+    address public recentWinner;  //声明最近中奖者的地址变量
+    uint256 public entryFee; //声明数值变量来储存参与抽奖需要的费用
+
+    // Chainlink VRF 配置变量，用于在调用外合约或外库的函数或结构体时作为参数变量传入
+    //这些变量的名称是官方文档的规范性名称，使用时最好复制粘贴
+    uint256 public subscriptionId;  //用于VRFV2PlusClient库的RandomWordsRequest结构体，匹配subId 字段，存储Chainlink VRF 订阅账户的编号 
+    //表示你已向 Chainlink 支付费用，有权限使用 VRF 服务
+    bytes32 public keyHash;      //用于VRFV2PlusClient库的RandomWordsRequest结构体，匹配keyHash字段，存储指定使用的 Chainlink 节点标识（公钥摘要）
+    //指定使用哪组 Chainlink 节点的公钥来生成随机数，确保来源可信
+    uint32 public callbackGasLimit = 100000;  //用于VRFV2PlusClient库的RandomWordsRequest结构体，匹配callbackGasLimit字段，存储Chainlink 回调时最多允许消耗的 gas 量
+    //限制 Chainlink 回调 fulfill 函数时可用的 gas，避免回调失败或滥用
+    uint16 public requestConfirmations = 3;  //用于VRFV2PlusClient库的RandomWordsRequest结构体，匹配requestConfirmations字段，存储请求随机数前需等待的区块确认数（安全性）
+    //增加区块确认数，提高随机数结果的安全性，防止攻击
+    uint32 public numWords = 1;  //用于VRFV2PlusClient库的RandomWordsRequest结构体，匹配numWords字段，存储请求生成的随机数数量
+    //指定需要几个随机数，便于一次请求满足多用途
+    uint256 public latestRequestId;  //用于VRFConsumerBaseV2Plus合约的requestRandomWords() 函数，储存返回值：最近一次随机数请求的编号（用于记录追踪
+    //跟踪请求状态或验证回调是否已执行
+    
+    
+    //初始化：手动输入赋值
+    //子合约的构造函数带有参数且继承了父合约的构造函数，父合约的构造函数也有参数
+    constructor(
+        address vrfCoordinator, //vrfCoordinator是Chainlink VRF 协调器的地址，在子合约构造函数的参数列表中传值传给父合约的构造函数的参数，告诉父合约 VRFConsumerBaseV2Plus 你将使用哪个节点服务。
+        uint256 _subscriptionId, // Chainlink 订阅编号（预付费池 ID）
+        bytes32 _keyHash, //指定使用哪个 Chainlink 节点
+        uint256 _entryFee //设置进入抽奖所需支付的 ETH 金额
+    ) VRFConsumerBaseV2Plus(vrfCoordinator) {  //VRFConsumerBaseV2Plus(vrfCoordinator)是父合约的构造函数，参数由子合约中构造函数的参数传来
+        //子合约构造函数的执行逻辑：将接收到的参数值写入到本合约中的状态变量。
+        subscriptionId = _subscriptionId; 
+        keyHash = _keyHash;
+        entryFee = _entryFee;
+        lotteryState = LOTTERY_STATE.CLOSED;//将抽奖状态设置为关闭，语法结构：枚举自定义变量名=枚举类型名.状态名
+        /*Solidity 中的 enum 实际上是用 uint8 存储的，它最多可以存储 256 种不同的状态（从 0 到 255），编译器会自动按你写的状态顺序，把第一个成员标记为 0，第二个为 1，第三个为 2，依此类推。*/
+    }
+
+
+    //在抽奖开放状态下，允许任何用户发送 ETH 来参与抽奖
+    function enter() public payable {  //用户给合约地址转钱
+        require(lotteryState == LOTTERY_STATE.OPEN, "Lottery not open"); //需要当前抽奖状态为开放
+        require(msg.value >= entryFee, "Not enough ETH"); //实际付出金额应至少要等于应付的entryFee金额，可以多付是为了避免因严格精度造成交易失败
+        players.push(payable(msg.sender)); //将已付款成功的用户地址进行payable化并推入玩家列表，方便后续进行随机抽奖
+    }
+    
+
+
+    //管理者操作抽奖状态为开放
+    function startLottery() external onlyOwner {
+        require(lotteryState == LOTTERY_STATE.CLOSED, "Can't start yet"); //须满足当前抽奖状态是关闭状态
+        lotteryState = LOTTERY_STATE.OPEN;  //将抽奖状态设置为开放，即允许玩家参与
+    }
+
+
+    //管理者请求随机数生成
+    function endLottery() external onlyOwner {
+        require(lotteryState == LOTTERY_STATE.OPEN, "Lottery not open"); //需满足当前抽奖状态为开放
+        lotteryState = LOTTERY_STATE.CALCULATING; //将当前抽奖状态设置为计算赢家中
+
+       //调用VRFV2PlusClient库的RandomWordsRequest类型结构体，给这个结构体各字段赋值
+       //结构体只是一种变量类型，而不是变量本身，不能直接存信息，必须先用这个结构类型声明一个变量再赋值
+        VRFV2PlusClient.RandomWordsRequest memory req = VRFV2PlusClient.RandomWordsRequest({  //给这个结构体自定义声明的变量名为req，并进行赋值。语法格式：  结构体类型 自定义变量名 = 结构体类型({字段1：值1，字段2：值2，...})；
+            keyHash: keyHash,  //使用节点
+            subId: subscriptionId,  //扣费的订阅账户
+            requestConfirmations: requestConfirmations, //确认的区块数量
+            callbackGasLimit: callbackGasLimit, //回调函数的gas消耗限制额
+            numWords: numWords,  //随机数数量
+            //extraArgs是额外参数（这里设置用原生 ETH 支付），这个额外参数的赋值由来：先是调用ExtraArgsV1 结构体的字段值，再调用_argsToBytes(...)函数将字段值编码成bytes类型
+            //“使用原生 ETH”，指的是：用 ETH（而不是 LINK 代币） 直接支付 Chainlink VRF 服务费用。
+            //这样做是为了简化用户操作，让合约无需持有 LINK 代币，只用 ETH 就能调用 VRF，更方便部署和使用。LINK 代币是 Chainlink 网络的原生代币，用于支付其预言机服务（如 VRF、价格喂价等）费用。
+            extraArgs: VRFV2PlusClient._argsToBytes( //调用函数将 true值 编码成bytes类型
+                VRFV2PlusClient.ExtraArgsV1({nativePayment: true}) //设置字段 nativePayment 为 true，表示用原生 ETH 付款
+                
+            )
+        });
+    
+        //记录上一次请求随机数的轮次编号。等号右边是调用了接口函数，将函数返回值赋予latestRequestId
+        latestRequestId = s_vrfCoordinator.requestRandomWords(req); //s_vrfCoordinator是目标合约地址，requestRandomWords（）是一个函数   //（注意区别上文RandomWordsRequest是一个结构体类型）
+    }
+
+
+    
+    //该函数实现的功能：①用随机数决定赢家；②给赢家转账；③重置抽奖状态，结束本轮抽奖
+    //fulfillRandomWords函数由VRFConsumerBaseV2Plus合约继承而来，这里使用override进行改写
+    function fulfillRandomWords(uint256, uint256[] calldata randomWords) internal override {
+        require(lotteryState == LOTTERY_STATE.CALCULATING, "Not ready to pick winner");  //要求当前抽奖状态是计算赢家中
+        //用第一个随机数对玩家数组长度取模，确定中奖者的索引：使用随机数除以玩家总人数再取余（取余的动因：余数不会大于等于被除数，确保索引号会在0~玩家总数-1之间诞生）（注意，数组索引号是从0开始，0则代表第一位玩家，以此类推，所以最后一个玩家的索引号使用  总人数-1  是有道理的）
+        uint256 winnerIndex = randomWords[0] % players.length;//randomWords[0]指第一个随机数， players.length指参与的所有玩家人数
+        address payable winner = players[winnerIndex]; //使用确定的索引号匹配玩家地址并记录登记进winner变量中，对其地址进行payable化，确保赢家能够接收中奖的以太币
+        recentWinner = winner; //将中奖者存入最近中奖者名单
+        //清空玩家列表
+        players = new address payable[](0) ; //new是solidity中的一个固定关键字，用于动态创建一个数组或合约（少见），但是临时存储。语法结构：new 类型 （）//如果创建的是数组类型，括号里填整数表示数组长度，创建合约则填构造函数的参数，没有参数可空着
+        lotteryState = LOTTERY_STATE.CLOSED; //将当前抽奖状态设为关闭
+
+        (bool sent, ) = winner.call{value: address(this).balance}(""); //使用call函数运用合约地址的钱给中奖者转账
+        require(sent, "Failed to send ETH to winner"); //返回转账是否成功信息
+    }
+
+
+   //获取玩家列表
+    function getPlayers() external view returns (address payable[] memory) {
+        return players;
+    }
+}
+

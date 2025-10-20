@@ -1,0 +1,118 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+//此合约是一个简易的借贷平台，在真实的借贷中抵押物和借出资产并非同一种，这里为了教学简化成都是以太币
+//以及给合约存入以太币的人称为流动性提供者，给合约提供借出资产，流动性提供者和借贷者一般并非同一角色
+contract SimpleLending {
+    mapping(address => uint256) public depositBalances; //流动性提供者地址对应存款余额
+    mapping(address => uint256) public borrowBalances;  //借贷者地址对应借款金额
+    mapping(address => uint256) public collateralBalances;  //借贷者地址对应抵押物数量
+    uint256 public interestRateBasisPoints = 500;  //用基点表示的年利率，赋值500，即5%
+    uint256 public collateralFactorBasisPoints = 7500;  //抵押系数，赋值7500，即75%，意思是你借出金额的最大占比，如抵押物价值1ETH，那么你最多能借0.75ETH
+    //抵押率的计算公式：借款金额（含息）/抵押物数量
+    mapping(address => uint256) public lastInterestAccrualTimestamp;  //用户地址对应上一次计算利息的时间戳
+    event Deposit(address indexed user, uint256 amount); //记录用户存款事件
+    event Withdraw(address indexed user, uint256 amount); //记录用户提款事件
+    event Borrow(address indexed user, uint256 amount); //记录用户借出资金事件
+    event Repay(address indexed user, uint256 amount); //记录用户归还借款或利息事件
+    event CollateralDeposited(address indexed user, uint256 amount); //记录用户存入抵押物事件
+    event CollateralWithdrawn(address indexed user, uint256 amount); //记录用户取回抵押物事件
+
+
+    //流动性提供者向合约存入以太币
+    function deposit() external payable {
+        require(msg.value > 0, "Must deposit a positive amount"); //存入金额需＞0
+        depositBalances[msg.sender] += msg.value; //流动性提供者的账面余额增加
+        emit Deposit(msg.sender, msg.value); //触发存款事件
+    }
+
+
+    //流动性提供者提取存入合约中的以太币
+    function withdraw(uint256 amount) external {
+        require(amount > 0, "Must withdraw a positive amount");  //提取金额＞0
+        require(depositBalances[msg.sender] >= amount, "Insufficient balance"); //确保账单余额有足够的提取金额
+        depositBalances[msg.sender] -= amount; //更改账单余额状态：-
+        payable(msg.sender).transfer(amount); //合约地址向流动性提供者发送以太币
+        emit Withdraw(msg.sender, amount); //触发提取以太币事件
+    }
+
+
+    //借贷者存入抵押物
+    function depositCollateral() external payable {
+        require(msg.value > 0, "Must deposit a positive amount as collateral");  //存入价值＞0
+        collateralBalances[msg.sender] += msg.value;  //抵押物账面余额增加 
+        emit CollateralDeposited(msg.sender, msg.value); //触发存入抵押物事件
+    }
+
+
+    //借贷者提取抵押物
+    function withdrawCollateral(uint256 amount) external {
+        require(amount > 0, "Must withdraw a positive amount");  //提取金额＞0
+        require(collateralBalances[msg.sender] >= amount, "Insufficient collateral"); //确保抵押物账面余额有足够的提取金额
+        uint256 borrowedAmount = calculateInterestAccrued(msg.sender);  //调用内部函数计算当前借款金额（包括利息）
+        uint256 requiredCollateral = (borrowedAmount * 10000) / collateralFactorBasisPoints; //计算提取后，所需的最低抵押物数量：所需抵押= 借款额（含息）×10000 / 抵押率（基点） 
+        require(
+            collateralBalances[msg.sender] - amount >= requiredCollateral, //检查所剩抵押物是否高于或等于所需最低抵押物数量
+            "Withdrawal would break collateral ratio"
+        );
+        collateralBalances[msg.sender] -= amount; //更新抵押物账面余额
+        payable(msg.sender).transfer(amount); //向借贷者发送抵押物
+        emit CollateralWithdrawn(msg.sender, amount);  //触发提取抵押物事件
+    }
+
+
+    //借贷者进行借款
+    function borrow(uint256 amount) external {
+        require(amount > 0, "Must borrow a positive amount");  //借款金额要大于0
+        require(address(this).balance >= amount, "Not enough liquidity in the pool");  //流动池中要有足够金额让借
+        uint256 maxBorrowAmount = (collateralBalances[msg.sender] * collateralFactorBasisPoints) / 10000;  //计算允许借款最大额度
+        uint256 currentDebt = calculateInterestAccrued(msg.sender); //调用内部函数计算当前已借金额
+        require(currentDebt + amount <= maxBorrowAmount, "Exceeds allowed borrow amount"); //已借金额+想借金额不得超过允许借款的最大额度
+        borrowBalances[msg.sender] = currentDebt + amount; //借款的账面余额变更
+        lastInterestAccrualTimestamp[msg.sender] = block.timestamp; //更新上一次计算利息的时间戳
+        payable(msg.sender).transfer(amount); //发送借款金额
+        emit Borrow(msg.sender, amount); //触发借款事件
+    }
+
+
+    //借贷者进行还款
+    function repay() external payable {
+        require(msg.value > 0, "Must repay a positive amount"); //还款金额＞0
+        uint256 currentDebt = calculateInterestAccrued(msg.sender); //查询当前借款的账面余额
+        require(currentDebt > 0, "No debt to repay"); //借款余额需大于0：有钱要还
+        uint256 amountToRepay = msg.value; //记录实际还款金额
+        if (amountToRepay > currentDebt) { //若实际还款金额大于当前应还金额
+            amountToRepay = currentDebt;  //更新实际还款金额与应还金额一致
+            payable(msg.sender).transfer(msg.value - currentDebt); //退回多还的金额
+        }
+        borrowBalances[msg.sender] = currentDebt - amountToRepay;  //更新借款账面余额状态
+        lastInterestAccrualTimestamp[msg.sender] = block.timestamp; //更新上一次计算利息的时间戳
+        emit Repay(msg.sender, amountToRepay);  //触发还款事件
+    }
+
+
+
+    //计算并返回当前借款金额
+    function calculateInterestAccrued(address user) public view returns (uint256) {
+        if (borrowBalances[user] == 0) { //若当前借款金额为零
+            return 0; //直接返回0
+        }
+        uint256 timeElapsed = block.timestamp - lastInterestAccrualTimestamp[user]; //计算上一次计算利息的时间戳与当前时间戳的间隔时间
+        uint256 interest = (borrowBalances[user] * interestRateBasisPoints * timeElapsed) / (10000 * 365 days); //计算自上次借款/还款以来累积的利息：（借款金额×年利率×时间间隔） / （10000×365×86400） //365 days == 365 * 24 * 60 * 60 == 31,536,000 秒
+        //在 Solidity 中，像 days、hours、minutes 这些时间单位是编译器内置的单位转换语法糖，可以直接用于时间表达，会自动计算成秒
+        //年利率指的是每年借多少钱要换多少钱，所以利息要除以秒数来拆分每秒要还的利息
+        return borrowBalances[user] + interest; //返回借款总额：上次更新的金额+新增加的利息
+    }
+
+
+
+    //查询允许借款的最大额度
+    function getMaxBorrowAmount(address user) external view returns (uint256) {
+        return (collateralBalances[user] * collateralFactorBasisPoints) / 10000; //计算公式：抵押物数量*抵押率/10000
+    }
+
+
+    //查询流动性总量，即当前合约地址中的以太币总额
+    function getTotalLiquidity() external view returns (uint256) {
+        return address(this).balance;
+    }
+}

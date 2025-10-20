@@ -1,0 +1,169 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+//IERC20.sol：导入 ERC20标准接口，用来与代币合约交互（例如转账、查询余额等）。
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+//ReentrancyGuard.sol：导入 防重入攻击模块（合约），用来保护转账函数不被反复调用。
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+//SafeCast.sol：导入 类型安全转换库，保证数值转换过程不会出错或溢出（虽然本合约暂时没有直接用）
+import "@openzeppelin/contracts/utils/math/SafeCast.sol"; // 先导入以备不时之需
+
+//定义接口且扩展了 ERC20 标准接口，额外声明了三个与代币元数据相关的只读函数。
+interface IERC20Metadata is IERC20 {  //语法格式：interface 自定义接口名字{}。此处继承了外部接口 is IERC20
+    function decimals() external view returns (uint8);  //返回代币的小数位数
+    function name() external view returns (string memory);  //返回代币的名称
+    function symbol() external view returns (string memory);  //返回代币的符号
+}
+
+
+contract YieldFarming is ReentrancyGuard {
+    using SafeCast for uint256;  //将 SafeCast 库中的函数“绑定”到所有 uint256 类型变量上，使该类型变量可以像调用成员函数一样调用库里的函数。
+    //使用IERC20类型声明变量接收强制转换类型后的地址
+    IERC20 public stakingToken;  //质押代币
+    IERC20 public rewardToken;   //发放奖励代币
+
+    uint256 public rewardRatePerSecond; //每秒分发奖励代币的数量
+
+    address public owner;  //管理者地址
+
+    uint8 public stakingTokenDecimals; // 记录质押代币的小数位数
+
+    struct StakerInfo {  //用户数据
+        uint256 stakedAmount; //质押代币数量
+        uint256 rewardDebt;  //累计待领取奖励
+        uint256 lastUpdate;  //上次奖励计算的时间戳
+    }
+
+    mapping(address => StakerInfo) public stakers;  //用户地址对应用户信息
+
+    event Staked(address indexed user, uint256 amount);  //记录用户质押代币事件
+    event Unstaked(address indexed user, uint256 amount); //记录用户赎回代币事件
+    event RewardClaimed(address indexed user, uint256 amount); //记录用户领取奖励代币事件
+    event EmergencyWithdraw(address indexed user, uint256 amount);  //记录用户通过紧急操作取回质押本金事件
+    event RewardRefilled(address indexed owner, uint256 amount);  //记录管理员向奖池补充代币事件
+
+
+    //设置管理员权限
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Not the owner");
+        _;
+    }
+    
+
+    //初始化：
+    constructor(
+        address _stakingToken,  //传入质押代币目标合约地址
+        address _rewardToken,   //传入奖励代币目标合约地址
+        uint256 _rewardRatePerSecond  //传入每秒奖励代币数量
+    ) {
+        stakingToken = IERC20(_stakingToken);
+        rewardToken = IERC20(_rewardToken);
+        rewardRatePerSecond = _rewardRatePerSecond;
+        owner = msg.sender;  //自动部署合约管理员地址
+
+        /*
+        try 表达式 returns (变量类型 变量名) {
+          // 如果调用成功，就执行这里的代码块
+            } catch (异常参数类型 变量名) {
+          // 如果调用失败，就执行这里的代码块
+            }                */
+        
+        //尝试调取函数获取小数位数
+        try IERC20Metadata(_stakingToken).decimals() returns (uint8 decimals) {  //接口名（地址）.目标函数名（）//这里IERC20Metadata接口是本合约自定义的
+            stakingTokenDecimals = decimals;//将返回值小数位数赋值给质押代币小数位数
+        }    
+        catch (bytes memory) {  //bytes memory是错误返回值（但这里没有用上具体值，只是作为语法形式）
+            stakingTokenDecimals = 18; // 如果调用失败，则使用默认值18
+        }
+        //虽然 decimals() 是 ERC20 的推荐扩展函数（由 IERC20Metadata 提供），但它 不是 ERC20 标准的一部分，并不是强制实现的。
+        //使用 try-catch 是为了兼容所有代币，确保即使某些代币没有实现 decimals() 函数，合约也能正常部署并运行。
+    }
+
+    //用户进行质押
+    function stake(uint256 amount) external nonReentrant {
+        require(amount > 0, "Cannot stake 0");  //质押数量需＞0
+        updateRewards(msg.sender); //调用内部函数，更新该用户的待发奖励状态。
+        stakingToken.transferFrom(msg.sender, address(this), amount);  //使用接口调用.transferFrom(...)标准的 ERC20 转账函数向合约地址转账
+        // ⚠️ 此处要求用户提前调用 approve(...) 允许本合约从其钱包转出代币。
+        stakers[msg.sender].stakedAmount += amount;  //更新用户信息stakedAmount字段状态
+        emit Staked(msg.sender, amount);  //触发质押事件
+    }
+
+    //用户取回质押代币
+    function unstake(uint256 amount) external nonReentrant {
+        require(amount > 0, "Cannot unstake 0");  //赎回数量要＞0
+        require(stakers[msg.sender].stakedAmount >= amount, "Not enough staked");  //确保用户有足够的质押金额
+        updateRewards(msg.sender);//调用内部函数，更新该用户的待发奖励状态
+        stakers[msg.sender].stakedAmount -= amount;  //更新用户信息stakedAmount字段状态
+        stakingToken.transfer(msg.sender, amount);  //调用接口函数退回质押代币
+        emit Unstaked(msg.sender, amount);  //触发退回质押代币事件
+    }
+
+
+    //用户发起领取奖励代币动作
+    function claimRewards() external nonReentrant {
+        updateRewards(msg.sender);  //更新奖励，确保最新的应得金额被计算
+        uint256 reward = stakers[msg.sender].rewardDebt;  //读取用户的奖励余额
+        require(reward > 0, "No rewards to claim");  //奖励余额需>0
+        require(rewardToken.balanceOf(address(this)) >= reward, "Insufficient reward token balance"); //调用接口函数读取合约余额，确保合约余额足够支付
+        stakers[msg.sender].rewardDebt = 0;  //清空用户的奖励记录
+        rewardToken.transfer(msg.sender, reward);  //调用接口函数进行转账
+        emit RewardClaimed(msg.sender, reward);  //触发领取奖励事件
+    }
+
+
+    //用户紧急取回质押代币但放弃代币奖励
+    function emergencyWithdraw() external nonReentrant {
+        uint256 amount = stakers[msg.sender].stakedAmount; //读取用户质押金额
+        require(amount > 0, "Nothing staked"); //检查用户是否有质押
+        stakers[msg.sender].stakedAmount = 0; //清除该用户的质押记录
+        stakers[msg.sender].rewardDebt = 0;  //清除该用户的奖励记录
+        stakers[msg.sender].lastUpdate = block.timestamp;  //记录用户上次计算奖励的时间戳
+        stakingToken.transfer(msg.sender, amount);  //转账：仅退回质押代币
+        emit EmergencyWithdraw(msg.sender, amount);  //触发紧急提取质押代币事件
+    }
+
+
+    //管理员补充奖励池
+    function refillRewards(uint256 amount) external onlyOwner {
+        rewardToken.transferFrom(msg.sender, address(this), amount);  //调用接口函数从管理员地址向合约地址输送代币
+        emit RewardRefilled(msg.sender, amount);  //触发补充奖池事件
+    }
+
+ 
+    //更新某个用户的奖励数据，在用户执行质押、领取或退出时调用，确保每次操作前都先结算好当前应得奖励。
+    function updateRewards(address user) internal {
+        StakerInfo storage staker = stakers[user];  //通过映射结构往用户信息结构存储信息并链上储存
+
+        if (staker.stakedAmount > 0) { //假如质押代币数量＞0
+            uint256 timeDiff = block.timestamp - staker.lastUpdate;  //计算从上次更新时间到现在之间的时间差。
+            uint256 rewardMultiplier = 10 ** stakingTokenDecimals;  //将奖励计算标准化，考虑质押代币的小数位数，防止单位不一致。 //rewardMultiplier用来抵消代币小数精度带来的放大效果
+            uint256 pendingReward = (timeDiff * rewardRatePerSecond * staker.stakedAmount) / rewardMultiplier;  //正式计算应得奖励：时间 × 速率 × 质押量 ➗ 精度单位
+            staker.rewardDebt += pendingReward;  //把刚刚算出来的应得奖励，累加进用户当前的奖励余额中。
+        }
+
+        staker.lastUpdate = block.timestamp;  //最后更新该用户的最后更新时间戳，为下一次计算作准备。
+    }
+
+
+
+    //只读查询某个地址当前应得的奖励数量
+    function pendingRewards(address user) external view returns (uint256) {
+        StakerInfo memory staker = stakers[user];  //通过映射结构往用户信息结构存储信息并临时储存
+        uint256 pendingReward = staker.rewardDebt;  //读取用户的当前奖励余额
+        //把新产生的奖励加到之前的 rewardDebt 上，得到“总待领取奖励”
+        if (staker.stakedAmount > 0) {
+            uint256 timeDiff = block.timestamp - staker.lastUpdate;
+            uint256 rewardMultiplier = 10 ** stakingTokenDecimals;
+            pendingReward += (timeDiff * rewardRatePerSecond * staker.stakedAmount) / rewardMultiplier;
+        }
+
+        return pendingReward;  //返回计算好的总奖励
+    }
+
+
+    //查询前质押代币的小数位数
+    function getStakingTokenDecimals() external view returns (uint8) {
+        return stakingTokenDecimals;
+    }
+}
+
