@@ -1,0 +1,118 @@
+//SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract SimpleFitnessTracker {
+    
+    //声明变量
+
+    address public owner;
+    //创建结构储存用户信息：名字、体重、是否注册
+    struct UserProfile {
+        string name;
+        uint256 weight; 
+        bool isRegistered;
+    }
+    //创建结构储存运动信息：运动类型、时长、距离、时间
+    struct WorkoutActivity {
+        string activityType; 
+        uint256 duration;    // in seconds
+        uint256 distance;    // in meters
+        uint256 timestamp;   
+    }
+    //使用mapping结构将相关变量联系到一起
+    mapping(address => UserProfile) public userAddressLinkProfile; //每个用户地址对应一个用户信息结构
+    mapping(address => WorkoutActivity[]) private userAddressLinkworkoutHistory;  //每个用户对应多次用户运动信息(运动信息有多次，所以用数组）
+    mapping(address => uint256) public totalWorkouts; //用户地址对应用户总运动次数
+    mapping(address => uint256) public totalDistance; //用户地址对应用户运动总距离
+    //运用event记录用户事件的发生并做出相应响应，标上indexed的参数可被打上标签方便查找
+    event UserRegistered(address indexed userAddress, string name, uint256 timestamp); //记录用户成功注册
+    event ProfileUpdated(address indexed userAddress, uint256 newWeight, uint256 timestamp); //记录用户体重信息的更新
+    event WorkoutLogged( //记录用户一次运动的完成
+        address indexed userAddress, 
+        string activityType, 
+        uint256 duration, 
+        uint256 distance, 
+        uint256 timestamp
+    );
+    event MilestoneAchieved(address indexed userAddress, string milestone, uint256 timestamp);//记录用户里程碑的达到
+    
+    //初始化
+    constructor() {
+        owner = msg.sender;
+    }
+    
+
+    //设置权限
+    modifier onlyRegistered() {
+        require(userAddressLinkProfile[msg.sender].isRegistered, "User not registered");
+        _;
+    }
+    
+    // 注册新用户
+    function registerUser(string memory _name, uint256 _weight) public {
+        require(!userAddressLinkProfile[msg.sender].isRegistered, "User already registered");
+        //往用户信息结构存入信息（？🎈语法结构）
+        userAddressLinkProfile[msg.sender] = UserProfile({
+            name: _name,
+            weight: _weight,
+            isRegistered: true
+        });
+        // 触发注册事件响应
+        emit UserRegistered(msg.sender, _name, block.timestamp);
+    }
+    
+    //更新用户信息：体重
+    function updateWeight(uint256 _newWeight) public onlyRegistered {
+        UserProfile storage profile = userAddressLinkProfile[msg.sender];
+        
+        // 判断减重是否达到意义性标准：是否减掉5%的体重或者更多？
+        if (_newWeight < profile.weight && (profile.weight - _newWeight) * 100 / profile.weight >= 5) { //solidity中没有小数除法，先乘100确保百分比精度
+            emit MilestoneAchieved(msg.sender, "Weight Goal Reached", block.timestamp); //触发里程碑事件响应
+        }
+        profile.weight = _newWeight; //更新体重
+        emit ProfileUpdated(msg.sender, _newWeight, block.timestamp); //触发用户信息更新响应
+    }
+    
+    //记录每一次用户运动的信息
+    function logWorkout(
+        string memory _activityType,
+        uint256 _duration,
+        uint256 _distance
+    ) public onlyRegistered {
+        //往用户运动信息结构添加内容（同上用户信息结构的内容添加
+        WorkoutActivity memory newWorkout = WorkoutActivity({
+            activityType: _activityType,
+            duration: _duration,
+            distance: _distance,
+            timestamp: block.timestamp
+        });       
+        //将一次运动信息推送进历史运动列表
+        userAddressLinkworkoutHistory[msg.sender].push(newWorkout);
+       //运动次数和运动距离增加
+        totalWorkouts[msg.sender]++;
+        totalDistance[msg.sender] += _distance;        
+        //触发一次运动完成的响应
+        emit WorkoutLogged(
+            msg.sender,
+            _activityType,
+            _duration,
+            _distance,
+            block.timestamp
+        );
+        //判断是否达到运动次数里程碑
+        if (totalWorkouts[msg.sender] == 10) {
+            emit MilestoneAchieved(msg.sender, "10 Workouts Completed", block.timestamp);  //触发10次运动次数里程碑事件响应
+        } else if (totalWorkouts[msg.sender] == 50) {
+            emit MilestoneAchieved(msg.sender, "50 Workouts Completed", block.timestamp);  //触发50次运动次数里程碑事件响应
+        }        
+        //判断是否达到运动距离里程碑 
+        if (totalDistance[msg.sender] >= 100000 && totalDistance[msg.sender] - _distance < 100000) { //第二个判断逻辑是为了确保首次突破10K（总距离减新增距离要小于10k）
+            emit MilestoneAchieved(msg.sender, "100K Total Distance", block.timestamp); //触发运动距离里程碑事件响应
+        }
+    }
+    
+    //查看运动次数（？能否通过totalWorkouts返回🎈
+    function getUserWorkoutCount() public view onlyRegistered returns (uint256) {
+        return userAddressLinkworkoutHistory[msg.sender].length;
+    }
+}

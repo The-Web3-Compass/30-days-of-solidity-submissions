@@ -1,0 +1,74 @@
+// SPDX-License-Identifier:MIT
+
+pragma solidity ^0.8.0;
+
+//在当前合约代码外插入外部合约
+import "./contracts/ScientificCalculator.sol";
+
+contract Calculator{
+    //声明变量储存管理者地址和目标合约地址
+    address public owner;
+    address public sientificCalculatorAddress;
+
+    //初始化环境
+    constructor(){
+        owner = msg.sender;
+    }
+
+    //权限设置
+    modifier onlyOwner() {
+        require(msg.sender == owner,"Only owner can do this action");
+        _;
+    }
+
+    //储存目标合约的地址
+    function setSientificCalculatorAddress(address _address) public onlyOwner{
+        sientificCalculatorAddress = _address;
+    }
+    
+    //计算加法
+     function add(uint256 a, uint256 b)public pure returns(uint256){
+        uint256 result = a+b;
+        return result;
+    }
+
+    //计算减法
+    function subtract(uint256 a, uint256 b)public pure returns(uint256){
+        uint256 result = a-b;
+        return result;
+    }
+
+    //计算乘法
+    function multiply(uint256 a, uint256 b)public pure returns(uint256){
+        uint256 result = a*b;
+        return result;
+    }
+
+    //计算除法
+    function divide(uint256 a, uint256 b)public pure returns(uint256){
+        require(b!= 0, "Cannot divide by zero");
+        uint256 result = a/b;
+        return result;
+    }
+
+    //调用外部函数计算幂
+    function calculatePower(uint256 base, uint256 exponent)public view returns(uint256){
+        scientificCalculator scientificCalc = ScientificCalculator(scientificCalculatorAddress); //将合约地址转成实例对象
+        uint256 result = scientificCalc.power(base, exponent); //调用外部函数计算并接收结果（目标合约名变成类型名，这里起了新名字
+        return result; //返回结果  
+    }
+
+    //使用低级调用.call()调用外部函数计算开平方根
+    function calculateSquareRoot(uint256 number) public returns(uint256){
+        require(number >= 0 , "Cannot calculate square root of negative nmber");
+        //使用abi.encodeWithSignature（）语句将目标函数及参数编码成低级调用方式，返回bytes让.call（）可以接收
+        bytes memory data = abi.encodeWithSignature("squareRoot(int256)", number); //使用data接收编码结果
+        (bool success, bytes memory returnData) = scientificCalculatorAddress.call(data); //将data传送给目标合约中的目标函数处理并要求返回成功信息和原始数据
+        require(success,"External call failed"); //要求调用成功才进行下一步
+        uint256 result = abi.decode(returnData,(uint256)); //对返回的原始数据即计算结果进行解码，bytes转uint256
+        return result;
+    }
+
+
+}
+
