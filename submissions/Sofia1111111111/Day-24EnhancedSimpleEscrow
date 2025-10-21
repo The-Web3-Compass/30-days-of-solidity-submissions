@@ -1,0 +1,127 @@
+ 
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+
+
+contract EnhancedSimpleEscrow {
+    //声明一个枚举类型来记录托管交易的5种状态：等待付款、已付款但等待确认收货、交易完成、争议中、交易取消
+    enum EscrowState { AWAITING_PAYMENT, AWAITING_DELIVERY, COMPLETE, DISPUTED, CANCELLED } //声明枚举类型，用枚举类型再声明一个变量在下面行。注意：声明枚举类型和声明struct类型一样末尾不用分号结尾
+    
+    //immutable：表示这个变量只能在构造函数中赋值，之后不能再修改   
+    address public immutable buyer;  //买家地址
+    address public immutable seller; //卖家地址
+    address public immutable arbiter; //仲裁者地址
+    uint256 public amount;  //记录买家存入的资金总额
+    EscrowState public state;  //声明枚举类型变量，记录当前托管的交易状态
+    uint256 public depositTime; //记录买家存入资金的时间戳
+    uint256 public deliveryTimeout; // 记录最大允许交易等待的时长，单位为秒
+
+    event PaymentDeposited(address indexed buyer, uint256 amount); //记录存款事件：买家、金额
+    event DeliveryConfirmed(address indexed buyer, address indexed seller, uint256 amount); //记录确认交付成功的事件：买家、卖家、金额
+    event DisputeRaised(address indexed initiator); //记录争议产生的事件：提出者
+    event DisputeResolved(address indexed arbiter, address recipient, uint256 amount);  //记录争议解决事件：仲裁者、资金获得方、金额
+    event EscrowCancelled(address indexed initiator); //记录交易取消事件：发起者
+    event DeliveryTimeoutReached(address indexed buyer); //记录交易超时事件：买家
+
+
+    //需手动传入参数进行初始化
+    constructor(address _seller, address _arbiter, uint256 _deliveryTimeout) { //需手动传入的参数：卖家地址、仲裁者地址、最大允许等待时长
+        require(_deliveryTimeout > 0, "Delivery timeout must be greater than zero"); //设置的最大允许等待时长必须大于0
+        buyer = msg.sender; //部署这个合约的地址是买家
+        seller = _seller;   //输入卖家地址
+        arbiter = _arbiter;  //输入仲裁者地址
+        state = EscrowState.AWAITING_PAYMENT; //将当前托管交易状态设置为等待支付
+        deliveryTimeout = _deliveryTimeout; //输入允许最大等待时长
+    }
+
+    //使用receive（）函数处理直接转账的以太币：阻止接收
+    receive() external payable {
+        revert("Direct payments not allowed"); //revert(...)主动触发回滚，终止执行，不消耗额外 gas。会把状态回滚到调用前，并显示错误信息。
+    }
+
+
+    //买家进行付钱操作：付给合约地址
+    function deposit() external payable {
+        require(msg.sender == buyer, "Only buyer can deposit");  //确保调用函数的地址是买家
+        require(state == EscrowState.AWAITING_PAYMENT, "Already paid");  //确保当前托管交易状态是等待付款
+        require(msg.value > 0, "Amount must be greater than zero");  //确保付款金额＞0
+        amount = msg.value;  //记录付款金额
+        state = EscrowState.AWAITING_DELIVERY; //将当前托管交易状态设置为等待交易确认
+        depositTime = block.timestamp;  //记录付款时间戳
+        emit PaymentDeposited(buyer, amount);  //触发付款事件
+    }
+
+
+    //买家进行收货确认
+    function confirmDelivery() external {
+        require(msg.sender == buyer, "Only buyer can confirm");  //确保当前调用地址是买家
+        require(state == EscrowState.AWAITING_DELIVERY, "Not in delivery state"); //确保当前托管交易状态是等待交易确认
+        state = EscrowState.COMPLETE; //将当前托管交易状态设置为交易完成
+        payable(seller).transfer(amount);  //合约地址存储的钱释放给卖家
+        emit DeliveryConfirmed(buyer, seller, amount); //触发买家确认交易事件
+    }
+
+
+    //发起争议
+    function raiseDispute() external {
+        require(msg.sender == buyer || msg.sender == seller, "Not authorized"); //  ||代表或的意思，表示两个条件任选其一满足：调用地址需为买家或卖家
+        require(state == EscrowState.AWAITING_DELIVERY, "Can't dispute now"); //需要满足当前托管交易状态是等待交易确认
+        state = EscrowState.DISPUTED; //将当前托管交易状态设置为争议中
+        emit DisputeRaised(msg.sender); //触发争议发起事件
+    }
+
+
+    //仲裁者进行争议解决
+    function resolveDispute(bool _releaseToSeller) external {   //传入布尔值参数，用于判断是否应该释放合约地址的钱给卖家
+        require(msg.sender == arbiter, "Only arbiter can resolve");  //确保调用函数的地址为仲裁者
+        require(state == EscrowState.DISPUTED, "No dispute to resolve"); //确保当前托管交易状态为争议中
+        state = EscrowState.COMPLETE;  //将当前托管交易状态设置为交易完成
+        if (_releaseToSeller) {  //如果判断为true，即应该释放
+            payable(seller).transfer(amount);  //则将合约地址的钱释放给卖家
+            emit DisputeResolved(arbiter, seller, amount); //触发争议解决事件
+        } else {  //否则
+            payable(buyer).transfer(amount);  //将合约地址的钱退回给买家
+            emit DisputeResolved(arbiter, buyer, amount); //触发争议解决事件
+        }
+    }
+
+
+
+    //时间超时后进行交易取消操作
+    function cancelAfterTimeout() external {
+        require(msg.sender == buyer, "Only buyer can trigger timeout cancellation"); //买家调用
+        require(state == EscrowState.AWAITING_DELIVERY, "Cannot cancel in current state"); //当前托管交易状态为等待交易确认
+        require(block.timestamp >= depositTime + deliveryTimeout, "Timeout not reached");  //当前时间戳已达到或超过最大允许等待时间
+        state = EscrowState.CANCELLED; //将当前托管交易状态设置为交易完成
+        payable(buyer).transfer(address(this).balance);  //退钱给买家
+        emit EscrowCancelled(buyer);  //触发交易取消事件
+        emit DeliveryTimeoutReached(buyer); //触发交易超时事件
+    }
+
+
+    //买家或卖家手动取消交易
+    function cancelMutual() external {
+        require(msg.sender == buyer || msg.sender == seller, "Not authorized"); //允许卖家或买家调用
+        require(
+            state == EscrowState.AWAITING_DELIVERY || state == EscrowState.AWAITING_PAYMENT,  //当前托管交易状态是等待交易确认或等待付款
+            "Cannot cancel now"
+        );
+        EscrowState previousState = state; //将当前托管交易状态存进新命名的变量中作为前状态
+        state = EscrowState.CANCELLED; //将当前托管交易状态设置为取消交易
+
+        if (previousState == EscrowState.AWAITING_DELIVERY) { //如果前状态为等待交易确认
+            payable(buyer).transfer(address(this).balance); //则退钱给买家
+        }
+        emit EscrowCancelled(msg.sender); //触发交易取消事件
+    }
+
+
+    //获取当前最大允许等待时长的剩余时间
+    function getTimeLeft() external view returns (uint256) {
+        if (state != EscrowState.AWAITING_DELIVERY) return 0;  //非等待确交易认状态直接返回0
+        if (block.timestamp >= depositTime + deliveryTimeout) return 0; //若当前时间戳已过点则返回0；
+        return (depositTime + deliveryTimeout) - block.timestamp; //若仍在等待时间内则计算剩余值并返回：存钱时间戳+允许最大等待时长-当前时间戳
+    }
+}
+
