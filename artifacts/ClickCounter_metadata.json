@@ -6,6 +6,56 @@
 	"output": {
 		"abi": [
 			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "clicker",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "newCounter",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"name": "Clicked",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "milestone",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "clicker",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"name": "MilestoneReached",
+				"type": "event"
+			},
+			{
 				"inputs": [],
 				"name": "click",
 				"outputs": [],
@@ -14,7 +64,176 @@
 			},
 			{
 				"inputs": [],
+				"name": "clickCooldown",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "times",
+						"type": "uint256"
+					}
+				],
+				"name": "clickMultiple",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "clicksByUser",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "counter",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "decrease",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getCounter",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "getUserClicks",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "hasUserClicked",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "lastClickTime",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "lastClicker",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "reset",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "resetCounter",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "newCooldown",
+						"type": "uint256"
+					}
+				],
+				"name": "setClickCooldown",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalUniqueClickers",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -39,7 +258,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"submissions/Vickywu/Day1.sol": "ClickCounter"
+			"submissions/Vickywu/Day1(advanced).sol": "ClickCounter"
 		},
 		"evmVersion": "prague",
 		"libraries": {},
@@ -53,12 +272,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"submissions/Vickywu/Day1.sol": {
-			"keccak256": "0x0b4940e57666fd635bd600d7ab8221d35251508a434041ad2ce89146ab05e4c7",
+		"submissions/Vickywu/Day1(advanced).sol": {
+			"keccak256": "0xf4819f6dc456bf95c506cc76c257db8c0c2d64601775cbcc68730fc94b61da8c",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://460a0dd3c9893ac204fd1580d0444efd84b83677f694214d53b2f5c60571497b",
-				"dweb:/ipfs/Qmec1wzYXtNijof7PwFMsqykYUFFvTzmRuTgzpcaG1QWK1"
+				"bzz-raw://7b6356969db0d35fbc6bf8c54f9a5f53faa03e926086bfb05f57847420304b49",
+				"dweb:/ipfs/Qmb8GauE5gZr7F22dceY3mBsdC8oCgvWbg4NCL56fLSZNr"
 			]
 		}
 	},
