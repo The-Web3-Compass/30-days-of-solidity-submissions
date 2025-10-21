@@ -1,0 +1,102 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_bio",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_age",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_occupation",
+						"type": "string"
+					}
+				],
+				"name": "add",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "retrieve",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"submissions/Vickywu/Day2SaveMyName.sol": "SaveMyname"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"submissions/Vickywu/Day2SaveMyName.sol": {
+			"keccak256": "0xd101f12a555480753fa8dd1592711cfbd47ae8baacdb49127ba12aa72dcb4444",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://9bf354491b3625b14b5438fd65ab153916ef5c8f82f1f3cd627c70285bcea6d1",
+				"dweb:/ipfs/QmbDQAnyqt2wuu3eAgtstXAyh58gULNrctmX4h5CWQuSBu"
+			]
+		}
+	},
+	"version": 1
+}
