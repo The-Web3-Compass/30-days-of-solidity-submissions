@@ -40,6 +40,35 @@
 				],
 				"stateMutability": "view",
 				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_bio",
+						"type": "string"
+					}
+				],
+				"name": "saveAndRetrieve",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
 			}
 		],
 		"devdoc": {
@@ -70,11 +99,11 @@
 	},
 	"sources": {
 		"submissions/UIU^ia/Day2.sol": {
-			"keccak256": "0xf2601a64c5016aee3e09fbf5207841d80d81cde9017c5c43f0e15e99eb90df7f",
+			"keccak256": "0x94ae4eeb84108f1bcc8ef11e70fd882f0010a30b54c5621ea5012911a96120cf",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://5082be47b5b69b65cdbd2d7ebb3a0231b084a5520790c1739242da4609902bc8",
-				"dweb:/ipfs/QmeGTo4FMCSZBaesEsvkhzmeHguBc4DXUA32rYRy9YrbWq"
+				"bzz-raw://e7474b10195bc11945badf9c1b7fb1e8c5312da700c511b3e036723cf3a7c83b",
+				"dweb:/ipfs/Qmb5wvG9bwNwU13xcWQ936ehPf5qVqCkL4AuaWdTcEdtB2"
 			]
 		}
 	},
