@@ -1,0 +1,123 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_candidateNames",
+						"type": "string"
+					}
+				],
+				"name": "addCandidateNames",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "candidateNames",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getCandidateNames",
+				"outputs": [
+					{
+						"internalType": "string[]",
+						"name": "",
+						"type": "string[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_candidateNames",
+						"type": "string"
+					}
+				],
+				"name": "getVote",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_candidateNames",
+						"type": "string"
+					}
+				],
+				"name": "vote",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"submissions/iCat798/Day03-PollStation.sol": "pollStation"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"submissions/iCat798/Day03-PollStation.sol": {
+			"keccak256": "0xf25cc095e058f948340f012d5914cf586f6d0fa392fee2308691eed5f59b4281",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a2f73b9b7a75325a48d9a1a146164bac64dc8bdaa714eb1a7c8475d70441c95c",
+				"dweb:/ipfs/QmNTHzPcQ6xuGpcuQEahUqsswzXvPWQjkqLnAiG5wNA9DW"
+			]
+		}
+	},
+	"version": 1
+}
