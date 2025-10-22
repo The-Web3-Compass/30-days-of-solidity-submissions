@@ -5,7 +5,7 @@ contract ClickCounter {
     uint256 public counter;
 
     function click() public {
-    counter++;
+        counter++;
     }
 
     function reset() public {
