@@ -1,66 +1,128 @@
-## Foundry
+---
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+#  Day 13 - PreorderTokens.sol
 
-Foundry consists of:
+### *Selling ERC20 Tokens for Ether | Token Presale Mechanism*
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+---
 
-## Documentation
+##  Task Overview
 
-https://book.getfoundry.sh/
+Build a smart contract that sells ERC20 tokens in exchange for Ether.
+This project demonstrates a **real-world token presale model**, where users buy tokens using ETH, and the contract owner can later withdraw the raised funds.
 
-## Usage
+---
 
-### Build
+##  Prerequisites
 
-```shell
-$ forge build
+Before running this project, make sure you have:
+
+* **Foundry installed** - [Foundry Book Setup](https://book.getfoundry.sh/getting-started/installation)
+
+  ```bash
+  curl -L https://foundry.paradigm.xyz | bash
+  foundryup
+  ```
+* **OpenZeppelin Contracts library** (for ERC20 + Ownable)
+
+  ```bash
+  forge install OpenZeppelin/openzeppelin-contracts
+  ```
+
+---
+
+---
+
+##  Explanation of Files
+
+* **src/PreorderTokens.sol** - Main ERC20 token sale contract handling token minting, sales, and withdrawals.
+* **script/DeployPreorderTokens.s.sol** - Deployment script using Foundry’s `vm.startBroadcast()` and logging deployment info.
+* **test/PreorderTokens.t.sol** - Automated test verifying token purchase, withdrawal, and sale toggle behavior.
+
+---
+
+##  foundry.toml 
+
+Defines core Foundry project configuration:
+
+* `src`, `out`, and `libs` folder paths
+* Remapping for `@openzeppelin` dependency
+* Default compiler settings for Solidity v0.8.20+
+
+---
+
+##  Setup and Run Commands
+
+###  Build Project
+
+```bash
+forge build
 ```
 
-### Test
+###  Run Local Node
 
-```shell
-$ forge test
+```bash
+anvil
 ```
 
-### Format
+###  Deploy Contract Locally
 
-```shell
-$ forge fmt
+```bash
+forge script script/DeployPreorderTokens.s.sol \
+--rpc-url http://127.0.0.1:8545 \
+--private-key <anvil_private_key> \
+--broadcast
 ```
 
-### Gas Snapshots
+###  Test All Functions
 
-```shell
-$ forge snapshot
+```bash
+forge test -vv
 ```
 
-### Anvil
+###  Interact with Contract
 
-```shell
-$ anvil
+**Buy Tokens:**
+
+```bash
+cast send <contract_address> "buyTokens()" \
+--rpc-url http://127.0.0.1:8545 \
+--private-key <buyer_key> \
+--value 1ether
 ```
 
-### Deploy
+**Withdraw Funds (Owner):**
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
+```bash
+cast send <contract_address> "withdrawFunds()" \
+--rpc-url http://127.0.0.1:8545 \
+--private-key <owner_key>
 ```
 
-### Cast
+**Check Buyer Balance:**
 
-```shell
-$ cast <subcommand>
+```bash
+cast call <contract_address> "balanceOf(address)" <buyer_address> \
+--rpc-url http://127.0.0.1:8545
 ```
 
-### Help
+---
 
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
+##  Sample Output
+
 ```
+PreorderTokens deployed at: 0x5FbDB2315678afecb367f032d93F642f64180aa3
+Owner: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+Rate: 1000 tokens per ETH
+
+ Buyer sent 1 ETH - received 1000 PDT
+ Owner successfully withdrew 1 ETH
+ Contract balance = 0
+```
+
+---
+
+##  End of Project
+
+This project successfully demonstrates a **token presale system** using ERC20 standards, fund management via Ownable, and real-time token sales logic.
+
