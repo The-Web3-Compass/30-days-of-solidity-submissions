@@ -32,13 +32,13 @@ contract SimpleERC20 {
         _;
     }
     
-    function transfer(address _to,uint _value) public checkBalance(msg.sender,_value) returns (bool){
+    function transfer(address _to,uint _value) public virtual   checkBalance(msg.sender,_value) returns (bool){
         _transfer(msg.sender,_to,_value);
         return true;
     }
 
     // 提取的公共方法
-    function _transfer(address _from,address _to,uint _value) private{
+    function _transfer(address _from,address _to,uint _value) internal{
         require(_to != address(0), unicode"不允许向零地址转账");
         balanceOf[_from] -= _value;
         balanceOf[_to] += _value;
@@ -54,7 +54,7 @@ contract SimpleERC20 {
     }
 
     // B 使用额度进行转账
-    function transferFrom(address _from , address _to , uint _value) public checkBalance(_from,_value) returns (bool){
+    function transferFrom(address _from , address _to , uint _value) public virtual   checkBalance(_from,_value) returns (bool){
         require(allowance[_from][msg.sender] >= _value,"allowance is not enough");
 
         allowance[_from][msg.sender] -= _value;
