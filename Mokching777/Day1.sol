@@ -10,4 +10,20 @@ contract clickcounter {
     {
         counter ++;
     }
+
+    function reset() public
+    {
+         counter=0;
+    }
+
+    function decrease() public
+    {
+        if (counter > 0){
+            counter--;
+        }
+    }
+
+    function clickMutiple(uint256 times)public{
+        counter+=times;
+    }
 }
