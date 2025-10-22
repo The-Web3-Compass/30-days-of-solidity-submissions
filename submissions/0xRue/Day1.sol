@@ -16,7 +16,7 @@ contract ClickCounter {
         if (counter > 0){
             counter--;
         }
-    }
+    } 
 
     function getCounter() public view returns (uint256) {
         return counter;
