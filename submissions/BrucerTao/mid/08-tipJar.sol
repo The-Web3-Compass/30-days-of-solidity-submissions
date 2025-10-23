@@ -59,7 +59,7 @@ contract TipJar {
 
         tipperContrubutions[msg.sender] += msg.value;
         totalTipsReceived += msg.value;
-        tipsPerCurrency["ETH] += msg.value;
+        tipsPerCurrency["ETH"] += msg.value;
 
     }
 

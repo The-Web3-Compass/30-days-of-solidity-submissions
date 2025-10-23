@@ -29,7 +29,7 @@ contract SimpleFitnessTracker {
     mapping(address => uint256) public totalDistance;
 
     event UserRegistered(addres indexed userAddress, string name, uint256 timestamp);
-    evnet ProfileUpdated(address indexed userAddress, uint256 newWeight, uint256 timestamp);
+    event ProfileUpdated(address indexed userAddress, uint256 newWeight, uint256 timestamp);
     event WorkoutLogged(address indexed userAddress, string activityType, uint256 duration, uint256 distance, uint256 timestamp);
     event MilestoneAchieved(address indexed userAddress, string milestone, uint256 timestamp);
 
@@ -43,7 +43,7 @@ contract SimpleFitnessTracker {
     function registerUser(string memory _name ,uint256 _weight) public {
         require(!userProfiles[msg.sender].isRegistered, "User already registered");
 
-        userProfiles[msg.sender] = userProfiles({
+        userProfiles[msg.sender] = UserProfile({
             name: _name,
             weight: _weight,
             isRegistered: true

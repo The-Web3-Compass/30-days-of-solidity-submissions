@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract VaultMaster is Ownable {
     event DepositSuccessful(address indexed account, uint256 value);
-    event WithdrawSuccessful(address indexex recipient, uint256 value);
+    event WithdrawSuccessful(address indexed recipient, uint256 value);
 
     constructor() Ownable(msg.sender) {}
 

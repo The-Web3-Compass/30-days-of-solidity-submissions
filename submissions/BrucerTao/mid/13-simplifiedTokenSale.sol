@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+import "./12-simpleERC20.sol";
+
 /**
 继承的SimpleERC20合约中，增加virtual
 function transfer(address _to, uint256 _value) public virtual  returns (bool);
