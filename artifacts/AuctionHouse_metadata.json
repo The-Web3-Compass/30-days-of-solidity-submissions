@@ -23,6 +23,32 @@
 			},
 			{
 				"inputs": [],
+				"name": "MIN_ABSOLUTE_INCREMENT",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "MIN_BID_INCREMENT_PERCENT",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "auctionEndTime",
 				"outputs": [
 					{
@@ -191,11 +217,11 @@
 	},
 	"sources": {
 		"submissions/iCat798/Day04-AuctionHouse.sol": {
-			"keccak256": "0xe81dd9b6062a0d36b6e37363141be9704b882569106bdae2cfd4f24d6b8493dd",
+			"keccak256": "0xe1868acd69a9eb0de1c6ecf75fa565584114925aa36fbae4ac9c7ba607e5a483",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://f5ffc7682d386c240e30a2b9b4968301a1dbde87b2b74e1b0597e331a4b9b8a1",
-				"dweb:/ipfs/QmUBdB1Qbt3wDauuQxSHf6RJfT1Nw6jMbfSWC334H12DCu"
+				"bzz-raw://1e995c4350b077c5f0d05c0957571941533932db6a76bf9869f554aa2be5ef25",
+				"dweb:/ipfs/QmdAKVcJE9S2wpUkujm6zfwmDTpVfTqLqhxKzToVE2DHMv"
 			]
 		}
 	},

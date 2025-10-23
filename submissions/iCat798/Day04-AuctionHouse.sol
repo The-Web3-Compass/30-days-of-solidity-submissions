@@ -9,8 +9,13 @@ contract AuctionHouse {
     uint private highestBid;       // Highest bid is private, accessible via getWinner
     bool public ended;             // 标记拍卖是否完成
 
+    // 最低加价幅度（例如 5% = 50，表示 5.0%）
+    uint public constant MIN_BID_INCREMENT_PERCENT = 50; // 0.5% → 5, 5% → 50, 10% → 100
+    uint public constant MIN_ABSOLUTE_INCREMENT = 0;     // 可选：固定最低加价金额（如 0.01 ETH）
+
     mapping(address => uint) public bids;  // 用映射记录用户出价
     address[] public bidders;              // 记录出价者地址
+    
 
     // Initialize the auction with an item and a duration
     constructor(string memory _item, uint _biddingTime) {
@@ -25,14 +30,22 @@ contract AuctionHouse {
         require(amount > 0, "Bid amount must be greater than zero.");                        // 确保出价>0
         require(amount > bids[msg.sender], "New bid must be higher than your current bid."); // 确保出价者比其上次出价高
 
-        // Track new bidders(记录新竞标者)
+        // 检查最低加价规则
+        if (highestBid > 0) {
+            uint minRequiredBid = highestBid +
+                (highestBid * MIN_BID_INCREMENT_PERCENT / 100) +
+                MIN_ABSOLUTE_INCREMENT;
+            require(amount >= minRequiredBid, "Bid must be at least X% higher than current highest bid.");
+        }   
+
+        // 记录新竞标者
         if (bids[msg.sender] == 0) {
             bidders.push(msg.sender);      // 存储到竞标者数组中
         }
 
         bids[msg.sender] = amount;         // 记录出价
 
-        // Update the highest bid and bidder（判断是否为新的最高价者）
+        // 更新最高出价
         if (amount > highestBid) {
             highestBid = amount;
             highestBidder = msg.sender;
