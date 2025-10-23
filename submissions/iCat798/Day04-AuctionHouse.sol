@@ -12,9 +12,9 @@ contract AuctionHouse {
     // 起拍价（最低接受出价）
     uint public reservePrice;
 
-    // 最低加价幅度（例如 5% = 50，表示 5.0%）
-    uint public constant MIN_BID_INCREMENT_PERCENT = 50; // 0.5% → 5, 5% → 50, 10% → 100
-    uint public constant MIN_ABSOLUTE_INCREMENT = 0;     // 可选：固定最低加价金额（如 0.01 ETH）
+    // 最低加价幅度
+    uint public constant MIN_BID_INCREMENT_PERCENT = 50;   // 最低出价百分比
+    uint public constant MIN_ABSOLUTE_INCREMENT = 100;     // 固定最低加价金额
 
     mapping(address => uint) public bids;  // 用映射记录用户出价
     address[] public bidders;              // 记录出价者地址
@@ -40,7 +40,7 @@ contract AuctionHouse {
             uint minRequiredBid = highestBid +
                 (highestBid * MIN_BID_INCREMENT_PERCENT / 100) +
                 MIN_ABSOLUTE_INCREMENT;
-            require(amount >= minRequiredBid, "Bid must be at least X% higher than current highest bid.");
+            require(amount >= minRequiredBid, "Bid must be at least 50% higher than current highest bid.");
         }   
 
         // 记录新竞标者
@@ -63,6 +63,15 @@ contract AuctionHouse {
         require(!ended, "Auction end already called.");                           // 确保没有人结束拍卖
 
         ended = true;
+    }
+
+    // 返回剩余时间（秒）
+    function getTimeRemaining() external view returns (uint) {
+        if (block.timestamp >= auctionEndTime || ended) {
+            return 0;
+        } else {
+            return auctionEndTime - block.timestamp;
+        }
     }
 
     // Get a list of all bidders(查看所有出价者)

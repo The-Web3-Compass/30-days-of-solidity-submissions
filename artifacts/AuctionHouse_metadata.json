@@ -151,6 +151,19 @@
 			},
 			{
 				"inputs": [],
+				"name": "getTimeRemaining",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "getWinner",
 				"outputs": [
 					{
@@ -235,11 +248,11 @@
 	},
 	"sources": {
 		"submissions/iCat798/Day04-AuctionHouse.sol": {
-			"keccak256": "0x0bb99281f3b0539d316292eb0732ddb25d90a0d7ddac9fc9948f17eb6cd85af5",
+			"keccak256": "0xa788d85cf18878e7374b6f38ec93d9a49b0d3d91d95a5e16e4199bd1cc0c95c8",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e1fac1837a8ae7be48919eb5893c13a086a7b4b1ec88b8ffe726465eae6cee93",
-				"dweb:/ipfs/Qmantsd4Gg7K4viGEVZLyMsBX6gZPAk8bBeCxjXPtqmip6"
+				"bzz-raw://8250e9a35fbe4296dc825e0db0d176165f11358d96852fe94d06774d49b64bbf",
+				"dweb:/ipfs/QmdWrniUWu4Eav4Se1o4BvoGyaP2QwLiwwLf1UwSGYmipW"
 			]
 		}
 	},
