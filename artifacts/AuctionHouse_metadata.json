@@ -16,6 +16,11 @@
 						"internalType": "uint256",
 						"name": "_biddingTime",
 						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_reservePrice",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -187,6 +192,19 @@
 				],
 				"stateMutability": "view",
 				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "reservePrice",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
 			}
 		],
 		"devdoc": {
@@ -217,11 +235,11 @@
 	},
 	"sources": {
 		"submissions/iCat798/Day04-AuctionHouse.sol": {
-			"keccak256": "0xe1868acd69a9eb0de1c6ecf75fa565584114925aa36fbae4ac9c7ba607e5a483",
+			"keccak256": "0x0bb99281f3b0539d316292eb0732ddb25d90a0d7ddac9fc9948f17eb6cd85af5",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://1e995c4350b077c5f0d05c0957571941533932db6a76bf9869f554aa2be5ef25",
-				"dweb:/ipfs/QmdAKVcJE9S2wpUkujm6zfwmDTpVfTqLqhxKzToVE2DHMv"
+				"bzz-raw://e1fac1837a8ae7be48919eb5893c13a086a7b4b1ec88b8ffe726465eae6cee93",
+				"dweb:/ipfs/Qmantsd4Gg7K4viGEVZLyMsBX6gZPAk8bBeCxjXPtqmip6"
 			]
 		}
 	},
