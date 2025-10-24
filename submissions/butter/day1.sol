@@ -6,4 +6,4 @@ uint256 public counter;
 // 函数 - 增加计数器
 function click() public {
 counter++;}
-}
+ }
