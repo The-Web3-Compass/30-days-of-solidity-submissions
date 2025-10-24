@@ -6,24 +6,26 @@
 	"output": {
 		"abi": [
 			{
-				"inputs": [
-					{
-						"internalType": "string",
-						"name": "_item",
-						"type": "string"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_biddingTime",
-						"type": "uint256"
-					}
-				],
+				"inputs": [],
 				"stateMutability": "nonpayable",
 				"type": "constructor"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "TransferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [],
-				"name": "auctionEndTime",
+				"name": "TreasureAmount",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -42,7 +44,7 @@
 						"type": "uint256"
 					}
 				],
-				"name": "bid",
+				"name": "addTreasure",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -50,31 +52,24 @@
 			{
 				"inputs": [
 					{
+						"internalType": "address",
+						"name": "recipient",
+						"type": "address"
+					},
+					{
 						"internalType": "uint256",
-						"name": "",
+						"name": "amount",
 						"type": "uint256"
 					}
 				],
-				"name": "bidders",
-				"outputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
+				"name": "approveWithdrawal",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"name": "bids",
+				"inputs": [],
+				"name": "getTreasureDetails",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -86,64 +81,19 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "endAuction",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "ended",
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "hasWithdrawn",
 				"outputs": [
 					{
 						"internalType": "bool",
 						"name": "",
 						"type": "bool"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "getAllBidders",
-				"outputs": [
-					{
-						"internalType": "address[]",
-						"name": "",
-						"type": "address[]"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "getWinner",
-				"outputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "item",
-				"outputs": [
-					{
-						"internalType": "string",
-						"name": "",
-						"type": "string"
 					}
 				],
 				"stateMutability": "view",
@@ -157,6 +107,51 @@
 						"internalType": "address",
 						"name": "",
 						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "resetWithdrawalStatus",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "withdrawTreasure",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "withdrawalAllowance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -176,7 +171,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"submissions/UIU^ia/Day4.sol": "AuctionHouse"
+			"submissions/UIU^ia/Day5.sol": "AdminOnly"
 		},
 		"evmVersion": "prague",
 		"libraries": {},
@@ -190,12 +185,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"submissions/UIU^ia/Day4.sol": {
-			"keccak256": "0x8160e162db36588f991cafc99b0e666628bcc8d42d6e413285786acace5d5322",
+		"submissions/UIU^ia/Day5.sol": {
+			"keccak256": "0x5e6653b0f5ee2bdbd1c754bbf8982ce82d007fff263611f61ff758801610047c",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e6aa4eb5fafa7380d6077cf97f122241df8be5f033a2c813f384803fb0877a0f",
-				"dweb:/ipfs/Qmc8wz2RAvWhXWm7nYZnM4QQLQd7gZt64wEafgEDxbqyCk"
+				"bzz-raw://ce0230eec6d007515263ada73b3fdf63b021d78bcf1fc25d2eaca34a63e76bd4",
+				"dweb:/ipfs/QmZCiwh8L9ghuyKq6MErUdQLUm94Wy2i8NYKhiYAgHLzh8"
 			]
 		}
 	},

@@ -9,8 +9,8 @@ contract AuctionHouse {
     uint private highestBid;
     bool public ended;
 
-    mapping(address => uint) public bids;
     address[] public bidders;
+    mapping(address => uint) public bids;
 
     constructor(string memory _item, uint _biddingTime) {
         owner = msg.sender;
@@ -21,7 +21,7 @@ contract AuctionHouse {
     function bid(uint amount) external {
         require(block.timestamp < auctionEndTime, "Auction has already ended.");
         require(amount > 10,"Bid amount must be greater than ten.");
-        require(amount > bids[msg.sender],"New bid must be at least 5% higher than your current bid.");
+        require(amount > bids[msg.sender],"New bid must be higher than your current bid.");
 
         if (bids[msg.sender] == 0) {
             bidders.push(msg.sender);
