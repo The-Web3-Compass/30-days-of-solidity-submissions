@@ -90,5 +90,39 @@ contract SimplifiedTokenSale is SimpleERC20 {
         }
         return super.transferFrom(_from,_to,_value);
     }
-    
+    // 销售期结束后进行结算，将合约账户的ETH转到个人钱包
+    function finalizeSale() public payable {
+        require(msg.sender == projectOwner,unicode"只允许合约拥有者进行结算");
+        require(block.timestamp >= saleEndTime , unicode"销售期未结束");
+        require(!finalized,unicode"不允许重复结算");
+
+        finalized = true;
+        uint totalAmount = totalSupply - balanceOf[address(this)];
+
+        (bool success ,) = projectOwner.call{value : address(this).balance}("");
+        require(success , unicode"结算转账失败");
+
+        emit SaleFinalized(address(this).balance, totalAmount);
+    }
+
+    // 查询销售期结束剩余多少时间
+    function timeRemaining() public view returns(uint) {
+        require(block.timestamp >= saleStartTime ,unicode"销售期未开始");
+        if(block.timestamp >= saleEndTime){
+            return 0;
+        }
+        return block.timestamp - saleEndTime;
+    }
+
+    // 查询一共剩余多少代币待销售
+    function tokensAvailable() public view returns (uint){
+        return balanceOf[address(this)];
+    }
+
+    /*
+        
+    */
+    receive() external payable { 
+        buyToken();
+    }
 }
