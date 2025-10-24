@@ -1,0 +1,64 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"submissions/iCat798/Day05-AdminOnly.sol": "AdminOnly"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"submissions/iCat798/Day05-AdminOnly.sol": {
+			"keccak256": "0x8b96aedfa9082a6af8adf3d0ad02ddd3f850c7175346906d8cec3005b23f8b53",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://eb52a1152928d74ac04fd382c636ebbe41a34e76f7f5c4265daf397cd3482766",
+				"dweb:/ipfs/QmPizFptBLpk8G3LaUu1M2XEGPoZYCT5jsVziSN9hLoLxY"
+			]
+		}
+	},
+	"version": 1
+}
