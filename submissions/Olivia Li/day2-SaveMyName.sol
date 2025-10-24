@@ -7,7 +7,7 @@ contract SaveMyName{
     string name;
     string bio;
 
-    function add(dtring memory_name, string memory_bio)public{
+    function add (string memory _name, string memory _bio)public {
         name = _name;
         bio = _bio;
     }
