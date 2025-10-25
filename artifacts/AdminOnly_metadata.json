@@ -13,42 +13,57 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					}
-				],
-				"name": "addTreasure",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
 						"internalType": "address",
-						"name": "recipient",
+						"name": "_member",
 						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
 					}
 				],
-				"name": "approvelWithdrawal",
+				"name": "addMembers",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
 				"inputs": [],
-				"name": "getTreasureDetails",
+				"name": "bankManager",
 				"outputs": [
 					{
-						"internalType": "uint256",
+						"internalType": "address",
 						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_amount",
 						"type": "uint256"
+					}
+				],
+				"name": "deposit",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "depositAmountEther",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getMember",
+				"outputs": [
+					{
+						"internalType": "address[]",
+						"name": "",
+						"type": "address[]"
 					}
 				],
 				"stateMutability": "view",
@@ -62,7 +77,7 @@
 						"type": "address"
 					}
 				],
-				"name": "hasWithdrawn",
+				"name": "registeredMembers",
 				"outputs": [
 					{
 						"internalType": "bool",
@@ -74,87 +89,16 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "owner",
-				"outputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "user",
-						"type": "address"
-					}
-				],
-				"name": "reseWithdrawalStatus",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "newOwner",
-						"type": "address"
-					}
-				],
-				"name": "transferOwnership",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "treasureAmount",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
 				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "amount",
+						"name": "_amount",
 						"type": "uint256"
 					}
 				],
-				"name": "withdrawTreasure",
+				"name": "withdraw",
 				"outputs": [],
 				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"name": "withdrawlAllowance",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
 				"type": "function"
 			}
 		],
@@ -171,7 +115,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"submissions/Z weiqi/Day5.sol": "AdminOnly"
+			"submissions/Z weiqi/Day6.sol": "AdminOnly"
 		},
 		"evmVersion": "prague",
 		"libraries": {},
@@ -185,12 +129,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"submissions/Z weiqi/Day5.sol": {
-			"keccak256": "0x10053a2473c67dfef02ae6690481f6e30809598e109b9ec84a8bf9889f9926e0",
+		"submissions/Z weiqi/Day6.sol": {
+			"keccak256": "0x3d42e934a87f5fcb8624d7abd4f0b768e6323e20f75ee67ea32a4fee555d67ea",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://69ca949cc6f8d9f11a878f924a5c28a8041b132bd6f0b5855ed980b177d163cd",
-				"dweb:/ipfs/QmVZVp8EAePejR5jUqTzfjH3skubivNZJJxpuxoE3Bc2PX"
+				"bzz-raw://42513d3289d452908374c9ee040f989081cc46ce4b2d0cf3a5ffc832fb416aa2",
+				"dweb:/ipfs/QmcSeb7woTTaJWbd5gRV9hkQxwL9NxcZ9N1u96fyTc9kqn"
 			]
 		}
 	},
