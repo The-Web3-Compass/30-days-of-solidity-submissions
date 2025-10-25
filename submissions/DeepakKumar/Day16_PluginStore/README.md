@@ -1,5 +1,3 @@
----
-
 ### Day 16 - PluginStore
 
 #### Task Overview
@@ -43,10 +41,4 @@ $(cast abi-encode "addAchievement(address,uint256)" <YOUR_ADDRESS> 5) \
 --rpc-url <YOUR_RPC_URL> --private-key <YOUR_PRIVATE_KEY>
 ```
 
-#### Notes
-
-* Replace `<YOUR_RPC_URL>` and `<YOUR_PRIVATE_KEY>` with your actual network credentials.
-* `<PluginStore_Address>` and `<AchievementPlugin_Address>` will be obtained after deployment.
-* This approach enables flexible and scalable smart contract architectures.
-
----
+# End of the Project.
