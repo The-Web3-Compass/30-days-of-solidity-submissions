@@ -1,0 +1,66 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"name": "click",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "counter",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"submissions/Daffodil_jane/day1.sol": "ClickCounter"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"submissions/Daffodil_jane/day1.sol": {
+			"keccak256": "0x1c621de88f777cdfe448b7e7ee55232484d1e137add749ae508968f7f2f8776f",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://b30cc50acb96e7a6b497a9798055c768ef3e55c044d4577cc7ee96df12ac7806",
+				"dweb:/ipfs/QmV4MMcQEB4DnoC4xzktxXuPXhx79nXshFcSYceYZnou5w"
+			]
+		}
+	},
+	"version": 1
+}
