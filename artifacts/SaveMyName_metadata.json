@@ -1,0 +1,82 @@
+{
+	"compiler": {
+		"version": "0.8.20+commit.a1b79de6"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_bio",
+						"type": "string"
+					}
+				],
+				"name": "add",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "retrieve",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"submissions/Little8Monster/Day2.sol": "SaveMyName"
+		},
+		"evmVersion": "shanghai",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"submissions/Little8Monster/Day2.sol": {
+			"keccak256": "0x894ae7694ef1f3b70e73005ed502ba8ee3136cffb67724e564258ed692bb1057",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://76e86d1493c1025b280711ab37698babce4d28ac5b2d05156f59fc41c59200ca",
+				"dweb:/ipfs/Qmcy82Kr1SNoqoqNXPtGYNWExPmShUXqWpmhkq5FLct3YP"
+			]
+		}
+	},
+	"version": 1
+}
