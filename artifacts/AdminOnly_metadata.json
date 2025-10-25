@@ -11,6 +11,69 @@
 				"type": "constructor"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "addTreasure",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "recipient",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "approveWithdrawal",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getTreasureDetails",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "hasWithdrawn",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "owner",
 				"outputs": [
@@ -18,6 +81,77 @@
 						"internalType": "address",
 						"name": "",
 						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "resetWithdrawalStatus",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "treasureAmount",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "withdrawTreasure",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "withdrawalAllowance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -37,7 +171,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"submissions/iCat798/Day05-AdminOnly.sol": "AdminOnly"
+			"submissions/iCat798/Day06-bankManager.sol": "AdminOnly"
 		},
 		"evmVersion": "prague",
 		"libraries": {},
@@ -51,12 +185,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"submissions/iCat798/Day05-AdminOnly.sol": {
-			"keccak256": "0x8b96aedfa9082a6af8adf3d0ad02ddd3f850c7175346906d8cec3005b23f8b53",
+		"submissions/iCat798/Day06-bankManager.sol": {
+			"keccak256": "0x78204515a8ca31ec36958120d5dde0e9086d6b8318b0c8494a4da14d6d8ebd7d",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://eb52a1152928d74ac04fd382c636ebbe41a34e76f7f5c4265daf397cd3482766",
-				"dweb:/ipfs/QmPizFptBLpk8G3LaUu1M2XEGPoZYCT5jsVziSN9hLoLxY"
+				"bzz-raw://5b9286ecf01f4ccf199b32ac4a0a1a0cf5a91c70e1a2e3000c88284bc0caf214",
+				"dweb:/ipfs/QmcomqtLfGigz3bMc3RUZ27npkDG2nFoAmoPedJfbqBHuZ"
 			]
 		}
 	},
