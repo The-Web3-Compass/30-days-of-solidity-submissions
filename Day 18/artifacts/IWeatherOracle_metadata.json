@@ -1,0 +1,65 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "location",
+						"type": "string"
+					}
+				],
+				"name": "getRainfallData",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"WeatherOracle.sol": "IWeatherOracle"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"WeatherOracle.sol": {
+			"keccak256": "0x6fc7dab1344a7ccc7a8474fd11a9a89b317d88b966b428be1b5d852a0e2eb86a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://9707c319476e755b22ed786304670d2cd8f20a3cdcbe75aa0a4cbb1320b41b84",
+				"dweb:/ipfs/QmX2BZQvRB3P7unv3PtqCHcxzz71JopgUTrTS9GeE3ATcG"
+			]
+		}
+	},
+	"version": 1
+}

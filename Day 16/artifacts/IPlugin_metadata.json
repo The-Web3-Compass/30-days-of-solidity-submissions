@@ -1,0 +1,59 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "data",
+						"type": "bytes"
+					}
+				],
+				"name": "execute",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"PluginStore.sol": "IPlugin"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"PluginStore.sol": {
+			"keccak256": "0x7c3bdb31aa0ebaa189fc24fdc4db11ddeb1d30f8f1d83043964ef7701e50b852",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://d42a44ee91bca8042519e545551aaa407ad3159d4c5a81b9d4447ed078a3affb",
+				"dweb:/ipfs/QmbGE5sxYULF34T8MDud65h6zwU9tdQjymTWEth33MSSkv"
+			]
+		}
+	},
+	"version": 1
+}
