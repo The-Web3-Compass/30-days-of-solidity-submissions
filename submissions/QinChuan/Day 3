@@ -1,0 +1,35 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+contract PollStation {
+    //声明候选人列表和投票跟踪
+    string[] public candidateNames;
+    mapping(string => uint256) voteCount;
+    // 记录哪些地址已经投过票了
+    mapping(address => bool) public hasVoted;
+
+    //添加候选人
+    function addCandidateNames(string memory _candidateNames) public {
+        candidateNames.push(_candidateNames);
+        voteCount[_candidateNames] = 0;
+    }
+
+    //查看候选人列表
+    function getCandidateNames() public view returns (string[] memory) {
+        return candidateNames;
+    }
+
+    //投票
+    function vote(string memory _candidateNames) public {
+	// 检查调用者是否已经投过票
+	require(!hasVoted[msg.sender], "You have already voted!");
+	// 如果没投过，才允许投票
+	voteCount[_candidateNames] += 1;
+	// 标记该地址已投票
+	hasVoted[msg.sender] = true;
+    }
+
+    //检查票数
+    function getVote(string memory _candidateNames) public view returns (uint256) {
+        return voteCount[_candidateNames];
+    } 
+}
