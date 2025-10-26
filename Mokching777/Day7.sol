@@ -67,7 +67,6 @@ contract simpleIOU{
 
         balances[msg.sender] -= _amount;
         (bool success, ) = _to.call{value:_amount}("");
-        balances[_to] += _amount;
         require(success,"Transfer failed.");
     }
 
@@ -82,5 +81,10 @@ contract simpleIOU{
 
     function checkBalance() public view  onlyRegistered returns (uint256){
         return balances[msg.sender];
+    }
+
+    //Advanced Step : Add the getDebt() query function to view “Who owes me how much money?”
+    function getDebt(address _debtor,address _creditor) public view returns (uint256){
+        return debts[_debtor][_creditor];
     }
 }
