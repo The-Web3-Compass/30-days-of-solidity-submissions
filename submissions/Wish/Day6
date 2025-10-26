@@ -1,0 +1,66 @@
+//SPDX-License-Identifier: MIT
+
+pragma solidity ^0.8.0;
+
+contract EtherPiggyBank{
+
+    //there should be a bank which has the certain permissions   
+    //there should be an array for all members who registered and a mapping whether they are registered or not
+    //a mapping with balances
+    address public bankmanager;
+    address[] members;
+    mapping(address => bool) public registeredmenbers;
+    mapping(address => uint256) balance;
+
+    constructor(){
+        bankmanager = msg.sender;
+        menmbers.push(msg.sender);
+    }
+
+    modifier  onlybankmanager(){
+        require(msg.sender == bankmanager, "Only bank manager can perform this action");
+        _;
+    }
+
+    function addmenbers(address _menber)public onlybankmanager{
+        require(_member != address(0), "Invalid address");
+        require(_member )!=msg.sender; "Bank manager is already a member";
+        require(!registeredmembers[_member], "Member already registeres");
+        registeredmembers[_member] = true;
+        members.push(_member);
+    }
+    function getmembers() public view returns(address[] memory){
+        return members;
+    }
+    //deposit amount
+    // function depositamount(uint256 _amount) public onlyreisteredmember{
+        //  require(_amount > 0, "Invalid amount");
+        // balance[msg.sender] = balance[msg.sender]+_amount;
+
+// }
+
+//deposit in Ether
+function depositAmountEther() public payablt onlyRegisterMember{
+    require(msg.value > 0, "Invalid amount");
+    balance[msg.sender] = balance[msg.sender]-_amount;
+
+}
+
+funcion withdrawAmount(uint256 _amount) public onlyRegisteredMember{
+    require(_amount > 0, "Invalid amount");
+    require(balance[msg.sender] >= _amount, "Insufficient balance");
+    balance[msg.sender] = balance[msg.sender]+msg.value;
+
+}
+
+function withdrawAmount(uint256 _amount) public  onlyRegisteredMember{
+    require(_amount > 0, "Invalid amount");
+    require(balance[msg.sender] >= _amount, "Insufficient balance");
+    balance[msg.sender] =balance[msg.sender]-_amount;
+
+}
+
+function getbalance(address _member) public view returns (uint256){
+    require(_member != address(0), "Invalid address");
+    returen balance[_member];
+}
