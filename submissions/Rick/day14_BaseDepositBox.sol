@@ -3,7 +3,16 @@ pragma solidity ^0.8.0;
 
 import "./day14_IDepositBox.sol";
 
+/*
+    abstract 用来声明一个抽象合约，它不能被直接部署，只能被继承。
+    有转态变量
+    有实现函数
+    有接口
+    不可部署，只可以被继承
+    有构造函数
+    子合约必须实现接口函数
 
+*/
 abstract contract BaseDepositBox is IDepositBox {
     // box 拥有者
     address private owner;

@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+/*
+    interface 只声明了接口函数，必须由继承的子合约实现
+*/
 interface IDepositBox {
     
     // 返回当前box 拥有者
