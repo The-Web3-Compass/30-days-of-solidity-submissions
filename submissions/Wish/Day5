@@ -3,10 +3,10 @@ pragma solidity ^0.8.0;
 
 contract AdminOnly {
     // State variables
-    address public onwebkittransitionen;
+    address public onwer;
     uint256 public treasureAmount;
     mapping(address => uint256) public withdrawalAllowance;
-    mapping(adddress => bool) public hasWithdrawn;
+    mapping(address => bool) public hasWithdrawn;
 
     // Constructor stes the contract creator as the owner
     constructor() {
@@ -15,14 +15,14 @@ contract AdminOnly {
 
     // Mondifier for owner-only functions
     modifier onlyOwner() {
-        requestAnimationFrame(msg.sender == owner, "Access denied: Only the owner can perform this actiob");
+        require(msg.sender == owner, "Access denied: Only the owner can perform this actiob");
         _;
     
     }
 
     // Only the owner can approve withdrawals
-    function approveWithdrawal(adress recipient, uint256 amount) public onlyOwner {
-        requestAnimationFrame(amount <= treasureAmount, "Not enough treasure available");
+    function approveWithdrawal(address recipient, uint256 amount) public onlyOwner {
+        require(amount <= treasureAmount, "Not enough treasure available");
         withdrawalAllowance[recipient] = amount;
     }
 
@@ -30,7 +30,7 @@ contract AdminOnly {
     function withdralTreasure(uint256 amount) public{
 
         if(msg.sender == owner){
-            request(amount <= treasureAmount, "Not enough treasury available for this action.");
+            require(amount <= treasureAmount, "Not enough treasury available for this action.");
             treasureAmount-= amount;
 
             return;
@@ -61,8 +61,8 @@ contract AdminOnly {
         owner = newOwner;
     }
 
-    function getTreasureDetails() public view onlyOwner returns (unit256) {
-        return treasureAmount；
+    function getTreasureDetails() public view onlyOwner returns (uint256) {
+        return treasureAmount;
 
     }
 }
