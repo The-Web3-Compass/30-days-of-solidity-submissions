@@ -25,6 +25,7 @@ contract AuditionHouse{
     if (bids[msg.sender] ==0){
         bidders.push(msg.sender);
     }
+    bids[msg.sender] = amount;
     if(amount > highestBid){
         highestBid = amount;
         highestBidder = msg.sender;
