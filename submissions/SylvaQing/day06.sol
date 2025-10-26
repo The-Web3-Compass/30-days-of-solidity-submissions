@@ -50,5 +50,11 @@ contract SaveMoney {
         balance[msg.sender]-=_amount;
         payable(msg.sender).transfer(_amount);
     }
+    //查看余额
+    
+    function getBalance(address _member) public view returns (uint256){
+        require(_member != address(0), "Invalid address");
+        return balance[_member];
+    } 
 
 }
