@@ -11,7 +11,7 @@ contract AuctionHouse{
     address[] public bidders;//出价者
     mapping(address => uint) public bids;
 
-    //构造函数
+    //构造函数（点deploy的条件）
     constructor(string memory _item, uint _biddingTime) {
         owner = msg.sender;//msg.sender表示当前调用函数的用户地址
         item = _item;
@@ -26,7 +26,7 @@ contract AuctionHouse{
         if (bids[msg.sender] == 0) {
             bidders.push(msg.sender);
         }
-        bids[msg.sender] = amount;
+        bids[msg.sender] = amount;//一个人只保留最高出价
 
         if (amount > highestBid) {
             highestBid = amount;
