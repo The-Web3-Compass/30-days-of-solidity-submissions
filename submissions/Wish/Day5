@@ -10,12 +10,12 @@ contract AdminOnly {
 
     // Constructor stes the contract creator as the owner
     constructor() {
-        owner = msg.sender;
+        onwer = msg.sender;
     }
 
     // Mondifier for owner-only functions
     modifier onlyOwner() {
-        require(msg.sender == owner, "Access denied: Only the owner can perform this actiob");
+        require(msg.sender == onwer, "Access denied: Only the owner can perform this actiob");
         _;
     
     }
@@ -29,7 +29,7 @@ contract AdminOnly {
     // Anyone can attempt to withdraw, but only those with allowance will succeed
     function withdralTreasure(uint256 amount) public{
 
-        if(msg.sender == owner){
+        if(msg.sender == onwer){
             require(amount <= treasureAmount, "Not enough treasury available for this action.");
             treasureAmount-= amount;
 
@@ -58,7 +58,7 @@ contract AdminOnly {
     //Only the owner can transfer ownership
     function transferOwnership(address newOwner) public onlyOwner {
         require(newOwner != address(0), "Invalid address");
-        owner = newOwner;
+        onwer = newOwner;
     }
 
     function getTreasureDetails() public view onlyOwner returns (uint256) {
