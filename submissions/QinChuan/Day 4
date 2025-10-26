@@ -1,0 +1,64 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+contract AuctionHouse {
+    address public owner;
+    //追踪用户
+    string public item;
+    //拍卖物品列表（数组）
+
+    uint public auctionEndTime;
+    //拍卖持续时间
+    bool public ended;
+    //拍卖是否结束
+
+    mapping(address => uint) public bids;
+    //“出价者→金额”的键值对（字典）
+    address private highestBidder;
+    uint private highestBid;
+    //记录最高价及出价者
+    address[] public bidders;
+    //all出价者名单
+
+    //构造函数
+    constructor(string memory _item, uint _biddingTime) {
+        owner = msg.sender;
+        //把部署合约的人设为所有者（拍卖人）
+        item = _item;
+        //已声明的变量写入函数的参数（拍卖品）
+        auctionEndTime = block.timestamp + _biddingTime;
+        //拍卖结束时间 = 当前时间 + 拍卖持续时间（拍卖时间）
+    }
+
+    //出价功能（函数）
+    function bid(uint amount) external {
+        require(block.timestamp < auctionEndTime, "Auction has already ended.");
+        require(amount > 0, "Bid amount must be greater than zero.");
+        require(amount > bids[msg.sender], "New bid must be higher than your current bid.");
+
+        if (bids[msg.sender] == 0) {
+          bidders.push(msg.sender);
+        }
+
+        bids[msg.sender] = amount;
+
+        if (amount > highestBid) {
+            highestBid = amount;
+            highestBidder = msg.sender;
+        }
+    }
+
+    function endAuction() external {
+        require(block.timestamp >= auctionEndTime, "Auction hasn't ended yet.");
+        require(!ended, "Auction end already called.");
+        ended = true;
+    }
+
+    function getWinner() external view returns (address, uint) {
+        require(ended, "Auction has not ended yet.");
+        return (highestBidder, highestBid);
+    }
+
+    function getAllBidders() external view returns (address[] memory) {
+        return bidders;
+    }
+}
