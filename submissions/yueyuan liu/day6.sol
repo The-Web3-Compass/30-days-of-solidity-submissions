@@ -4,7 +4,6 @@ contract Etherpiggybank{
     address public bankmanager;
     address[]members;
     mapping(address=>bool)public registermembers;
-    //bool值，是member就变成了true 默认false
     mapping(address=>uint256)balance;
 
     constructor(){
