@@ -1,0 +1,65 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"name": "click",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "counter",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"submissions/Anjou999/Day01-点击计数器.sol": "ClickCounter"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"submissions/Anjou999/Day01-点击计数器.sol": {
+			"keccak256": "0x0d7889eb593d7fde1299d5ab0485b88dedf9802b65d349a6d0be787823321252",
+			"urls": [
+				"bzz-raw://cf26dd73278305a32449be9f5c2133cd8c031f02d42bec2c258dabc9b680108e",
+				"dweb:/ipfs/QmVnPxPkLyApNkTPCZwx7MTV1KrLjEWLzuizsKBnsLmz2R"
+			]
+		}
+	},
+	"version": 1
+}
