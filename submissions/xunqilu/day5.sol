@@ -13,7 +13,7 @@ contract AdminOnly {
     
     modifier onlyOwner() {
         require(msg.sender == owner, "Access denied: Only the owner can perform this action");
-        _;
+        _; //placeholder,where the rest of the code in the funtion shoul run
     }
     
     function addTreasure(uint256 amount) public onlyOwner {
@@ -31,7 +31,6 @@ contract AdminOnly {
         if(msg.sender == owner){
             require(amount <= treasureAmount, "Not enough treasury available for this action.");
             treasureAmount-= amount;
-
             return;
         }
         uint256 allowance = withdrawalAllowance[msg.sender];
@@ -39,14 +38,18 @@ contract AdminOnly {
         require(allowance > 0, "You don't have any treasure allowance");
         require(!hasWithdrawn[msg.sender], "You have already withdrawn your treasure");
         require(allowance <= treasureAmount, "Not enough treasure in the chest");
-        require(allowance >= amount, "Cannot withdraw more than you are allowed"); // condition to check if user is withdrawing more than allowed
+            //‘amount<=trasureAmount’ make more sense than ‘allowance <= treasureAmount’ for checking if there are enough treasure in the chest
+            //because if the amount user wanna withdraw is lower than allowance and current treasure amount 
+            //but the allowance is more than the treasure amount, then the user can not withdraw any money
+            //for example, treasure is 5, amount is 2, allowance is 10
+        require(allowance >= amount, "Cannot withdraw more than you are allowed"); 
         
         hasWithdrawn[msg.sender] = true;
-        treasureAmount -= allowance;
-        withdrawalAllowance[msg.sender] = 0;
+        treasureAmount -= allowance; //should it be -= amount？
+        withdrawalAllowance[msg.sender] = 0; //is this necessary when we already set hasWithdraw to true? if the user's status get reset, 
+                                            // then they still can not withdraw any money unless the allowance get reset too
         
     }
-    
     function resetWithdrawalStatus(address user) public onlyOwner {
         hasWithdrawn[user] = false;
     }
