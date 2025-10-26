@@ -56,10 +56,11 @@ contract EtherPiggyBank {
         balance[msg.sender] += msg.value;
     }
 
-    function withdrawAmountEther() public payable onlyRegistredMember {
-        require(msg.value > 0, "Invalid amount");
-        require(msg.value <= balance[msg.sender], "Insufficient balance");
-        balance[msg.sender] -= msg.value;
+    function withdrawAmountEther(uint256 amount) public payable onlyRegistredMember {
+        require(amount > 0, "Invalid amount");
+        require(amount <= balance[msg.sender], "Insufficient balance");
+        payable(msg.sender).transfer(amount);
+        balance[msg.sender] -= amount;
     }
 
     function getBalance(address member) public view onlyRegistredMember returns(uint256) {
