@@ -31,6 +31,17 @@ contract PluginStore {
         return pluginMap[key];
     }
 
+    /*
+        call : 夸合约调用其他合约函数
+        执行目标合约的代码，使用目标合约的上下文
+        msg.sender 是当前合约，要获取原始调用者，单独作为参数传入
+        可传递ETH
+
+        abi.encodeWithSignature("函数名(参数类型...)", 参数值...)
+        第一个是签名字符串，
+        后面依次传实际参数，
+        没参数就不写后面的值，但括号要保留！
+    */
     function runPlugins(string memory _pluginName , string memory functionSignature, address user , string memory argument) external {
         address pluginAddr = pluginMap[_pluginName];
         require(pluginAddr != address(0), "not  set");
@@ -40,7 +51,14 @@ contract PluginStore {
         require(success , "Plugin execution failed");
     }
 
-    // 通过staticcall 实现不同渠道
+    /* 
+        delegatecall 使用目标合约的函数逻辑，但是使用当前合约的上下文
+        还是在当前合约执行费代码，msg.sender 无变更，还是原始调用者
+        不能传递ETH 
+
+        staticcall 安全地读取其他合约的状态或返回值（不会修改状态）
+        调用的只能是view和pure函数
+    */
     function runPluginView(string memory _pluginName , string memory functionSignature, address user ) external view returns (string memory) {
         address pluginAddr = pluginMap[_pluginName];
         require(pluginAddr != address(0), "not  set");
