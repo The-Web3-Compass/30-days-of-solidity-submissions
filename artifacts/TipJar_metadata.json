@@ -311,11 +311,11 @@
 	},
 	"sources": {
 		"submissions/iCat798/Day08-TipJar.sol": {
-			"keccak256": "0xa5c34e4dcfe9e60925bdb5428acb9772462347c8a24964c2e87be6860efe069e",
+			"keccak256": "0x61c76721b2139de8591ee6de9270242580064be60720114ccc000f0a229044d2",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://8fcb57a48d8056d1f637d4bbca7fb0e2eb62b5f92b36a9e7cfacd3a43b15f7fa",
-				"dweb:/ipfs/QmZ4Fvb42MkBVpRg8sZz9B2gBmrFUC2T42ooZF8hJr2wxj"
+				"bzz-raw://eac6a05d480afec95627ab317cb5c2631f149a5dfe8471c107be90a954bb6c7a",
+				"dweb:/ipfs/QmRfjdvVPFXVduSfz46rKfzwuVPjzk9BQ3jDWnJ7hTPxiJ"
 			]
 		}
 	},
