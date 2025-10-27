@@ -6,18 +6,22 @@ contract SimpleIOU{
     
     mapping(address => bool) public registeredFriends;
     address[] public friendList;
-    
+    //快速检查是否允许某人使用合约，mapping 是查找表，用来判断“有没有”
+    //提供了所有注册地址的完整列表，array 是列表，用来记录“有哪些”。
 
     mapping(address => uint256) public balances;
     
-    mapping(address => mapping(address => uint256)) public debts; // debtor -> creditor -> amount
+    mapping(address => mapping(address => uint256)) public debts; 
+    // debtor -> creditor -> amount嵌套映射
     
+
     constructor() {
         owner = msg.sender;
         registeredFriends[msg.sender] = true;
         friendList.push(msg.sender);
     }
     
+    //修饰符有助于保护功能免遭未经授权的访问
     modifier onlyOwner() {
         require(msg.sender == owner, "Only owner can perform this action");
         _;
@@ -41,7 +45,10 @@ contract SimpleIOU{
         require(msg.value > 0, "Must send ETH");
         balances[msg.sender] += msg.value;
     }
+    //该函数是payable,这意味着它可以接收 ETH
+    //msg.value 保存发送的 ETH 数量
     
+    //调用recordDebt记录欠款
     function recordDebt(address _debtor, uint256 _amount) public onlyRegistered {
         require(_debtor != address(0), "Invalid address");
         require(registeredFriends[_debtor], "Address not registered");
@@ -50,6 +57,7 @@ contract SimpleIOU{
         debts[_debtor][msg.sender] += _amount;
     }
     
+    //使用合约中存储的 ETH 余额偿还某人
     function payFromWallet(address _creditor, uint256 _amount) public onlyRegistered {
         require(_creditor != address(0), "Invalid address");
         require(registeredFriends[_creditor], "Creditor not registered");
@@ -62,6 +70,7 @@ contract SimpleIOU{
         debts[msg.sender][_creditor] -= _amount;
     }
     
+    //转钱给群内的朋友
     function transferEther(address payable _to, uint256 _amount) public onlyRegistered {
         require(_to != address(0), "Invalid address");
         require(registeredFriends[_to], "Recipient not registered");
@@ -71,6 +80,7 @@ contract SimpleIOU{
         balances[_to]+=_amount;
     }
     
+        //更灵活，无gas限制。除普通钱包，还支持转入外部钱包（EOA），智能合约钱包（Gnosis Safe 等）
     function transferEtherViaCall(address payable _to, uint256 _amount) public onlyRegistered {
         require(_to != address(0), "Invalid address");
         require(registeredFriends[_to], "Recipient not registered");
@@ -78,16 +88,20 @@ contract SimpleIOU{
         
         balances[msg.sender] -= _amount;
         
+
+        //("")：表示不调用任何函数、也不传参数（只是转钱）
         (bool success, ) = _to.call{value: _amount}("");
         balances[_to]+=_amount;
         require(success, "Transfer failed");
     }
     
+//取钱
     function withdraw(uint256 _amount) public onlyRegistered {
         require(balances[msg.sender] >= _amount, "Insufficient balance");
         
         balances[msg.sender] -= _amount;
         
+        //使用success 变量检查作是否成功 
         (bool success, ) = payable(msg.sender).call{value: _amount}("");
         require(success, "Withdrawal failed");
     }
