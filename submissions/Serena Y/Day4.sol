@@ -18,7 +18,7 @@ contract AuditionHouse{
     }
 //允许用户去竞拍
     function bid(uint amount) external {
-        require(block.timestamp < auctionEndTime, "Auction has already ended");
+        require(block.timestamp < auctionEndTime, "Auction has already ended");//Unnecessary？？？
         require(amount > 0, "Bid amount must be greater than zero");
         require(amount > bids[msg.sender],"New bid must be higher than your current bid.");
 //跟踪新的竞拍者
@@ -30,8 +30,18 @@ contract AuditionHouse{
         highestBid = amount;
         highestBidder = msg.sender;
     }
-}   
-function endAuction() external {
+    
+    if(block.timestamp>=auctionEndTime && !ended){//New added, to save the problem that auction can't end automatically-not working
+        ended = true;
+        revert("Auction has ended");//立即终止函数执行
+        
+    }
+}  
+modifier onlyOwner() {
+    require(msg.sender==owner,"Not Owner");//New added, to save the problem that anyone can end the auction
+    _;
+}
+function endAuction() external onlyOwner{
     require(block.timestamp >= auctionEndTime, "Auction hasn't ended yet.");//确保拍卖在合约预设的时间上已经结束
     require(!ended,"Audition end already called");
     ended = true;
