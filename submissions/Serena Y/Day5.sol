@@ -5,8 +5,8 @@ contract AdminOnly{
 
 address public owner;
 uint256 public treasureAmount;
-mapping(address=>uint256) public withdrawalAllowance;
-mapping(address=>bool) public hasWithdrawn;
+mapping(address=>uint256) public withdrawalAllowance;//提款限额
+mapping(address=>bool) public hasWithdrawn;//判断是否已撤回
 
 constructor(){
     owner = msg.sender;
@@ -35,13 +35,20 @@ function withdrawTreasure(uint256 amount) public{
     }
     //普通用户取宝
     uint256 allowance = withdrawalAllowance[msg.sender];
+    require(allowance>= amount,"Can not withdraw more than you are allowed");//不能够超出权限取宝物
+    require(amount <= treasureAmount, "Not enough treasure in the chest");//宝箱里是否仍有足够的宝物？
     require(allowance>0,"You don't have any treasure allowance");//是否被批准提取？
     require(!hasWithdrawn[msg.sender],"You have already withdrawn your treasure");//是否已经提取过？
-    require(allowance<= treasureAmount, "Not enough treasure in the chest");//宝箱里是否仍有足够的宝物？
+    
+    
     //完成取宝操作
-    hasWithdrawn[msg.sender]=true;//将用户标记为“已提取”；
-    treasureAmount-=allowance;//从宝箱中减去被批准的提取数量
-    withdrawalAllowance[msg.sender]=0;//将该用户的提取额度重置为零，防止重复提取
+    
+    treasureAmount-=amount;//从宝箱中减去被批准的提取数量
+    withdrawalAllowance[msg.sender]-=amount;//扣减部分授权额
+
+    if(withdrawalAllowance[msg.sender]==0){
+        hasWithdrawn[msg.sender]=true;//将用户标记为“已提取”；
+    }
     }
 
 
