@@ -14,12 +14,36 @@
 				"inputs": [
 					{
 						"internalType": "address",
+						"name": "_creditor",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					}
+				],
+				"name": "PayFromWallet",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
 						"name": "_friend",
 						"type": "address"
 					}
 				],
 				"name": "addFriend",
-				"outputs": [],
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
@@ -122,24 +146,6 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "_creditor",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_amount",
-						"type": "uint256"
-					}
-				],
-				"name": "payFromWallet",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
 						"name": "_debtor",
 						"type": "address"
 					},
@@ -171,24 +177,6 @@
 					}
 				],
 				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address payable",
-						"name": "_to",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_amount",
-						"type": "uint256"
-					}
-				],
-				"name": "transferEther",
-				"outputs": [],
-				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -251,11 +239,11 @@
 	},
 	"sources": {
 		"submissions/Serena Y/Day7.sol": {
-			"keccak256": "0x740785c4c7f3db60753e25b4fc65af0272f40022ba19a5023045e8d769e94c58",
+			"keccak256": "0xd101bedbb7da3557a4fa1e3d4e90939e4adec11857522ec45faeb2e6be10ecda",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://1bfacbced1b3ddfd24bedb03767eaf50b5377150384f384022f467d5ed2efa55",
-				"dweb:/ipfs/QmSHCgVmo7EBRk9nYZzJSC1PZSBTHE9Jk4nNsewBSc6u9f"
+				"bzz-raw://0e91358de8ab4e26142a9d629e4193f7afd22929389bab425870694904232e49",
+				"dweb:/ipfs/QmUZDYPqYjapwr8B3kNWU26vyr63iFHS5ieJUXK2dT1NMV"
 			]
 		}
 	},

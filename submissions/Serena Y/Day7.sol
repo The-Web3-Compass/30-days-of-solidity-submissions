@@ -27,12 +27,13 @@ contract SimpleIOU{
         _;
     }
 //添加朋友
-    function addFriend(address _friend) public onlyOwner{
+    function addFriend(address _friend) public onlyOwner returns(address) {
         require(_friend!= address(0),"Invalid address");
         require(!registeredFriends[_friend],"Friend already registered");
 
         registeredFriends[_friend]=true;
         friendList.push(_friend);
+        return(_friend);
     }
 //存钱
     function depositIntoWallet() public payable onlyRegistered{
