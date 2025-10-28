@@ -38,17 +38,28 @@ contract Calculator{
         return results;
     }
 
-    function calculatePower(uint256 base, uint exponent) public view returns(uint256){
-         ScientificCalculator scientificCalc = ScientificCalculator(scientificCalculatorAddress); 
 
-         uint256 results=scientificCalc.power(base, exponent);
-         return results;
-    }
- function calculateSquareRoot(int256 number) public view returns(int256){
-         ScientificCalculator scientificCalc = ScientificCalculator(scientificCalculatorAddress); 
+    function calculatePower(uint256 base, uint256 exponent)public returns (uint256){
+        
 
-         int256 results=scientificCalc.squareRoot(number);
-         return results;
+        bytes memory data = abi.encodeWithSignature("power(uint256,uint256)",base,exponent);
+        (bool success, bytes memory returnData) = scientificCalculatorAddress.call(data);
+        require(success, "External call failed");
+        uint256 result = abi.decode(returnData, (uint256));
+        return result;
     }
+
+
+
+    function calculateSquareRoot(uint256 number)public returns (uint256){
+        require(number >= 0 , "Cannot calculate square root of negative nmber");
+
+        bytes memory data = abi.encodeWithSignature("squareRoot(uint256)", number);
+        (bool success, bytes memory returnData) = scientificCalculatorAddress.call(data);
+        require(success, "External call failed");
+        uint256 result = abi.decode(returnData, (uint256));
+        return result;
+    }
+
 
 }
