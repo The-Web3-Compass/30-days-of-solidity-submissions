@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract ScientificCalcuator{
+contract ScientificCalculator{
 
   function power(uint256 base, uint256 exponent)  public pure returns(uint256){
     if(exponent==0) return 1;
