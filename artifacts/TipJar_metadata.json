@@ -311,11 +311,11 @@
 	},
 	"sources": {
 		"submissions/doubleqian/day8.sol": {
-			"keccak256": "0x08bfc8c5657e947889ca40eebec60c78aa953115337bbf96db0551b198090c47",
+			"keccak256": "0x8cac7737e3d1a15e02fd5e06f12594236569bac50a3dbbea0e54361da2496473",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://42efb43d08c279d4f2ac628412a25ff791a892e418da68a511adb370b80f99e4",
-				"dweb:/ipfs/QmPbC6KDwQf2Dv5xnmqg8QKzvRCShnZ6TGvRMsdvxctWBD"
+				"bzz-raw://5b3b64b33b5a7c7df04ae595b33f4bef9e614056df7e2b6aa4435d6d64669eb5",
+				"dweb:/ipfs/QmVDm1aoQekTco4ovpbrzWZkT2FMx9Cj6ha2bRm7ZCRypA"
 			]
 		}
 	},
