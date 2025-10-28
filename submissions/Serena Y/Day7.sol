@@ -70,9 +70,9 @@ contract SimpleIOU{
 
         
          balances[msg.sender] -= _amount;
+         balances[_to] += _amount;
          
          (bool success,)= _to.call{value: _amount}("");//call 方法向 _to 地址发送 _amount ETH。
-         balances[_to] += _amount;
          require(success, "transfer failed");
 
         
