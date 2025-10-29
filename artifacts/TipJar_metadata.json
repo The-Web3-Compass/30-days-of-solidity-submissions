@@ -311,11 +311,11 @@
 	},
 	"sources": {
 		"submissions/Z weiqi/Day8.sol": {
-			"keccak256": "0xb46b943506be3429750d6d7ee2d5eec6021329acb97475f496de644560e35fa8",
+			"keccak256": "0x0d17b690b1b68a9e8754cafa26d71551aa9135ae7b806fca9f036cd9479f0ac3",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://edf64d3d101cf0a1a28d06752796de81dfeaa185c2cddb8b8b6695bc686f047d",
-				"dweb:/ipfs/Qmchp3VDf9nZGVWA2ZeGFeL99Nk9MC5bmvLtDkGE1vVroQ"
+				"bzz-raw://ee10b16e520addb63a650f32c20e98bdfdde84cf11d4ec1876671198b893be98",
+				"dweb:/ipfs/QmXHdqjpeLymLf3MFyb2dVLLGTfKT2eibsqhdYFM66wjmq"
 			]
 		}
 	},
