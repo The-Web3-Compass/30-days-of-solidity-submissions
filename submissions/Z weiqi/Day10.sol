@@ -59,7 +59,7 @@ contract SimpleFitnessTracker {
             isRegistered: true
         });
         
-        // Emit registration event
+        
         emit UserRegistered(msg.sender, _name, block.timestamp);
     }
 
