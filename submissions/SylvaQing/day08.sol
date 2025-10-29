@@ -1,6 +1,7 @@
 // SPDX-License-Identifier:MIT
 pragma solidity ^0.8.0;
 
+//Qingchen
 contract TipJar{
     //基本信息
     address public owner;
@@ -54,7 +55,10 @@ contract TipJar{
     //其他币种小费：有疑问1111
     //辅助函数-转换为Eth
     function convertToEth(string memory _curCode,uint256 _amount) public view  returns (uint256){
-        return _amount * rates[_curCode] / (10**18);
+        require(rates[_curCode]>0,"Currency not supported");
+        // return _amount * rates[_curCode] ;
+        uint256 ethAmount = _amount * rates[_curCode] ;
+        return ethAmount;
     }
     function tipInCur(string memory _curCode,uint256 _amount) public payable {
         //转换为ETH
