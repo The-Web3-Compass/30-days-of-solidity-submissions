@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./SubscriptionStorageLayout.sol";
+import "./SubLayout.sol";
 
 contract SubscriptionStorage is SubscriptionStorageLayout{
     constructor(address _logicContract){
