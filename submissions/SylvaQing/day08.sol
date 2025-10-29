@@ -15,7 +15,7 @@ contract TipJar{
         _;
     }
 
-    //汇率转换-手动设置
+    //增加货币：代码+汇率（手动设置，后用预言机）
     function addCur(string memory _curCode,uint256 _rateToETH)public onlyOwner{
         require(_rateToETH>0,"Conversion rate must be greater than 0");
         
@@ -52,13 +52,25 @@ contract TipJar{
         tipsPerCurrency["ETH"]+=msg.value;
     }
     //其他币种小费：有疑问1111
-    function tipInCur(string memory _curCode) public payable {
+    //辅助函数-转换为Eth
+    function convertToEth(string memory _curCode,uint256 _amount) public view  returns (uint256){
+        return _amount * rates[_curCode] / (10**18);
+    }
+    function tipInCur(string memory _curCode,uint256 _amount) public payable {
         //转换为ETH
-        uint256 ethAmount=msg.value*rates[_curCode]/(10**18);
-        require(ethAmount>0,"Tip amount must be greater than 0");
-        totalTipsReceived+=ethAmount;
-        tipperContributions[msg.sender]+=ethAmount;
-        tipsPerCurrency["ETH"]+=ethAmount;
+        require(rates[_curCode]>0,"Currency not supported");
+        require(_amount>0,"Amount must be greater than 0");
+
+        // uint256 ethAmount=msg.value*rates[_curCode]/(10**18);
+        uint256 ethAmount=convertToEth(_curCode, _amount);
+        require(msg.value == ethAmount, "Sent ETH doesn't match converted amount");
+        // totalTipsReceived+=ethAmount;
+        // tipperContributions[msg.sender]+=ethAmount;
+        // tipsPerCurrency["ETH"]+=ethAmount;
+        tipperContributions[msg.sender] += msg.value;
+        totalTipsReceived += msg.value;
+        tipsPerCurrency[_curCode] += _amount;
+        //注意：amount是外币数量;value是wei大小
     }
     //提现
     function withdrawTips() public onlyOwner{
