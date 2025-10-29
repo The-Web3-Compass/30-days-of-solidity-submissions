@@ -1,0 +1,89 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "base",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "exponent",
+						"type": "uint256"
+					}
+				],
+				"name": "power",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "number",
+						"type": "uint256"
+					}
+				],
+				"name": "squareRoot",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"submissions/yuriofi/Day9_1.sol": "ScientificCalculator"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"submissions/yuriofi/Day9_1.sol": {
+			"keccak256": "0xf090e4c9970690ae55efb4bb6f50997969e8adf3d6dc96fc04d24350fd38dabd",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://553bb244484785afc86aba7d55361b471194983fa9507140f74aba91c11d7325",
+				"dweb:/ipfs/QmXudFj8tLiJSr2zQdxJEfuX9fwPryCX9oynVqFAHcuzaX"
+			]
+		}
+	},
+	"version": 1
+}
