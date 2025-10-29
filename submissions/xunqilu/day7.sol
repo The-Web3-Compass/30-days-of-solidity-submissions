@@ -3,15 +3,9 @@ pragma solidity ^0.8.0;
 
 contract SimpleIOU{
     address public owner;
-    
-    // Track registered friends
     mapping(address => bool) public registeredFriends;
     address[] public friendList;
-    
-    // Track balances
     mapping(address => uint256) public balances;
-    
-    // Simple debt tracking
     mapping(address => mapping(address => uint256)) public debts; // debtor -> creditor -> amount
     
     constructor() {
@@ -21,27 +15,24 @@ contract SimpleIOU{
     }
     
     modifier onlyOwner() {
-        require(msg.sender == owner, "Only owner can perform this action");
+        require(msg.sender == owner, "Only owner can do this!");
         _;
     }
     
     modifier onlyRegistered() {
-        require(registeredFriends[msg.sender], "You are not registered");
+        require(registeredFriends[msg.sender], "You are not registered");// requires registeredFriends == true
         _;
     }
     
-    // Register a new friend
     function addFriend(address _friend) public onlyOwner {
         require(_friend != address(0), "Invalid address");
         require(!registeredFriends[_friend], "Friend already registered");
-        
         registeredFriends[_friend] = true;
         friendList.push(_friend);
     }
     
-    // Deposit funds to your balance
     function depositIntoWallet() public payable onlyRegistered {
-        require(msg.value > 0, "Must send ETH");
+        require(msg.value > 0, "The amount should be greater than 0");
         balances[msg.sender] += msg.value;
     }
     
@@ -62,46 +53,57 @@ contract SimpleIOU{
         require(debts[msg.sender][_creditor] >= _amount, "Debt amount incorrect");
         require(balances[msg.sender] >= _amount, "Insufficient balance");
         
-        // Update balances and debt
         balances[msg.sender] -= _amount;
         balances[_creditor] += _amount;
         debts[msg.sender][_creditor] -= _amount;
     }
     
-    // Direct transfer method using transfer()
+    // transfer method using transfer()
     function transferEther(address payable _to, uint256 _amount) public onlyRegistered {
         require(_to != address(0), "Invalid address");
         require(registeredFriends[_to], "Recipient not registered");
         require(balances[msg.sender] >= _amount, "Insufficient balance");
-        balances[msg.sender] -= _amount;
+
+        //update balance before transfer to prevent reentrancy attack
+        balances[msg.sender] -= _amount; 
         _to.transfer(_amount);
         balances[_to]+=_amount;
+        //should we update debts here?
     }
     
-    // Alternative transfer method using call()
-    function transferEtherViaCall(address payable _to, uint256 _amount) public onlyRegistered {
+    // transfer method using call()
+    function transferEtherViaCall(address payable _to, uint256 _amount) public onlyRegistered { //why payable is in this function variable?
         require(_to != address(0), "Invalid address");
         require(registeredFriends[_to], "Recipient not registered");
         require(balances[msg.sender] >= _amount, "Insufficient balance");
         
         balances[msg.sender] -= _amount;
         
-        (bool success, ) = _to.call{value: _amount}("");
+        (bool success, ) = _to.call{value: _amount}(""); 
+        // call can do 2 things: 
+            //1- send ETH ; 
+            //2- optionally call a function on the target address, by passing encoded data in ("")
+            //("") means "no data" → only transfer _amount Ether to _to
+            //it returns (bool success, bytes memory data)
+                //success → whether the call succeeded (true or false)
+                //data → any bytes returned from the function (if any, but we don't care here)
         balances[_to]+=_amount;
         require(success, "Transfer failed");
+
+        //should we update debts here?
     }
     
-    // Withdraw your balance
+
     function withdraw(uint256 _amount) public onlyRegistered {
         require(balances[msg.sender] >= _amount, "Insufficient balance");
         
         balances[msg.sender] -= _amount;
         
-        (bool success, ) = payable(msg.sender).call{value: _amount}("");
+        (bool success, ) = payable(msg.sender).call{value: _amount}("");   // payable -> make msg.sender address can receive ETH
         require(success, "Withdrawal failed");
     }
     
-    // Check your balance
+
     function checkBalance() public view onlyRegistered returns (uint256) {
         return balances[msg.sender];
     }
