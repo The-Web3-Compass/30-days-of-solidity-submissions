@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./Day9-ScientificCalculator.sol";
+import "./Day09-ScientificCalculator.sol";
 
 contract Calculator{
     address public owner;

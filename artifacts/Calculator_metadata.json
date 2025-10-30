@@ -202,7 +202,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"submissions/Little8Monster/Day9-Calculator.sol": "Calculator"
+			"submissions/Little8Monster/Day09-Calculator.sol": "Calculator"
 		},
 		"evmVersion": "london",
 		"libraries": {},
@@ -216,15 +216,15 @@
 		"remappings": []
 	},
 	"sources": {
-		"submissions/Little8Monster/Day9-Calculator.sol": {
-			"keccak256": "0xecebfbf14917d6eb63605bb15c0844d46772088a158a3935470a9a41e108c02a",
+		"submissions/Little8Monster/Day09-Calculator.sol": {
+			"keccak256": "0xfa15b10207939a72cb221511dbadb950f8d65c99b1dbc206a4faab90793786b1",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://c800a0d8d1746226bae4ed23dbd096399689a0a097144e38e50d17fbf15bc07d",
-				"dweb:/ipfs/Qma7a9gZSF4xyCoWGBwzXGmyhonPGfS8smK6vmn4pU5afq"
+				"bzz-raw://1b9d9702a27bc811bae0dedfb7b439d85b74c9235ff95c4a60a44cc5c148ef21",
+				"dweb:/ipfs/QmZ83tkaTauHTSb16rp71N576Y2uEN5v6hLNStFU88i9Nj"
 			]
 		},
-		"submissions/Little8Monster/Day9-ScientificCalculator.sol": {
+		"submissions/Little8Monster/Day09-ScientificCalculator.sol": {
 			"keccak256": "0x1a58d79df08ec41e94a7be0544b21c60a7246ef41b23d159eb00f98df494be03",
 			"license": "MIT",
 			"urls": [
