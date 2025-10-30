@@ -70,7 +70,6 @@ contract EventEntry {
     function getEthSignedMessageHash(bytes32 _messageHash) public pure returns (bytes32) {
         return keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", _messageHash));
     }
-
     // 验证签名 
     function verifySignature(address _attendee, bytes memory _signature) public view returns (bool) {
         bytes32 messageHash = getMessageHash(_attendee);
@@ -96,10 +95,12 @@ contract EventEntry {
         if (v < 27) {
             v += 27;
         }
-
         require(v == 27 || v == 28, "Invalid signature 'v' value");
-        // 作用一：验证签名合法性
-        // 作用二：找到用户公钥，进而获取用户地址
+        /*
+            ecrecover
+            作用一：验证签名合法性
+            作用二：找到用户公钥，进而获取用户地址
+        */
         return ecrecover(_ethSignedMessageHash, v, r, s);
     }
 
