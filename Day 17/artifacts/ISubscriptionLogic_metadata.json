@@ -1,0 +1,59 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "data",
+						"type": "bytes"
+					}
+				],
+				"name": "manageSubscription",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"UpgradeHub.sol": "ISubscriptionLogic"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"UpgradeHub.sol": {
+			"keccak256": "0x634df9bd09733e2e7686c596a496faec98752b27147ed03f943fed038f7158a7",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://5a5ce027af3dc81e755f8c556ef67301c5fa0d3648e64b8dcad3ebd5ec26c29c",
+				"dweb:/ipfs/QmdDT7yy4X9QLdnb2RXH14CkErEgHSXtVEF2TEKniwdcjG"
+			]
+		}
+	},
+	"version": 1
+}
