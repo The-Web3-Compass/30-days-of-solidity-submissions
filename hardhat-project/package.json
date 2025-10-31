@@ -1,0 +1,22 @@
+{
+  "name": "hardhat-project",
+  "version": "1.0.0",
+  "description": "Hardhat project for 30 Days of Solidity",
+  "main": "index.js",
+  "scripts": {
+    "test": "hardhat test",
+    "compile": "hardhat compile",
+    "node": "hardhat node",
+    "deploy": "hardhat run scripts/deploy.js --network localhost"
+  },
+  "keywords": ["solidity", "hardhat", "ethereum", "smart-contracts"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "hardhat": "^2.19.2"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.9.3"
+  }
+}
