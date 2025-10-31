@@ -2,10 +2,19 @@
 pragma solidity ^0.8.0;
 
 contract SimpleERC20{
-    string public name="SimpleToken";//代币全名
-    string public symbol="SIM";//简短交易代码
-    uint8 public decimals=18;//18位小数
+    string public name;
+    string public symbol;
+    uint8 public decimals;
     uint256 public totalSupply;//代币供应量
+
+    constructor(string memory _name ,string memory _symbol ,uint8 _decimals,uint256 _initialSupply){
+       name=_name;
+       symbol=_symbol;
+       decimals=_decimals;
+       totalSupply=_initialSupply*(10**uint256(decimals));
+        balanceOf[msg.sender]=totalSupply;
+        emit Transfer(address(0),msg.sender,totalSupply);
+    }
 
     mapping(address=>uint256) public balanceOf;//告诉你每个地址有多少代币
     mapping(address=>mapping(address=>uint256)) public allowance;//双重映射，在你的地址簿里，谁被允许花了多少钱
@@ -13,11 +22,7 @@ contract SimpleERC20{
     event Transfer(address indexed from, address indexed to, uint256 value);
     event Approval(address indexed owner, address indexed spender, uint256 value);
 
-    constructor(uint256 _initialSupply){
-        totalSupply=_initialSupply*(10**uint256(decimals));
-        balanceOf[msg.sender]=totalSupply;
-        emit Transfer(address(0),msg.sender,totalSupply);
-    }
+
 
     function transfer(address _to, uint256 _value) public returns(bool){
         require(balanceOf[msg.sender]>0,"Not enough balance");

@@ -8,6 +8,21 @@
 			{
 				"inputs": [
 					{
+						"internalType": "string",
+						"name": "_name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_symbol",
+						"type": "string"
+					},
+					{
+						"internalType": "uint8",
+						"name": "_decimals",
+						"type": "uint8"
+					},
+					{
 						"internalType": "uint256",
 						"name": "_initialSupply",
 						"type": "uint256"
@@ -267,11 +282,11 @@
 	},
 	"sources": {
 		"submissions/Serena Y/Day12-ERC20.sol": {
-			"keccak256": "0xf2c843a9fbbaef9ed92de8a73cbf3abdd3375d0246806195e2dec28dbd469a6e",
+			"keccak256": "0xa44d29d3139918c0d5b167ab851c4a834be80108cc21b044adb9a9767043eb30",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://f24c687b78c475249b8cc199a2244943caaa5843e0343f000d4eaee747fda5f1",
-				"dweb:/ipfs/QmXbk3TWf38M9Nqp36mXcYgzdG5aGTxErY4CqAjKsbpKN4"
+				"bzz-raw://44efde00224a986cd0082ac22016a02f4cb3c5de177856e0b54ad2c38fe03332",
+				"dweb:/ipfs/QmdNBRuD218FQBr7Y9Ej6PKSFsST7LFiRxzuqQXCgZwJgr"
 			]
 		}
 	},
