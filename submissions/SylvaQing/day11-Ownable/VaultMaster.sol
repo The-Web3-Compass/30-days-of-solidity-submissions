@@ -1,11 +1,15 @@
 // SPDX-License-Identifier:MIT
 pragma solidity ^0.8.0;
 
-import "./ownable.sol";
+// import "./ownable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract VaultMaster is Ownable{
     event DepositSuccessful(address indexed account, uint256 value);
     event WithdrawSuccessful(address indexed recipient, uint256 value);
+
+    //使用包的构造函数
+    constructor() Ownable(msg.sender){}
 
     //获取余额
     function getBalance()public view returns (uint256){
