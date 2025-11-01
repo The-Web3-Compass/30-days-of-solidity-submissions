@@ -6,6 +6,7 @@ pragma solidity ^0.8.0;
  * @title SimpleLending
  * @dev A basic DeFi lending and borrowing platform
  */
+ 
 contract SimpleLending {
     // Token balances for each user
     mapping(address => uint256) public depositBalances;
