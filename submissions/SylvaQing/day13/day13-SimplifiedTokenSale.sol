@@ -80,20 +80,24 @@ contract SimplifiedTokenSale is SimpleERC20 {
         require(block.timestamp>=saleEndTime,"Sale is still active");
         finalized = true;
         //报警告说这个没有用上欸！
-        // uint256 tokensSold=totalSupply-balanceOf[address(this)]; //计算已售出的代币数量
+        uint256 tokensSold=totalSupply-balanceOf[address(this)]; //计算已售出的代币数量
         // 向项目所有者发送 ETH
         (bool success,)=projectOwner.call{value:address(this).balance}("");
         require(success,"Failed to send ETH to project owner");
 
-        emit SaleFinalized(totalRaised,totalSupply);
+        // emit SaleFinalized(totalRaised,totalSupply);
+        emit SaleFinalized(totalRaised, tokensSold); // 使用 tokensSold 替代 totalSupply
     }
 
     //只读函数：发售状态辅助函数
     function timeRemaining() public view returns (uint256){
-        if(block.timestamp>=saleEndTime){
-            return 0;
-        }
-        return saleEndTime-block.timestamp;
+        // if(block.timestamp>=saleEndTime){
+        //     return 0;
+        // }
+        // return saleEndTime-block.timestamp;
+
+        // 用三元表达式替换
+        return block.timestamp >= saleEndTime ? 0 : saleEndTime - block.timestamp;
     }
     function tokensAvailable() public view returns (uint256){
         return balanceOf[address(this)];
