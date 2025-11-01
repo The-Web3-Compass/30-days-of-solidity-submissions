@@ -11,6 +11,31 @@
 						"internalType": "uint256",
 						"name": "_initialSupply",
 						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_tokenPrice",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_saleDurationInSeconds",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_minPurchase",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_maxPurchase",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "_projectOwner",
+						"type": "address"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -39,6 +64,50 @@
 					}
 				],
 				"name": "Approval",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "totalRaised",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "totalTokensSold",
+						"type": "uint256"
+					}
+				],
+				"name": "SaleFinalized",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "buyer",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "etherAmount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "tokenAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "TokensPurchased",
 				"type": "event"
 			},
 			{
@@ -135,12 +204,78 @@
 			},
 			{
 				"inputs": [],
+				"name": "buyTokens",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "decimals",
 				"outputs": [
 					{
 						"internalType": "uint8",
 						"name": "",
 						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "finalizeSale",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "finalized",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "isSaleActive",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "maxPurchase",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "minPurchase",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -161,12 +296,103 @@
 			},
 			{
 				"inputs": [],
+				"name": "projectOwner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "saleEndTime",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "saleStartTime",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "symbol",
 				"outputs": [
 					{
 						"internalType": "string",
 						"name": "",
 						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "timeRemaining",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "tokenPrice",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "tokensAvailable",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalRaised",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -237,6 +463,10 @@
 				],
 				"stateMutability": "nonpayable",
 				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
 			}
 		],
 		"devdoc": {
@@ -252,7 +482,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"submissions/doubleqian/day13/SimpleERC20.sol": "SimpleERC20"
+			"submissions/doubleqian/day13/SimplifiedTokenSale.sol": "SimplifiedTokenSale"
 		},
 		"evmVersion": "prague",
 		"libraries": {},
@@ -272,6 +502,14 @@
 			"urls": [
 				"bzz-raw://8a03959f6de630569c3247d60fa9ff6d64317e6448cf069e6a78b0b616f5d41e",
 				"dweb:/ipfs/QmcvJBC4gHMVnP24ARFYeBhDjeagFHBVgC2tz1eajqeZkp"
+			]
+		},
+		"submissions/doubleqian/day13/SimplifiedTokenSale.sol": {
+			"keccak256": "0x1d5f9d397c17ed1296145faf14c17e319fd859192fe37bfe21f0b75eaa53d9f3",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://16a47980477d7fc9d72bb9faab807385bd8aa034d1bd7f08b971f48a0c6afa70",
+				"dweb:/ipfs/QmUtcjgUZpeP2vGMfmdhpe8Pzbuer7rJ9Xj2gSYC7dLm6L"
 			]
 		}
 	},
