@@ -19,7 +19,7 @@ contract SimpleERC20 {
         emit Transfer(address(0),msg.sender,totalSupply);
     }
 
-    function tranfer(address _to,uint256 value)public returns(bool){
+    function transfer(address _to,uint256 value)public virtual  returns(bool){
         require(_to!=address(0),"Invalid address");
         require(balanceOf[msg.sender] >= value,"Insufficient balance");
         _transfer(msg.sender,_to,value);
@@ -31,7 +31,7 @@ contract SimpleERC20 {
         emit Approval(msg.sender, _spender, value);
         return true;
     }
-    function transferFrom(address _from,address _to,uint256 _value) public returns(bool){
+    function transferFrom(address _from,address _to,uint256 _value) public virtual  returns(bool){
         require(_from!=address(0),"Invalid address");
         require(_to!=address(0),"Invalid address");
         require(balanceOf[_from] >= _value,"Insufficient balance");
