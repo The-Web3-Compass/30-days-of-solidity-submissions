@@ -31,14 +31,14 @@ contract SimpleERC20{
         balanceOf[_to]+=_value;
         emit Transfer(_from,_to,_value);
     }
-    function transfer(address _to,uint256 _value)public  returns (bool){
+    function transfer(address _to,uint256 _value)public virtual  returns (bool){
         require(balanceOf[msg.sender]>=_value,"Not enough balance");
         //内部辅助函数
         _transfer(msg.sender,_to,_value);
         return true;
     }
     //允许已获批准的人代为转移代币
-    function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {
+    function transferFrom(address _from, address _to, uint256 _value) public virtual returns (bool) {
         require(balanceOf[_from]>=_value,"Not enough balance");
         require(allowance[_from][msg.sender]>=_value,"Not enough allowance");
 
