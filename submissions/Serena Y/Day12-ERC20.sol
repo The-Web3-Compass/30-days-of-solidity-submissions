@@ -24,7 +24,7 @@ contract SimpleERC20{
 
 
 
-    function transfer(address _to, uint256 _value) public returns(bool){
+    function transfer(address _to, uint256 _value) public virtual returns(bool){//这一变化（指加virtua）会告诉 Solidity：如果有其他合约继承了这个合约，这个函数是可以被重新修改的
         require(balanceOf[msg.sender]>0,"Not enough balance");
         _transfer(msg.sender,_to,_value);//调用一个内部辅助函数 _transfer() 来执行实际的代币转移
         return true;
@@ -38,7 +38,7 @@ contract SimpleERC20{
         emit Transfer(_from,_to,_value);
     }
 
-    function transferFrom(address _from, address _to, uint256 _value) public returns(bool){
+    function transferFrom(address _from, address _to, uint256 _value) public virtual returns(bool){
         require(balanceOf[_from]>0,"Not enough balance");
         require(allowance[_from][msg.sender]>=_value,"Not enough balance");
         _transfer(_from,_to,_value);
