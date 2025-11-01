@@ -4,8 +4,8 @@ pragma solidity ^0.8.0;
 
 contract SaveMyname {
     
-    string name;
-    string bio;
+    string name;  // 一个名字
+    string bio;   //一个简介
     string age;
     string occupation;
 
