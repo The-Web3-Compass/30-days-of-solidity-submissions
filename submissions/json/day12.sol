@@ -39,14 +39,14 @@ contract CoolCoinERC20 {
     }
 
     // from 转账 to value 代币
-    function _transfer(address _from _to, uint256 _value) internal {
+    function _transfer(address _from, address _to, uint256 _value) internal {
         require(_to != address(0), "Invalid address");
         balanceOf[_from] -= _value;
         balanceOf[_to] += _value;
         emit Transfer(_from, _to, _value);
     }
 
-    function transferFrom(address _from _to, uint256 _value) public returns (bool) {
+    function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {
         require(balanceOf[_from] >= _value, "Not enough balance");
         require(allowance[_from][msg.sender] >= _value, "Allowance too low");
         allowance[_from][msg.sender] -= _value;
