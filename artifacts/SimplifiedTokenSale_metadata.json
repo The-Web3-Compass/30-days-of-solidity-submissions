@@ -9,8 +9,33 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "_initSupply",
+						"name": "_initialSupply",
 						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_tokenPrice",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_saleDurationInSeconds",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_minPurchase",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_maxPurchase",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "_projectOwner",
+						"type": "address"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -39,6 +64,50 @@
 					}
 				],
 				"name": "Approval",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "totalRaised",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "totalTokensSold",
+						"type": "uint256"
+					}
+				],
+				"name": "SaleFinalized",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "buyer",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "etherAmount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "tokenAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "TokensPurchased",
 				"type": "event"
 			},
 			{
@@ -135,12 +204,78 @@
 			},
 			{
 				"inputs": [],
+				"name": "buyTokens",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "decimals",
 				"outputs": [
 					{
 						"internalType": "uint8",
 						"name": "",
 						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "finalizeSale",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "finalized",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "isSaleActive",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "maxPurchase",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "minPurchase",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -161,12 +296,103 @@
 			},
 			{
 				"inputs": [],
+				"name": "projectOwner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "saleEndTime",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "saleStartTime",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "symbol",
 				"outputs": [
 					{
 						"internalType": "string",
 						"name": "",
 						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "timeRemaining",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "tokenPrice",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "tokensAvailable",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalRaised",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -189,12 +415,12 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "to",
+						"name": "_to",
 						"type": "address"
 					},
 					{
 						"internalType": "uint256",
-						"name": "value",
+						"name": "_value",
 						"type": "uint256"
 					}
 				],
@@ -237,6 +463,10 @@
 				],
 				"stateMutability": "nonpayable",
 				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
 			}
 		],
 		"devdoc": {
@@ -252,7 +482,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"submissions/yuriofi/Day12.sol": "SimpleERC20"
+			"submissions/yuriofi/Day13.sol": "SimplifiedTokenSale"
 		},
 		"evmVersion": "prague",
 		"libraries": {},
@@ -272,6 +502,14 @@
 			"urls": [
 				"bzz-raw://81f62bf1bf63f14bd46a9f223b48f86279f1aa7ff253b569360cae90812c4a59",
 				"dweb:/ipfs/QmPTWoizLvCKr2hdrX95SXa4UNGwKiU8ckmg13hobXvkxy"
+			]
+		},
+		"submissions/yuriofi/Day13.sol": {
+			"keccak256": "0x78f2896c0c164c4090f87a6e1981f51f2074e712cb71d605620a87148ed51ab5",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://8bd1c2d1266cc602946fb547c650c1ca4b0c118fb4b40c810e6c1049e5ccd34d",
+				"dweb:/ipfs/QmetktB2DduwcgSgX92MBqnEyXBXeShX6JLWQJ1jHqNAwC"
 			]
 		}
 	},
