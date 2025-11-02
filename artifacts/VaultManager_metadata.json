@@ -1,0 +1,301 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "boxAddress",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "boxType",
+						"type": "string"
+					}
+				],
+				"name": "BoxCreated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "boxAddress",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					}
+				],
+				"name": "BoxNamed",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "createBasicBox",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "createPremiumBox",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "lockDuration",
+						"type": "uint256"
+					}
+				],
+				"name": "createTimeLockedBox",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "boxAddress",
+						"type": "address"
+					}
+				],
+				"name": "getBoxInfo",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "boxType",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "depositTime",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "boxAddress",
+						"type": "address"
+					}
+				],
+				"name": "getBoxName",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "getUserBoxes",
+				"outputs": [
+					{
+						"internalType": "address[]",
+						"name": "",
+						"type": "address[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "boxAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					}
+				],
+				"name": "nameBox",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "boxAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "secret",
+						"type": "string"
+					}
+				],
+				"name": "storeSecret",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "boxAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferBoxOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"submissions/Serena Y/Day14-ValutManager.sol": "VaultManager"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"submissions/Serena Y/Day14-BaseDepositBox.sol": {
+			"keccak256": "0x62f268ac782b4a29e96ac80199d10f36b3c1bb00a214e531703b762986fc5165",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://06e2af4206afca30ea8445a4af529983eeae2512fc5ed081223ba251671be2cb",
+				"dweb:/ipfs/QmeHeZaNaMbj7PhwKGDhknSXtr3mX2jgdE8Bo8mMiN14hB"
+			]
+		},
+		"submissions/Serena Y/Day14-BasicDepositBox.sol": {
+			"keccak256": "0xb40271f3015cf3a615681489deba49b2495213a9ad3943974fe6ae663b5fe703",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://e062cef90ac89d865baed4fd5f7b8962030ff3fd1e4c9c16b2222620ff1faec8",
+				"dweb:/ipfs/QmZNrquJ8Vqgdbn6VuLbPJNw4zcoLruQ6QQiTTXzzfN8VW"
+			]
+		},
+		"submissions/Serena Y/Day14-IDepositBox.sol": {
+			"keccak256": "0x8abb42f6c49e91753f0ad2c26d38a50b45623959434033319734c9fea987724b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6c3224681f3fb54572ba0750fb91da7ed9408d7836ed26e93e751d927c1e32b2",
+				"dweb:/ipfs/QmZBnoLgyqgoKAm4wk6zwRsqUd8pNgxDEofUfeoeKTiVSK"
+			]
+		},
+		"submissions/Serena Y/Day14-PremiumDepositBox.sol": {
+			"keccak256": "0x84704506447b88d4593be6902087510c65cc4f1f85a364534dc9c0f18ea527d6",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://02690190af394df4c6e65961909155af105207bb6761f1cc5544a31276095d61",
+				"dweb:/ipfs/QmVMN2nWmm8znLDL61yqJjvEhCWhVhQeVwJSwoTwnneNds"
+			]
+		},
+		"submissions/Serena Y/Day14-TimeLockedDepositBox.sol": {
+			"keccak256": "0xdac84f574fdf90ca0ab3ccb18d319b5f0f397f1999b06cc2932a137726128dcf",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://43ef3881f0fd34fe0acc9e1176fbd4242e2863fb8dcc93a9f6aa1930509bf1fc",
+				"dweb:/ipfs/QmZdZsx7wvm3h9cBeumwG6whnAwcL2tt9PvMdqwVvHP2LY"
+			]
+		},
+		"submissions/Serena Y/Day14-ValutManager.sol": {
+			"keccak256": "0x67b86145db858f91b6d29a7f83e564c9519d45e151ff8163568a44f42b7c51cf",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://9089223c143e2a73b40f4a4ca41752da008761990ad0d883ddba5edb1d51651c",
+				"dweb:/ipfs/QmUkty3KH7cR2r7n6misfWpCxBaoUYE7kCeadhJ5AvazNg"
+			]
+		}
+	},
+	"version": 1
+}
