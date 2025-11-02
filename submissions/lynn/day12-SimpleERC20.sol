@@ -1,13 +1,13 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+//import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-contract MySimpleToken is ERC20 {
-    constructor(uint256 _supply) ERC20("MySimpleToken", "MST") {
-        _mint(msg.sender, _supply * (10 ** decimals()));
-    }
-}
+// contract MySimpleToken is ERC20 {
+//     constructor(uint256 _supply) ERC20("MySimpleToken", "MST") {
+//         _mint(msg.sender, _supply * (10 ** decimals()));
+//     }
+// }
 
 contract SimpleERC20 {
     string public name = "SimpleToken";
@@ -27,7 +27,7 @@ contract SimpleERC20 {
         emit Transfer(address(0), msg.sender, totalSupply);
     }
 
-    function transfer(address _to, uint256 _amount) public returns(bool) {
+    function transfer(address _to, uint256 _amount) public virtual returns(bool) {
         _transfer(msg.sender, _to, _amount);
         return true;
     }
@@ -40,7 +40,7 @@ contract SimpleERC20 {
         return true;
     }
 
-    function transferFrom(address _from, address _to, uint256 _amount) public returns(bool) {
+    function transferFrom(address _from, address _to, uint256 _amount) public virtual returns(bool) {
         require(_amount <= allowance[_from][msg.sender], "Exceed Allowance");
         
         _transfer(_from, _to, _amount);
