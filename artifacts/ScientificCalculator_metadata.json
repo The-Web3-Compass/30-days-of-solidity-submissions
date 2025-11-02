@@ -1,0 +1,89 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "base",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "exponent",
+						"type": "uint256"
+					}
+				],
+				"name": "power",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "int256",
+						"name": "number",
+						"type": "int256"
+					}
+				],
+				"name": "squareRoot",
+				"outputs": [
+					{
+						"internalType": "int256",
+						"name": "",
+						"type": "int256"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"submissions/Dahan/ScientificCalculator.sol": "ScientificCalculator"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"submissions/Dahan/ScientificCalculator.sol": {
+			"keccak256": "0x0a1f946cbf8c27c7607b0be053ff43fbde01733da997f41e4677a2cb0d2d6211",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://042f3ef5601c87058091b83f693a55ddcfad78b34cae61253500ed1cc2bc303c",
+				"dweb:/ipfs/Qme1Xipv6ouyV6iCQZhKWuNdj1hhaViTDszofcoUVm5wyo"
+			]
+		}
+	},
+	"version": 1
+}
