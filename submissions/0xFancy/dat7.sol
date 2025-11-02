@@ -33,6 +33,7 @@ contract SimpleIOU{
     }
     function recordDebt(address _debtor, uint256 _amount) public onlyRegistered {
         require(_debtor != address(0), "Invalid address.");
+        require(_debtor != msg.sender, "Address should not be yourself.");
         require(registeredFriends[_debtor], "Address not registered");
         require(_amount > 0, "Amount must be greater than 0.");
         debts[_debtor][msg.sender] += _amount;

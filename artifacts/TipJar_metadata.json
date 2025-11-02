@@ -13,12 +13,17 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address",
-						"name": "_friend",
-						"type": "address"
+						"internalType": "string",
+						"name": "_currencyCode",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_rateToEth",
+						"type": "uint256"
 					}
 				],
-				"name": "addFriend",
+				"name": "addCurrency",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -26,25 +31,12 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address",
+						"internalType": "string",
 						"name": "",
-						"type": "address"
+						"type": "string"
 					}
 				],
-				"name": "balances",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "checkBalance",
+				"name": "conversionRates",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -58,49 +50,17 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address",
-						"name": "_friend",
-						"type": "address"
-					}
-				],
-				"name": "checkDebt",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "checkFriendList",
-				"outputs": [
-					{
-						"internalType": "address[]",
-						"name": "",
-						"type": "address[]"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
+						"internalType": "string",
+						"name": "_currencyCode",
+						"type": "string"
 					},
 					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
 					}
 				],
-				"name": "debts",
+				"name": "convertToEth",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -113,25 +73,95 @@
 			},
 			{
 				"inputs": [],
-				"name": "depositIntoWallet",
-				"outputs": [],
-				"stateMutability": "payable",
-				"type": "function"
-			},
-			{
-				"inputs": [
+				"name": "getContractBalance",
+				"outputs": [
 					{
 						"internalType": "uint256",
 						"name": "",
 						"type": "uint256"
 					}
 				],
-				"name": "friendList",
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_currencyCode",
+						"type": "string"
+					}
+				],
+				"name": "getConversionRate",
 				"outputs": [
 					{
-						"internalType": "address",
+						"internalType": "uint256",
 						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getSupportedCurrencies",
+				"outputs": [
+					{
+						"internalType": "string[]",
+						"name": "",
+						"type": "string[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_currencyCode",
+						"type": "string"
+					}
+				],
+				"name": "getTipPerCurrency",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_tipper",
 						"type": "address"
+					}
+				],
+				"name": "getTipperContributions",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getTotalTipsReceived",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -154,16 +184,11 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "_creditor",
+						"name": "_newOwner",
 						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_amount",
-						"type": "uint256"
 					}
 				],
-				"name": "payFromWallet",
+				"name": "ransferOwnerShip",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -171,35 +196,17 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address",
-						"name": "_debtor",
-						"type": "address"
-					},
-					{
 						"internalType": "uint256",
-						"name": "_amount",
-						"type": "uint256"
-					}
-				],
-				"name": "recordDebt",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
 						"name": "",
-						"type": "address"
+						"type": "uint256"
 					}
 				],
-				"name": "registeredFriends",
+				"name": "supportCurrencies",
 				"outputs": [
 					{
-						"internalType": "bool",
+						"internalType": "string",
 						"name": "",
-						"type": "bool"
+						"type": "string"
 					}
 				],
 				"stateMutability": "view",
@@ -208,9 +215,9 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address payable",
-						"name": "_to",
-						"type": "address"
+						"internalType": "string",
+						"name": "_currencyCode",
+						"type": "string"
 					},
 					{
 						"internalType": "uint256",
@@ -218,38 +225,72 @@
 						"type": "uint256"
 					}
 				],
-				"name": "transferEther",
+				"name": "tipInCurrency",
 				"outputs": [],
-				"stateMutability": "nonpayable",
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "tipInEth",
+				"outputs": [],
+				"stateMutability": "payable",
 				"type": "function"
 			},
 			{
 				"inputs": [
 					{
-						"internalType": "address payable",
-						"name": "_to",
+						"internalType": "address",
+						"name": "",
 						"type": "address"
-					},
+					}
+				],
+				"name": "tipperContributions",
+				"outputs": [
 					{
 						"internalType": "uint256",
-						"name": "_amount",
+						"name": "",
 						"type": "uint256"
 					}
 				],
-				"name": "transferEtherViaCall",
-				"outputs": [],
-				"stateMutability": "nonpayable",
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
 				"inputs": [
 					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"name": "tipsPerCurrency",
+				"outputs": [
+					{
 						"internalType": "uint256",
-						"name": "_amount",
+						"name": "",
 						"type": "uint256"
 					}
 				],
-				"name": "withdraw",
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalTipsReceived",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "withDrawTips",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -268,7 +309,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"submissions/0xFancy/dat7.sol": "SimpleIOU"
+			"submissions/0xFancy/day8.sol": "TipJar"
 		},
 		"evmVersion": "prague",
 		"libraries": {},
@@ -282,12 +323,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"submissions/0xFancy/dat7.sol": {
-			"keccak256": "0x2a9667af6588f3a2932bc8c6ad96ee0501bf0a655341ebbef868bf4a347e3113",
+		"submissions/0xFancy/day8.sol": {
+			"keccak256": "0xd6920f0e98d5bc95b88b9386b3e2b04d1bc594373934bce4b0c8cbe102e87698",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://d66b7a25dbb41b54dc0daea58d73eeee41f89343755072b058420e9532da09d5",
-				"dweb:/ipfs/Qmdsbr4V7byNQPSJ1tBk5kZeaBfcbwztg3C9jxWbHemtfF"
+				"bzz-raw://23ccda6eea54041d303eb6d219efc38d730b32bbb7f7002232ba31e89c23477d",
+				"dweb:/ipfs/QmPJhpnDdJMokzk9FNDfb8KqmtCW2KzX55r2ccH3zJ1B5u"
 			]
 		}
 	},
