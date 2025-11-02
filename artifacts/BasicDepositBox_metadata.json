@@ -1,0 +1,172 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "previousOwner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "OwnershipTransferred",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					}
+				],
+				"name": "SecretStored",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "getBoxType",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getDepositTime",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getOwner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getSecret",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_secret",
+						"type": "string"
+					}
+				],
+				"name": "storeSecret",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"submissions/yuriofi/Day14_BasicDepositBox.sol": "BasicDepositBox"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"submissions/yuriofi/Day14_BaseDepositBox.sol": {
+			"keccak256": "0xc21809222abbd852632ff3d1a370d8ca670fc56cda3870c93b2d9096c7958dcf",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://83d9f74a1d8f555de96bdd8f7758e12929dcc2363c8b2c6e3c7f7555f9069ba9",
+				"dweb:/ipfs/QmPMD1wwteG2Wf9NCsvSSJrybaRskaWo7t6VzFHp6tbWPe"
+			]
+		},
+		"submissions/yuriofi/Day14_BasicDepositBox.sol": {
+			"keccak256": "0xaaaea1848b0d24ca35dd4ae1c84b817d90b5022cc2f0c3d488686b613940d026",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://46f458c48ba8b58573c8a6c0dcbf55a495270cdec0c6f9f6a83d70949671d477",
+				"dweb:/ipfs/QmbbmXenPQZs2fvHH8Evzx1jj5mL5s9wm6KSy7yvH13f5t"
+			]
+		},
+		"submissions/yuriofi/Day14_IDepositBox.sol": {
+			"keccak256": "0xa6a6007055ec6fc6d2b3d284fe5212023e0d07e531ab9b5bac7c2fc53815e656",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://fe7021be66f224a9a885a3da5233f5d6004e26ffc12c504853a41d38fcfdf4be",
+				"dweb:/ipfs/QmQRk32D7Tkm7g76HhCTDErQjvpHHGqirDJvfAYTpo9iTp"
+			]
+		}
+	},
+	"version": 1
+}
