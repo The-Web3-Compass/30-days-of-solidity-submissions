@@ -79,7 +79,7 @@ contract SimplifiedTokenSale is SimpleERC20 {
         require(!finalized,"Sale is already finalized");
         require(block.timestamp>=saleEndTime,"Sale is still active");
         finalized = true;
-        //报警告说这个没有用上欸！
+        
         uint256 tokensSold=totalSupply-balanceOf[address(this)]; //计算已售出的代币数量
         // 向项目所有者发送 ETH
         (bool success,)=projectOwner.call{value:address(this).balance}("");
