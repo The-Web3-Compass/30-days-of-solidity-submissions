@@ -77,11 +77,11 @@
 	},
 	"sources": {
 		"submissions/iCat798/ScientificCalculator.sol": {
-			"keccak256": "0x083726b777d59c2450229a2a2fa5fadfc348a56afc074313c8d6a4b85427e8d9",
+			"keccak256": "0xd4df354cc9b83c02932012134eceeca6941739dc6ae731d951a3d2cd8af329fa",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://7ed13237cc5a3cd15096169087565ceb76684426f965443b9c18cfd940137fb0",
-				"dweb:/ipfs/QmbaK9FKnYcH2FqrgsejmYYhhviS8zWYjwexBbMaCiV3JA"
+				"bzz-raw://3367afdd005c4631de080932de4ac57e4aa3644ae42d60b158634ee5d7b69649",
+				"dweb:/ipfs/QmdVKLC4aNWfZPioBiULeiuV6PpWCotti2t9K1aW1f51UK"
 			]
 		}
 	},
