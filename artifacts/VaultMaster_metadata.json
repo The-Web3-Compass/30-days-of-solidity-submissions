@@ -140,7 +140,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"submissions/iCat798/Day11.sol": "VaultMaster"
+			"submissions/iCat798/11-钱库控制合约/Day11-VaultMaster.sol": "VaultMaster"
 		},
 		"evmVersion": "prague",
 		"libraries": {},
@@ -154,7 +154,7 @@
 		"remappings": []
 	},
 	"sources": {
-		"submissions/iCat798/Day11.sol": {
+		"submissions/iCat798/11-钱库控制合约/Day11-VaultMaster.sol": {
 			"keccak256": "0x5f333ccd2d46b0fc5fe6e03653718db4496b620e6da23ee8548a54d343dd31aa",
 			"license": "MIT",
 			"urls": [
@@ -162,7 +162,7 @@
 				"dweb:/ipfs/QmPtEJGpqS6yeNvrMDSTMA8tcNMjaQxuvPZqLxhQvv7mxz"
 			]
 		},
-		"submissions/iCat798/Ownable.sol": {
+		"submissions/iCat798/11-钱库控制合约/Ownable.sol": {
 			"keccak256": "0x2ab58ad0f07ab94f0a71c889e0cead42d758b0837a3ce1c401e30c6629141ccf",
 			"license": "MIT",
 			"urls": [

@@ -1,0 +1,313 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint8",
+						"name": "proposalId",
+						"type": "uint8"
+					},
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "name",
+						"type": "bytes32"
+					}
+				],
+				"name": "ProposalCreated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint8",
+						"name": "proposalId",
+						"type": "uint8"
+					}
+				],
+				"name": "ProposalExecuted",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "voter",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint8",
+						"name": "proposalId",
+						"type": "uint8"
+					}
+				],
+				"name": "Voted",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "name",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "uint32",
+						"name": "duration",
+						"type": "uint32"
+					}
+				],
+				"name": "createProposal",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint8",
+						"name": "proposalId",
+						"type": "uint8"
+					}
+				],
+				"name": "executeProposal",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint8",
+						"name": "proposalId",
+						"type": "uint8"
+					}
+				],
+				"name": "getProposal",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "name",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "uint32",
+						"name": "voteCount",
+						"type": "uint32"
+					},
+					{
+						"internalType": "uint32",
+						"name": "startTime",
+						"type": "uint32"
+					},
+					{
+						"internalType": "uint32",
+						"name": "endTime",
+						"type": "uint32"
+					},
+					{
+						"internalType": "bool",
+						"name": "executed",
+						"type": "bool"
+					},
+					{
+						"internalType": "bool",
+						"name": "active",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "voter",
+						"type": "address"
+					},
+					{
+						"internalType": "uint8",
+						"name": "proposalId",
+						"type": "uint8"
+					}
+				],
+				"name": "hasVoted",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "proposalCount",
+				"outputs": [
+					{
+						"internalType": "uint8",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint8",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"name": "proposalVoterCount",
+				"outputs": [
+					{
+						"internalType": "uint32",
+						"name": "",
+						"type": "uint32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint8",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"name": "proposals",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "name",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "uint32",
+						"name": "voteCount",
+						"type": "uint32"
+					},
+					{
+						"internalType": "uint32",
+						"name": "startTime",
+						"type": "uint32"
+					},
+					{
+						"internalType": "uint32",
+						"name": "endTime",
+						"type": "uint32"
+					},
+					{
+						"internalType": "bool",
+						"name": "executed",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint8",
+						"name": "proposalId",
+						"type": "uint8"
+					}
+				],
+				"name": "vote",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"createProposal(bytes32,uint32)": {
+					"details": "Create a new proposal",
+					"params": {
+						"duration": "Voting duration in seconds",
+						"name": "The proposal name (pass as bytes32 for gas efficiency)"
+					}
+				},
+				"executeProposal(uint8)": {
+					"details": "Execute a proposal after voting ends",
+					"params": {
+						"proposalId": "The proposal ID"
+					}
+				},
+				"getProposal(uint8)": {
+					"details": "Get detailed proposal information Uses calldata for parameters and memory for return values"
+				},
+				"hasVoted(address,uint8)": {
+					"details": "Check if an address has voted for a proposal",
+					"params": {
+						"proposalId": "The proposal ID",
+						"voter": "The voter address"
+					},
+					"returns": {
+						"_0": "True if the address has voted"
+					}
+				},
+				"vote(uint8)": {
+					"details": "Vote on a proposal",
+					"params": {
+						"proposalId": "The proposal ID"
+					}
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"submissions/iCat798/15-Gas节省方式/GasEfficientVoting.sol": "GasEfficientVoting"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"submissions/iCat798/15-Gas节省方式/GasEfficientVoting.sol": {
+			"keccak256": "0x6776394df4fe10c2a0eb035af64979f1d38e01beae50b29957806ad9de413421",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://5c9f5803f53b8a4a1af4364acd00477938d26f273b61ed703db5a1ab59046f7d",
+				"dweb:/ipfs/QmPQHcKd5VWJtij4VdmBjCY9Ea54pzGR5xrbkmodxCb7P4"
+			]
+		}
+	},
+	"version": 1
+}
