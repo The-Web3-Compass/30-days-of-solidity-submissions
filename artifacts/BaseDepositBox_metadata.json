@@ -1,0 +1,164 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "previousOwner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "OwnershipTransferred",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					}
+				],
+				"name": "SecretStored",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "getBoxType",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getDepositTime",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getOwner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getSecret",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_secret",
+						"type": "string"
+					}
+				],
+				"name": "storeSecret",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"submissions/CCan_08/Day14/BaseDepositBox.sol": "BaseDepositBox"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"submissions/CCan_08/Day14/BaseDepositBox.sol": {
+			"keccak256": "0xfae4b0fa53747f2179ed2343f4b6eb23dda2cc8b95c6d88d42a249a4d3d8aeb5",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://ba10dd5fc39bc733b889c2ca2aa4c31da1c83647b235106bc57c83279bbef4d5",
+				"dweb:/ipfs/Qmdk7kG9WCjksFbe7tJ5Nm5zSZ6TERiPhZ78gB5SmsYcBZ"
+			]
+		},
+		"submissions/CCan_08/Day14/IDepositBox.sol": {
+			"keccak256": "0x06ab45e8f8416c48fcab0b9e651ed07194aca38c1baa3bff79acae69c6a7d238",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://8aee7985f41f9d27fbb63c0b069666d6ffde5a95c199fc2173a8d74c7b285dd5",
+				"dweb:/ipfs/QmWHZdj1TSvA32Gy3VU7VjetHartuuoiqU8r3YyF3Sbrn1"
+			]
+		}
+	},
+	"version": 1
+}
