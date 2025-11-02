@@ -1,0 +1,211 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					}
+				],
+				"name": "MetadataUpdated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "previousOwner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "OwnershipTransferred",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					}
+				],
+				"name": "SecretStored",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "getBoxType",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getDepositTime",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getMetadata",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getOwner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getSecret",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_metadata",
+						"type": "string"
+					}
+				],
+				"name": "setMetadata",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_secret",
+						"type": "string"
+					}
+				],
+				"name": "storeSecret",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"submissions/Z weiqi/Day14/PremiumDepositBox.sol": "PremiumDepositBox"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"submissions/Z weiqi/Day14/BaseDepositBox.sol": {
+			"keccak256": "0xcc7230086052996acb49f2f0a2b191d17bdae1677b3a5ba0874db72b6055ad58",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://891ed42f6e74f5fe2459a6ad03a9d4ed6d56af69f27283a6b620a92fa6e7cdd7",
+				"dweb:/ipfs/QmaYZPF29Q28dVFoV8d5yZkipJSt9G2esEMjY7qWq9VWUL"
+			]
+		},
+		"submissions/Z weiqi/Day14/IDepositBox.sol": {
+			"keccak256": "0x848c0d7e9d9ddad32393db8bf4f3cf6169c6844492fc6cf874a513273a30152e",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://65a4280e2334f1b05cf538388ddf0b6836f38b7ef875d936f3ff23e9a8f78718",
+				"dweb:/ipfs/QmNqd9g6SRzBQK4exxdmwCJ1hfh3PdLEPynSnJDTtYjcBL"
+			]
+		},
+		"submissions/Z weiqi/Day14/PremiumDepositBox.sol": {
+			"keccak256": "0xf2dd483eef537b5d50a55b8ef93bbe09203f70d05f1194cae7ad37e8216ed4fd",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://ce0dd634bb21d2899e42c684c51af2d3e588a74c883871d4b9cca14945769edd",
+				"dweb:/ipfs/QmTnivd1vzY1MmA493amenBcmf5CeT3HRvQKgb4aqPfsXe"
+			]
+		}
+	},
+	"version": 1
+}

@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.20;
 
-contract SimplifiedTokenSale is SimpleERC20 {
+contract SimpelifiedTokenSale is SimpleERC20 {
     uint256 public tokenPrice;
     uint256 public saleStartTime;
     uint256 public saleEndTime;
