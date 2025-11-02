@@ -11,7 +11,7 @@ contract SimpleIOU{
     // Track balances
     mapping(address => uint256) public balances;
     
-    // Simple debt tracking
+    // Simple debt tracking 嵌套映射
     mapping(address => mapping(address => uint256)) public debts; // debtor -> creditor -> amount
     
     constructor() {
@@ -74,7 +74,7 @@ contract SimpleIOU{
         require(registeredFriends[_to], "Recipient not registered");
         require(balances[msg.sender] >= _amount, "Insufficient balance");
         balances[msg.sender] -= _amount;
-        _to.transfer(_amount);
+        _to.transfer(_amount);         //transfer()内置方法：将ETH从合约发送到接收者的地址,限制2300gas，可能转移失败
         balances[_to]+=_amount;
     }
     
@@ -86,7 +86,7 @@ contract SimpleIOU{
         
         balances[msg.sender] -= _amount;
         
-        (bool success, ) = _to.call{value: _amount}("");
+        (bool success, ) = _to.call{value: _amount}("");  //低级函数call()用于发送ETH和调用函数，无gas限制，可以使用变量success变量检查是否成功
         balances[_to]+=_amount;
         require(success, "Transfer failed");
     }
@@ -106,3 +106,8 @@ contract SimpleIOU{
         return balances[msg.sender];
     }
 }
+
+
+//0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2
+
+//0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db
