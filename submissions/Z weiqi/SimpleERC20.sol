@@ -57,6 +57,8 @@ contract SimpleERC20 {
         emit Transfer(_from, _to, _value);
     }
 
+    
+
 
 
 }

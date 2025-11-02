@@ -252,7 +252,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"submissions/Z weiqi/Day12.sol": "SimpleERC20"
+			"submissions/Z weiqi/SimpleERC20.sol": "SimpleERC20"
 		},
 		"evmVersion": "prague",
 		"libraries": {},
@@ -266,12 +266,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"submissions/Z weiqi/Day12.sol": {
-			"keccak256": "0x3fe093d6cd91c3252dc101c3bab9f3ea73eccedb116f2d155e9707f95f188d65",
+		"submissions/Z weiqi/SimpleERC20.sol": {
+			"keccak256": "0x95741746eda3f6c435091f0c102132710258a8fa55a8eb260cf7718c888bcfe8",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://5a9d327b977e84934ae1dbd32da7713f553806d2202983988fd557fed6327edc",
-				"dweb:/ipfs/QmUpmDqfhQSQsXQMpJFG6jBfYAzyXhHjKaLF5daBwsHD7c"
+				"bzz-raw://9794404c0f471d85b6be8ce99cee28d82789bb6af429800e33caca79256d89bc",
+				"dweb:/ipfs/QmPiXqrMEfths3kKimcNCnZ7XNJWTfTyofQufASfSGNZB3"
 			]
 		}
 	},
