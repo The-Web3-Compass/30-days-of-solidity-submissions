@@ -6,6 +6,17 @@
 	"output": {
 		"abi": [
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "initialOwner",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
 				"anonymous": false,
 				"inputs": [
 					{
@@ -183,11 +194,11 @@
 	},
 	"sources": {
 		"submissions/Serena Y/Day14-BaseDepositBox.sol": {
-			"keccak256": "0x62f268ac782b4a29e96ac80199d10f36b3c1bb00a214e531703b762986fc5165",
+			"keccak256": "0x71fb84a3337014395a17c5b0a0816731d9cd97087589a07750dde5beb6bec62b",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://06e2af4206afca30ea8445a4af529983eeae2512fc5ed081223ba251671be2cb",
-				"dweb:/ipfs/QmeHeZaNaMbj7PhwKGDhknSXtr3mX2jgdE8Bo8mMiN14hB"
+				"bzz-raw://ff7dd1c46c1423d45c97d012f73bd464c8327dfa8c877cb43ed828242d4af020",
+				"dweb:/ipfs/QmU1G1y2AqYPsAueBtvq98KWF5rd1Dgjsh2LfAPR5cWQRg"
 			]
 		},
 		"submissions/Serena Y/Day14-IDepositBox.sol": {
@@ -199,11 +210,11 @@
 			]
 		},
 		"submissions/Serena Y/Day14-PremiumDepositBox.sol": {
-			"keccak256": "0x84704506447b88d4593be6902087510c65cc4f1f85a364534dc9c0f18ea527d6",
+			"keccak256": "0xdc9d38b35645100f174b0a4739aa4439547ca1191334dd6532dd91f4a59a047d",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://02690190af394df4c6e65961909155af105207bb6761f1cc5544a31276095d61",
-				"dweb:/ipfs/QmVMN2nWmm8znLDL61yqJjvEhCWhVhQeVwJSwoTwnneNds"
+				"bzz-raw://3202e4ef9fb99ab5901f2b4211fc41e5b3c22cba63a79c73e830e18029f40ae2",
+				"dweb:/ipfs/Qmafk59KHue6Et1qTFdR4qVgAeZ4xpp3bmX3RcA2bXuWP7"
 			]
 		}
 	},

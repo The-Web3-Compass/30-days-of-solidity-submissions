@@ -16,10 +16,18 @@ abstract contract BaseDepositBox is IDepositBox {//关键字 abstract 表示�
         _;
     }
 
-    constructor() {//该金库在创建时自动设置所有权和时间跟踪
-        owner = msg.sender;
-        depositTime = block.timestamp;
+    //constructor() {//该金库在创建时自动设置所有权和时间跟踪
+        //owner = msg.sender;
+        //depositTime = block.timestamp;
+    //}
+
+    constructor(address initialOwner) {
+    owner = initialOwner; 
+    depositTime = block.timestamp;
     }
+
+
+    //constructor(address initialOwner) { owner = initialOwner; depositTime = block.timestamp; }
 
     function getOwner() public view override returns (address) {//返回金库的当前所有者。这是一个简单的 getter 函数
         return owner;

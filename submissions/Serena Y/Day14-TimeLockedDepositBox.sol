@@ -5,8 +5,9 @@ import "./Day14-BaseDepositBox.sol";//导入BaseDepositBox
 
 contract TimeLockedDepositBox is BaseDepositBox {//从BaseDepositBox继承
     uint256 private unlockTime;
+    constructor(address initialOwner, uint256 lockDuration)
+    BaseDepositBox(initialOwner){
 
-    constructor(uint256 lockDuration) {
         unlockTime = block.timestamp + lockDuration;//解锁时间等于当前时间加上锁住时间
     }
 
