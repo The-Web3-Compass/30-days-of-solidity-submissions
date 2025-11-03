@@ -1,0 +1,104 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "equippedWeapon",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "getWeapon",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "weapon",
+						"type": "string"
+					}
+				],
+				"name": "setWeapon",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"details": "Stores and retrieves a user's equipped weapon. Meant to be called via PluginStore.",
+			"kind": "dev",
+			"methods": {},
+			"title": "WeaponStorePlugin",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"submissions/iCat798/16-模块化的玩家配置文件系统/WeaponStorePlugin.sol": "WeaponStorePlugin"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"submissions/iCat798/16-模块化的玩家配置文件系统/WeaponStorePlugin.sol": {
+			"keccak256": "0x97025fff615258a127ee8cd9a7e21fb4c4288ce50c024dbdc2be3003c56dcc3e",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://58c095da1fb7b37627fdc7541a7e6305a946f3d8e2931cfa487540ea0ec5bcb9",
+				"dweb:/ipfs/QmWGZfmfYKVG2AggyESac6fqLirjiTWKmnmuXXw1Y5qH3d"
+			]
+		}
+	},
+	"version": 1
+}
