@@ -50,6 +50,56 @@ contract EnhancedSimpleEscrow {
         emit DeliveryConfirmed(msg.sender, seller, amount);
     }
 
+    function raiseDispute() external {
+        require(msg.sender == buyer || msg.sender == seller, "Not authorized");
+        require(state == EscrowState.AWAITING_DELIVERY, "Can't dispute now");
+        state = EscrowState.DISPUTED;
+        emit DisputeRaised(msg.sender);
+    }
+
+    function resolveDispute(bool _releaseToSeller) external {
+        require(msg.sender == arbiter, "Only arbiter can resolve");
+        require(state == EscrowState.DISPUTED, "No dispute to resolve");
+
+        state = EscrowState.COMPLETE;
+        if (_releaseToSeller) {
+            payable(seller).transfer(amount);
+            emit DisputeResolved(arbiter, seller, amount);
+        } else {
+            payable(buyer).transfer(amount);
+            emit DisputeResolved(arbiter, buyer, amount);
+        }
+    }
+
+    function cancelAfterTimeout() external {
+        require(msg.sender == buyer, "Only buyer can trigger timeout cancellation");
+        require(state == EscrowState.AWAITING_DELIVERY, "Cannot cancel in current state");
+        require(block.timestamp >= depositTime + deliveryTimeout, "Timeout not reached");
+
+        state = EscrowState.CANCELLED;
+        payable(buyer).transfer(address(this).balance);
+        emit EscrowCancelled(buyer);
+        emit DeliveryTimeoutReached(buyer);
+    }
+
+    function cancelMutual() external {
+        require(msg.sender == buyer || msg.sender == seller, "Not authorized");
+        require(state == EscrowState.AWAITING_DELIVERY || state == EscrowState.AWAITING_PAYMENT,"Cannot cancel now");
+
+        EscrowState previousState = state;
+        state = EscrowState.CANCELLED;
+        if (previousState == EscrowState.AWAITING_DELIVERY) {
+            payable(buyer).transfer(address(this).balance);
+        }
+        emit EscrowCancelled(msg.sender);
+    }
+
+    function getTimeLeft() external view returns (uint256) {
+        if (state != EscrowState.AWAITING_DELIVERY) return 0;
+        if (block.timestamp >= depositTime + deliveryTimeout) return 0;
+        return (depositTime + deliveryTimeout) - block.timestamp;
+    }
+
     receive() external payable {
         revert("Direct payments not allowed");
     }
