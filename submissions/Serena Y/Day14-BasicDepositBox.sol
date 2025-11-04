@@ -10,6 +10,6 @@ import "./Day14-BaseDepositBox.sol";
 //}
 
  contract BasicDepositBox is BaseDepositBox {
-    constructor(address initialOwner)
-    BaseDepositBox(initialOwner) { }
+    constructor(address initialOwner,address initialManager)
+    BaseDepositBox(initialOwner,initialManager) { }
     function getBoxType() external pure override returns (string memory) { return "Basic"; } }

@@ -74,11 +74,42 @@
 				"inputs": [
 					{
 						"internalType": "address",
+						"name": "ownerAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "_secret",
+						"type": "string"
+					}
+				],
+				"name": "storeSecretByManager",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
 						"name": "newOwner",
 						"type": "address"
 					}
 				],
 				"name": "transferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnershipByManager",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -112,11 +143,11 @@
 	},
 	"sources": {
 		"submissions/Serena Y/Day14-IDepositBox.sol": {
-			"keccak256": "0x8abb42f6c49e91753f0ad2c26d38a50b45623959434033319734c9fea987724b",
+			"keccak256": "0x063bd2fb2ceef9d6d75498234c7d53f0e1be9c8f1dfe1d596119141a2c843d3a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://6c3224681f3fb54572ba0750fb91da7ed9408d7836ed26e93e751d927c1e32b2",
-				"dweb:/ipfs/QmZBnoLgyqgoKAm4wk6zwRsqUd8pNgxDEofUfeoeKTiVSK"
+				"bzz-raw://9494b93fd76ce9689992fe8b5980c63ddded7a8b3aebea258a72fab0bb54f377",
+				"dweb:/ipfs/QmcewvAq6VoH92d316V99MBmEuTVnX58b6cWPWSzzDpjU3"
 			]
 		}
 	},

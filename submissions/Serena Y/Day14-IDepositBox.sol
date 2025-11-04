@@ -7,4 +7,6 @@ interface IDepositBox {
     function getSecret() external view returns (string memory);// 检索存储的秘密
     function getBoxType() external pure returns (string memory);//让我们知道它是哪种类型的存款箱（基础型、高级型等）
     function getDepositTime() external view returns (uint256);//返回存款箱的创建时间
+    function transferOwnershipByManager(address newOwner) external;
+    function storeSecretByManager(address ownerAddress, string calldata _secret) external;
 }

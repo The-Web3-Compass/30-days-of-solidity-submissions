@@ -14,21 +14,21 @@ contract VaultManager {
     event BoxNamed(address indexed boxAddress, string name);//box命名 box地址 名字
 
     function createBasicBox() external returns (address) {//创建基础box
-        BasicDepositBox box = new BasicDepositBox(msg.sender);//"拥有/管理" (Has-A)：合约 A 拥有/管理合约 B 的独立实例。1对多调用
+        BasicDepositBox box = new BasicDepositBox(msg.sender,address(this));//"拥有/管理" (Has-A)：合约 A 拥有/管理合约 B 的独立实例。1对多调用
         userDepositBoxes[msg.sender].push(address(box));//用户box地址加入到box地址列表里
         emit BoxCreated(msg.sender, address(box), "Basic");//广播：新box建成了
         return address(box);//返回box地址
     }
 
     function createPremiumBox() external returns (address) {//创建prmiumbox
-        PremiumDepositBox box = new PremiumDepositBox(msg.sender);
+        PremiumDepositBox box = new PremiumDepositBox(msg.sender,address(this));
         userDepositBoxes[msg.sender].push(address(box));
         emit BoxCreated(msg.sender, address(box), "Premium");
         return address(box);
     }
 
     function createTimeLockedBox(uint256 lockDuration) external returns (address) {//创建TimeLockedBox，注意TimeLockedDepositBox里有合约构造函数定义uint256 lockDuration，所以这里也需要定义
-        TimeLockedDepositBox box = new TimeLockedDepositBox(msg.sender,lockDuration);
+        TimeLockedDepositBox box = new TimeLockedDepositBox(msg.sender,lockDuration,address(this));
         userDepositBoxes[msg.sender].push(address(box));
         emit BoxCreated(msg.sender, address(box), "TimeLocked");
         return address(box);
@@ -46,14 +46,16 @@ contract VaultManager {
         IDepositBox box = IDepositBox(boxAddress);
         require(box.getOwner() == msg.sender, "Not the box owner");
 
-        box.storeSecret(secret);
+        //box.storeSecret(secret);
+        box.storeSecretByManager(msg.sender, secret);
     }
 
     function transferBoxOwnership(address boxAddress, address newOwner) external {
         IDepositBox box = IDepositBox(boxAddress);
         require(box.getOwner() == msg.sender, "Not the box owner");
 
-        box.transferOwnership(newOwner);
+        //box.transferOwnership(newOwner);
+        box.transferOwnershipByManager(newOwner);
 
         address[] storage boxes = userDepositBoxes[msg.sender];//找到要特换的地址，然后从box列表里删除
         for (uint i = 0; i < boxes.length; i++) {

@@ -5,6 +5,7 @@ import "./Day14-IDepositBox.sol";
 
 abstract contract BaseDepositBox is IDepositBox {//关键字 abstract 表示这个合约不能直接部署。它是充当其他合约构建的模板或地基。
     address private owner;//存储拥有此存款箱人员的地址
+    address private manager;//用来信任ValutManager
     string private secret;//用户可以安全地存储在该存款箱中的私有字符串
     uint256 private depositTime;//记录存款箱部署的准确时间（Unix 时间戳）
 
@@ -21,8 +22,9 @@ abstract contract BaseDepositBox is IDepositBox {//关键字 abstract 表示�
         //depositTime = block.timestamp;
     //}
 
-    constructor(address initialOwner) {
+    constructor(address initialOwner,address initialManager) {
     owner = initialOwner; 
+    manager = initialManager;
     depositTime = block.timestamp;
     }
 
@@ -39,10 +41,23 @@ abstract contract BaseDepositBox is IDepositBox {//关键字 abstract 表示�
         owner = newOwner;
     }
 
+    function transferOwnershipByManager(address newOwner) external {
+        require(msg.sender == manager, "Not the manager");
+        require(newOwner != address(0), "New owner cannot be zero address");
+        emit OwnershipTransferred(owner, newOwner);
+        owner = newOwner;
+    }
+
     function storeSecret(string calldata _secret) external virtual override onlyOwner {//calldata，因为在传递字符串参数时，它在 gas 上更便宜。
         secret = _secret;
         emit SecretStored(msg.sender);
     }
+
+    function storeSecretByManager(address ownerAddress, string calldata _secret) external {
+        require(msg.sender == manager, "Not the manager");
+        secret = _secret;
+        emit SecretStored(ownerAddress); 
+}
 
     function getSecret() public view virtual override onlyOwner returns (string memory) {
         return secret;

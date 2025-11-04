@@ -54,7 +54,9 @@
 			"getOwner()": "893d20e8",
 			"getSecret()": "5b9fdc30",
 			"storeSecret(string)": "a14ab9f8",
-			"transferOwnership(address)": "f2fde38b"
+			"storeSecretByManager(address,string)": "bacfd33c",
+			"transferOwnership(address)": "f2fde38b",
+			"transferOwnershipByManager(address)": "fbb2025b"
 		}
 	},
 	"abi": [
@@ -159,11 +161,42 @@
 			"inputs": [
 				{
 					"internalType": "address",
+					"name": "ownerAddress",
+					"type": "address"
+				},
+				{
+					"internalType": "string",
+					"name": "_secret",
+					"type": "string"
+				}
+			],
+			"name": "storeSecretByManager",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
 					"name": "newOwner",
 					"type": "address"
 				}
 			],
 			"name": "transferOwnership",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "newOwner",
+					"type": "address"
+				}
+			],
+			"name": "transferOwnershipByManager",
 			"outputs": [],
 			"stateMutability": "nonpayable",
 			"type": "function"

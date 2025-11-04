@@ -16,6 +16,11 @@
 						"internalType": "uint256",
 						"name": "lockDuration",
 						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "initialManager",
+						"type": "address"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -156,6 +161,19 @@
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnershipByManager",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
 			}
 		],
 		"devdoc": {
@@ -186,11 +204,11 @@
 	},
 	"sources": {
 		"submissions/Serena Y/Day14-BaseDepositBox.sol": {
-			"keccak256": "0x71fb84a3337014395a17c5b0a0816731d9cd97087589a07750dde5beb6bec62b",
+			"keccak256": "0x67ab2573b3ad7f58ce84aa874f3e959ccfb894b1620f389a804c1210096f4537",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://ff7dd1c46c1423d45c97d012f73bd464c8327dfa8c877cb43ed828242d4af020",
-				"dweb:/ipfs/QmU1G1y2AqYPsAueBtvq98KWF5rd1Dgjsh2LfAPR5cWQRg"
+				"bzz-raw://c356f063ff656be3f18ab3732fe38d4a38fd6f286df3fe34d2a231857b3999c5",
+				"dweb:/ipfs/QmSjyC5dZ29y1DPGWb5s96oQaVeksyGzezQLLp5SJCxuwD"
 			]
 		},
 		"submissions/Serena Y/Day14-IDepositBox.sol": {
@@ -202,11 +220,11 @@
 			]
 		},
 		"submissions/Serena Y/Day14-TimeLockedDepositBox.sol": {
-			"keccak256": "0x8702e67058e9275191941821e4bc403cc49e51dbe73ea71378f2c7f1c0cd3e48",
+			"keccak256": "0x80ff90b2df79bc9c921d2adf606760e8dafab8e57331b2443037e126cf22a60b",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://bd7e00f96fffb11463e0d1448e3ca4bec16f7be72ea33b0e6035fe29cf2647f9",
-				"dweb:/ipfs/QmVKbcJDYNza81zMVu1ypw3hhhBE4ZNZ1CacefeGUQEzqr"
+				"bzz-raw://ecc87938e19103a908be9ad96080d9334ec13ae686c560c11f5d463e6dd4498b",
+				"dweb:/ipfs/Qmb9SYqZA4515LjftorjaodFWHDdEY8HHdzSodh4xr8SRq"
 			]
 		}
 	},

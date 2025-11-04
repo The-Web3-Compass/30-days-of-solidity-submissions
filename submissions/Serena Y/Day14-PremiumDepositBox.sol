@@ -8,8 +8,8 @@ contract PremiumDepositBox is BaseDepositBox {//继承和导入
 
     event MetadataUpdated(address indexed owner);
 
-    constructor(address initialOwner) 
-        BaseDepositBox(initialOwner) 
+    constructor(address initialOwner,address initialManager) 
+        BaseDepositBox(initialOwner,initialManager) 
     {}
 
     function getBoxType() external pure override returns (string memory) {
