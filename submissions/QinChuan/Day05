@@ -51,7 +51,7 @@ contract AdminOnly {
 
     //重置用户提取状态（onlyOwner）
     function resetWithdrawalStatus(address user) public onlyOwner {
-        hasWithdrawn[user] == false;
+        hasWithdrawn[user] = false;
     }
 
     //转移owner权限
