@@ -24,9 +24,9 @@ Functions are designed with gas efficiency in mind:
 2. `test/GasSaver.t.sol` - Test cases for validating voting functionality and restrictions.
 3. `foundry.toml` - Foundry configuration file.
 4. `.gas-snapshot` - Gas usage report generated using Foundry.
+5. `README.md` - Documentation for the task.
 
 ## Foundry Commands Used
-
 ```
 forge build
 forge test
