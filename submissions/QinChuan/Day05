@@ -1,0 +1,67 @@
+//SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+contract AdminOnly {
+    address public owner;
+    constructor() {
+        owner = msg.sender;
+    }
+    //谁部署合约，谁拥有（文章的作者姓名）
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "You're not owner!");
+        _;
+    }
+    //modifier修饰符限制访问
+
+    //函数主体
+    uint public treasureAmount;
+    function addTreasure(uint amount) public onlyOwner {
+        treasureAmount += amount;
+    }
+    //只有owner可以添加宝物
+
+    //让别人可以有额度地拿宝物
+    mapping(address => uint) public withdrawalAllowance;
+    function approveWithdrawal(address recipient, uint amount) public onlyOwner{
+        require(amount <= treasureAmount, "Not enough!");  //够不够钱
+        withdrawalAllowance[recipient] = amount;  //够钱就按分配给
+    }
+
+    //实际取宝过程
+    mapping(address => bool) public hasWithdrawn;  //记录是否已取宝
+    function withdrawTreasure(uint amount) public {
+        if (msg.sender == owner) {
+            require(amount <= treasureAmount, "Not enough!");  //够不够钱
+            treasureAmount -= amount;
+            return;  //if循环结束标记
+        }
+        //01 owner自己取钱
+
+        uint allowance = withdrawalAllowance[msg.sender];
+        require(allowance >0, "You're not allowed!");  //不在名单里
+        require(!hasWithdrawn[msg.sender], "You've already withdrawn your treasure!");  //拿过了
+        require(allowance <= treasureAmount, "Treasure is not enough!");  //金库没钱了
+        //02 普通用户取钱
+
+        hasWithdrawn[msg.sender] == true;
+        treasureAmount -= amount;  //扣总数
+        withdrawalAllowance[msg.sender] = 0;  //扣额度
+        //登记取钱
+    }
+
+    //重置用户提取状态（onlyOwner）
+    function resetWithdrawalStatus(address user) public onlyOwner {
+        hasWithdrawn[user] = false;
+    }
+
+    //转移owner权限
+    function transferOwnership(address newOwner) public onlyOwner {
+        require(newOwner != address(0), "Invalid address");
+        owner = newOwner;
+    }
+
+    //查看宝箱信息（owner）
+    function getTreasureDetails() public view onlyOwner returns (uint) {
+        return treasureAmount;
+    }
+}

@@ -1,0 +1,28 @@
+// SPDX-License-Identifier: MIT
+//（1）SPDX许可证标识符
+
+pragma solidity ^0.8.0;
+//（2）Pragma 指令 - 设置 Solidity 版本
+
+contract SaveMyName {
+    //（3） 定义智能合约
+
+    string name;
+    string bio;
+    string age;
+    string job;
+    //（4）声明状态变量
+
+    function add(string memory _name, string memory _bio, string memory _age, string memory _job) public {
+        name = _name;
+        bio = _bio;
+        age = _age;
+        job = _job;
+    }
+    //（5）增加功能-写入
+
+    function retrieve() public view returns (string memory, string memory, string memory, string memory) {
+        return (name, bio, age, job);
+    }
+    //（5）增加功能-写入
+}
