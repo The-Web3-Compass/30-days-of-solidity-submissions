@@ -1,0 +1,102 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "getAchievement",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "latestAchievement",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "achievement",
+						"type": "string"
+					}
+				],
+				"name": "setAchievement",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"submissions/Z weiqi/Day16/AchievementsPlugin.sol": "AchievementsPlugin"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"submissions/Z weiqi/Day16/AchievementsPlugin.sol": {
+			"keccak256": "0xf54c47d0fcd426cecfcf0fc3fe57de3fe7503b0bbd42f17fe8cd4514236e2a73",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://8a394dcb779f349c72dd44b026619fbcbf3a715cd6c991173dae7a72b29f7527",
+				"dweb:/ipfs/QmVMQGDHH84tnMFfrXTxLtDdioyRjVCZgd5YJh3rNkhaow"
+			]
+		}
+	},
+	"version": 1
+}

@@ -1,0 +1,102 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "equippedWeapon",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "getWeapon",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "weapon",
+						"type": "string"
+					}
+				],
+				"name": "setWeapon",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"submissions/Z weiqi/Day16/WeaponStorePlugin.sol": "WeaponStorePlugin"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"submissions/Z weiqi/Day16/WeaponStorePlugin.sol": {
+			"keccak256": "0x1bb1fa81bebcf89f0848f9d3f7c6fb634ff9df88b86c16187805649d33c830e7",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://34b5fde4f0deab2a982c6ce69d5cb78734cbe490d750fcbe2414ed63868a3ef3",
+				"dweb:/ipfs/QmaUzV7Bi4vsZN6pMiQeVLqH3LxGmCC2YFCtUg3H6YDB6J"
+			]
+		}
+	},
+	"version": 1
+}
