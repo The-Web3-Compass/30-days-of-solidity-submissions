@@ -1,0 +1,36 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "CosmosTypes",
+  "sourceName": "contracts/CosmosTypes.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "denom",
+              "type": "string"
+            }
+          ],
+          "internalType": "struct Cosmos.Coin",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "name": "coin",
+      "outputs": [],
+      "stateMutability": "pure",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x6080604052348015600f57600080fd5b5060b280601d6000396000f3fe6080604052348015600f57600080fd5b506004361060285760003560e01c80632ff6e5df14602d575b600080fd5b603b6038366004603d565b50565b005b600060208284031215604e57600080fd5b813567ffffffffffffffff811115606457600080fd5b820160408185031215607557600080fd5b939250505056fea264697066735822122031aef4fea67f5f4e44f0ba0b9d1e511b3ec2d41758ac25f72171dcbbb36c940764736f6c634300081c0033",
+  "deployedBytecode": "0x6080604052348015600f57600080fd5b506004361060285760003560e01c80632ff6e5df14602d575b600080fd5b603b6038366004603d565b50565b005b600060208284031215604e57600080fd5b813567ffffffffffffffff811115606457600080fd5b820160408185031215607557600080fd5b939250505056fea264697066735822122031aef4fea67f5f4e44f0ba0b9d1e511b3ec2d41758ac25f72171dcbbb36c940764736f6c634300081c0033",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}
