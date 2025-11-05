@@ -1,0 +1,67 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"name": "deposit",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "safeWithdraw",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "vulnerableWithdraw",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"submissions/iCat798/20-重入攻击/GoldThief.sol": "IVault"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"submissions/iCat798/20-重入攻击/GoldThief.sol": {
+			"keccak256": "0x4cd7daaddf2628455d414b28ce10e3f0b73566c0cc6e6a0075be7b51c960d8fd",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://1c49ddb983c087d49eb3d12ca1e4f76044c3005e87157fdacfa94c45f3512dc4",
+				"dweb:/ipfs/QmPvupmwoEVvNK1WFLmUDd8MYeZNqsCawtjyhKL4fmHEkG"
+			]
+		}
+	},
+	"version": 1
+}
