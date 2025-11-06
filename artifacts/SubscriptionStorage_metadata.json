@@ -6,6 +6,21 @@
 	"output": {
 		"abi": [
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_logicContract",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "fallback"
+			},
+			{
 				"inputs": [],
 				"name": "logicContract",
 				"outputs": [
@@ -97,6 +112,23 @@
 				],
 				"stateMutability": "view",
 				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_newLogic",
+						"type": "address"
+					}
+				],
+				"name": "upgradeTo",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
 			}
 		],
 		"devdoc": {
@@ -112,7 +144,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"submissions/Serena Y/Day17-SubscriptionStorageLayout.sol": "SubscriptionStorageLayout"
+			"submissions/Serena Y/Day17-SubscriptionStorage.sol": "SubscriptionStorage"
 		},
 		"evmVersion": "prague",
 		"libraries": {},
@@ -126,6 +158,14 @@
 		"remappings": []
 	},
 	"sources": {
+		"submissions/Serena Y/Day17-SubscriptionStorage.sol": {
+			"keccak256": "0x284bc8603d0635bc032aaa96cb5050fdced97a754d33e89d32b7969c9b8adfe1",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://e0d3baf06cf0dbaf4727093bcbc6a336340af82fdfb5e808901d536c7a80f020",
+				"dweb:/ipfs/QmQvHATYJV9d9owMQMgY2FBM8CqejDLfLL7scyaCHwmsqh"
+			]
+		},
 		"submissions/Serena Y/Day17-SubscriptionStorageLayout.sol": {
 			"keccak256": "0x8047e51f3b8d4267a311f83ecfc2417ab3590eb1ff4b6fb4a572342f08b4cf3c",
 			"license": "MIT",
