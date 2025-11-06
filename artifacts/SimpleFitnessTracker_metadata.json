@@ -283,7 +283,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"submissions/iCat798/Day10.sol": "SimpleFitnessTracker"
+			"submissions/iCat798/10-链上健身记录器/Day10-ActivityTracker.sol": "SimpleFitnessTracker"
 		},
 		"evmVersion": "prague",
 		"libraries": {},
@@ -297,12 +297,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"submissions/iCat798/Day10.sol": {
-			"keccak256": "0x5001d9294758dbeedd5592668adf825355e851edf1f5aeca0593b10dacafc0ec",
+		"submissions/iCat798/10-链上健身记录器/Day10-ActivityTracker.sol": {
+			"keccak256": "0x8e07127310444a8038d6b094fc1a0e7631ae941995b97b02275848f850145847",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://168603ef5607f5134d77d298c3aaf2528ee92f0eb6c61e1f01dcda875e67591e",
-				"dweb:/ipfs/Qmev16fNHkB8UDyjQEDEmHVWGcTWZPorr7RRRRhdPxRoWv"
+				"bzz-raw://55648b66d93e5cb19de8aad1b51d65c637bf29f76a354de782117f74d5196fe6",
+				"dweb:/ipfs/QmPikFqGjAdBus5yhc7A7JiaVHLn9cEXrXaqSvADuEu3cH"
 			]
 		}
 	},

@@ -4,40 +4,32 @@ pragma solidity ^0.8.0;
 contract SimpleFitnessTracker {
     address public owner;
     
-    // User profile struct
+    // ！！！struct 结构体：自定义数据结构
+    // 记录用户基础信息
     struct UserProfile {
-        string name;
-        uint256 weight; 
-        bool isRegistered;
+        string name;       //用户名
+        uint256 weight;    //体重
+        bool isRegistered; //是否注册
     }
     
-    
+    // 记录每次锻炼细节
     struct WorkoutActivity {
-        string activityType; 
-        uint256 duration;    // in seconds
-        uint256 distance;    // in meters
-        uint256 timestamp;   
-    }
-    
-   
-    mapping(address => UserProfile) public userProfiles;
-    
-    mapping(address => WorkoutActivity[]) private workoutHistory;
-    
-   
-    mapping(address => uint256) public totalWorkouts;
-    mapping(address => uint256) public totalDistance;
-    
-    
+        string activityType;  // 运动类型
+        uint256 duration;    // 持续时间（秒）
+        uint256 distance;    // 距离（米）
+        uint256 timestamp;   // 记录发生时间
+        }
+        
+    mapping(address => UserProfile) public userProfiles;           // 地址 → 用户档案：为每个用户（通过他们的地址）存储一份个人资料
+    mapping(address => WorkoutActivity[]) private workoutHistory;  // 地址 → 运动记录数组：为每个用户保存一个锻炼日志数组
+    mapping(address => uint256) public totalWorkouts;              // 地址 → 运动总次数：跟踪每个用户记录了多少次锻炼
+    mapping(address => uint256) public totalDistance;              // 地址 → 运动总距离：跟踪用户覆盖的总距离
+
+
+    // ！！！event 事件
     event UserRegistered(address indexed userAddress, string name, uint256 timestamp);
     event ProfileUpdated(address indexed userAddress, uint256 newWeight, uint256 timestamp);
-    event WorkoutLogged(
-        address indexed userAddress, 
-        string activityType, 
-        uint256 duration, 
-        uint256 distance, 
-        uint256 timestamp
-    );
+    event WorkoutLogged(address indexed userAddress, string activityType, uint256 duration, uint256 distance, uint256 timestamp);
     event MilestoneAchieved(address indexed userAddress, string milestone, uint256 timestamp);
     
     constructor() {
