@@ -1,0 +1,22 @@
+//the blueprint:the shared brain that both the proxy and logic contracts understand. 
+/**
+* @title Upgradeable Subscription Manager
+*/
+ 
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract SubscriptionStorageLayout {
+    address public logicContract;
+    address public owner;
+
+    struct Subscription {
+        uint8 planId;
+        uint256 expiry;
+        bool paused;
+    }
+
+    mapping(address => Subscription) public subscriptions;
+    mapping(uint8 => uint256) public planPrices;
+    mapping(uint8 => uint256) public planDuration;
+}
