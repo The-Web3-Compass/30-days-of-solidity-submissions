@@ -53,4 +53,128 @@ contract DecentralizedGovernance is ReentrancyGuard {
         emit TimelockSet(_timelockDuration);
     }
 
+    function setQuorumPercentage(uint256 _quorumPercentage) external onlyAdmin {
+        require(_quorumPercentage <= 100, "Quorum percentage must be between 0 and 100");
+        quorumPercentage = _quorumPercentage;
+    }
+
+    function setProposalDepositAmount(uint256 _proposalDepositAmount) external onlyAdmin {
+        proposalDepositAmount = _proposalDepositAmount;
+    }
+
+    function setTimelockDuration(uint256 _timelockDuration) external onlyAdmin {
+        timelockDuration = _timelockDuration;
+        emit TimelockSet(_timelockDuration);
+    }
+
+    function createProposal(
+        string calldata _description,
+        address[] calldata _targets,
+        bytes[] calldata _calldatas
+    ) external returns (uint256) {
+        require(governanceToken.balanceOf(msg.sender) >= proposalDepositAmount, "Insufficient tokens for deposit");
+        require(_targets.length == _calldatas.length, "Targets and calldatas length mismatch");
+
+        governanceToken.transferFrom(msg.sender, address(this), proposalDepositAmount);
+        emit ProposalDepositPaid(msg.sender, proposalDepositAmount);
+
+        proposals[nextProposalId] = Proposal({
+            id: nextProposalId,
+            description: _description,
+            deadline: block.timestamp + votingDuration,
+            votesFor: 0,
+            votesAgainst: 0,
+            executed: false,
+            proposer: msg.sender,
+            executionData: _calldatas,
+            executionTargets: _targets,
+            executionTime: 0
+        });
+
+        emit ProposalCreated(nextProposalId, _description, msg.sender, proposalDepositAmount);
+        nextProposalId++;
+        return nextProposalId - 1;
+    }
+
+    function vote(uint256 proposalId, bool support) external {
+        Proposal storage proposal = proposals[proposalId];
+        require(block.timestamp < proposal.deadline, "Voting period over");
+        require(governanceToken.balanceOf(msg.sender) > 0, "No governance tokens");
+        require(!hasVoted[proposalId][msg.sender], "Already voted");
+
+        uint256 weight = governanceToken.balanceOf(msg.sender);
+
+        if (support) {
+            proposal.votesFor += weight;
+        } else {
+            proposal.votesAgainst += weight;
+        }
+        hasVoted[proposalId][msg.sender] = true;
+        emit Voted(proposalId, msg.sender, support, weight);
+    }
+
+    function finalizeProposal(uint256 proposalId) external {
+        Proposal storage proposal = proposals[proposalId];
+        require(block.timestamp >= proposal.deadline, "Voting period not yet over");
+        require(!proposal.executed, "Proposal already executed");
+        require(proposal.executionTime == 0, "Execution time already set");
+
+        uint256 totalSupply = governanceToken.totalSupply();
+        uint256 totalVotes = proposal.votesFor + proposal.votesAgainst;
+        uint256 quorumNeeded = (totalSupply * quorumPercentage) / 100;
+
+        if (totalVotes >= quorumNeeded && proposal.votesFor > proposal.votesAgainst) {
+            proposal.executionTime = block.timestamp + timelockDuration;
+            emit ProposalTimelockStarted(proposalId, proposal.executionTime);
+        } else {
+            proposal.executed = true;
+            emit ProposalExecuted(proposalId, false);
+            if (totalVotes < quorumNeeded) {
+                emit QuorumNotMet(proposalId, totalVotes, quorumNeeded);
+            }
+        }
+    }
+
+    function executeProposal(uint256 proposalId) external nonReentrant {
+        Proposal storage proposal = proposals[proposalId];
+        require(!proposal.executed, "Proposal already executed");
+        require(proposal.executionTime > 0 && block.timestamp >= proposal.executionTime, "Timelock not yet expired");
+
+        proposal.executed = true; // set early to prevent reentrancy
+
+        bool passed = proposal.votesFor > proposal.votesAgainst;
+
+        if (passed) {
+            for (uint256 i = 0; i < proposal.executionTargets.length; i++) {
+                (bool success, bytes memory returnData) = proposal.executionTargets[i].call(proposal.executionData[i]);
+                require(success, string(returnData));
+            }
+            emit ProposalExecuted(proposalId, true);
+            governanceToken.transfer(proposal.proposer, proposalDepositAmount);
+            emit ProposalDepositRefunded(proposal.proposer, proposalDepositAmount);
+        } else {
+            emit ProposalExecuted(proposalId, false);
+        }
+    }
+
+    function getProposalResult(uint256 proposalId) external view returns (string memory) {
+        Proposal storage proposal = proposals[proposalId];
+        require(proposal.executed, "Proposal not yet executed");
+
+        uint256 totalSupply = governanceToken.totalSupply();
+        uint256 totalVotes = proposal.votesFor + proposal.votesAgainst;
+        uint256 quorumNeeded = (totalSupply * quorumPercentage) / 100;
+
+        if (totalVotes < quorumNeeded) {
+            return "Proposal FAILED - Quorum not met";
+        } else if (proposal.votesFor > proposal.votesAgainst) {
+            return "Proposal PASSED";
+        } else {
+            return "Proposal REJECTED";
+        }
+    }
+
+    function getProposalDetails(uint256 proposalId) external view returns (Proposal memory) {
+        return proposals[proposalId];
+    }
 }
