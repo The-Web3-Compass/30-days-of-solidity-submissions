@@ -1,0 +1,207 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+//引入ERC721 接口。IERC721 是 ERC-721（NFT 标准）的接口定义，允许你与外部 NFT 合约交互（如转账、查询所有者等）
+import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+//引入 ReentrancyGuard合约，用于防止重入攻击，通过一个锁变量确保某函数在执行中不可再次调用
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+
+contract NFTMarketplace is ReentrancyGuard {
+    address public owner; //合约拥有者地址
+    uint256 public marketplaceFeePercent; // 市场收取的手续费比例，单位是基点。基点（bp） 是一个金融单位，1 个基点 = 0.01%。
+    address public feeRecipient;  //接收手续费的地址
+
+    struct Listing {  //该结构展示NFT的上架信息
+        address seller;  //卖家
+        address nftAddress; //NFT所在合约地址
+        uint256 tokenId; //NFT的唯一编号
+        uint256 price; //上架价格，单位为wei
+        address royaltyReceiver;  //接收版税的地址，即原创作者的地址
+        uint256 royaltyPercent; // 版税比例，以基点为单位
+        bool isListed;  //上架状态
+    }
+
+    mapping(address => mapping(uint256 => Listing)) public listings;  //NFT合约地址→NFT唯一编号→NFT上架信息（结构体类型）
+
+    event Listed( //记录NFT上架事件
+        address indexed seller,  //卖家
+        address indexed nftAddress, //NFT所在合约地址
+        uint256 indexed tokenId,  //NFT唯一编号
+        uint256 price,  //价格
+        address royaltyReceiver,  //版税接收者
+        uint256 royaltyPercent  //版税比例
+    );
+
+    event Purchase( //记录购买NFT事件
+        address indexed buyer,  //买家
+        address indexed nftAddress,  //NFT所在合约地址
+        uint256 indexed tokenId,  //NFT唯一编号
+        uint256 price,  //价格
+        address seller, //卖家
+        address royaltyReceiver, //版税接收者
+        uint256 royaltyAmount,  //版税金额
+        uint256 marketplaceFeeAmount  //手续费金额
+    );
+
+    event Unlisted(  //记录下架事件
+        address indexed seller,  //卖家
+        address indexed nftAddress,  //NFT所在合约地址
+        uint256 indexed tokenId  //NFT唯一编号
+    );
+
+    event FeeUpdated( //记录手续费、变更事件
+        uint256 newMarketplaceFee, //新的手续费
+        address newFeeRecipient  //新的手续费接收者地址
+    );
+
+
+
+    //初始化：设置手续费比例、手续费接收地址、部署合约拥有者地址
+    constructor(uint256 _marketplaceFeePercent, address _feeRecipient) {
+        require(_marketplaceFeePercent <= 1000, "Marketplace fee too high (max 10%)"); //手续比例不许超过10%
+        require(_feeRecipient != address(0), "Fee recipient cannot be zero"); //手续费接收地址不能为空地址
+        owner = msg.sender;  //部署者即为合约拥有者
+        marketplaceFeePercent = _marketplaceFeePercent;  //手动输入手续费比例
+        feeRecipient = _feeRecipient;  //手动输入手续费接收地址
+    }
+
+
+
+    //设置管理员权限
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only owner");
+        _;
+    }
+
+
+    //更新手续费比例
+    function setMarketplaceFeePercent(uint256 _newFee) external onlyOwner {
+        require(_newFee <= 1000, "Marketplace fee too high");  //同样不得超过10%
+        marketplaceFeePercent = _newFee;  //更新手续费比例
+        emit FeeUpdated(_newFee, feeRecipient);  //触发手续费比例更新事件
+    }
+
+
+    //更新手续费接收地址
+    function setFeeRecipient(address _newRecipient) external onlyOwner {
+        require(_newRecipient != address(0), "Invalid fee recipient");  //新地址不为空
+        feeRecipient = _newRecipient;  //赋值更新
+        emit FeeUpdated(marketplaceFeePercent, _newRecipient); //触发手续费接收地址更新事件
+    }
+
+
+    //上架NFT
+    function listNFT(
+        address nftAddress,
+        uint256 tokenId,
+        uint256 price,
+        address royaltyReceiver,
+        uint256 royaltyPercent
+    ) external {
+        require(price > 0, "Price must be above zero");  //价格必须＞0
+        require(royaltyPercent <= 1000, "Max 10% royalty allowed");  //版税比例不得超过10%
+        require(!listings[nftAddress][tokenId].isListed, "Already listed");  //需要当前NFT并未上架。此句语法结构：mapping名字[外层key值][内层key值].结构体里布尔值字段。//mapping名字[外层key值][内层key值]返回的是一个结构体
+        //接口导入后只需要“声明变量 + 明确类型”，不需要通过继承is就能使用接口
+        IERC721 nft = IERC721(nftAddress); //声明一个IERC712接口类型的变量叫nft；将nftAddress，即NFT所在地址强制转成IERC712类型再存入nft作为调用接口函数的实例对象
+        require(nft.ownerOf(tokenId) == msg.sender, "Not the owner");  //调用的ownerOf函数返回值要等于当前调用者地址，确保调用者是NFT的真正持有者
+        require(
+            nft.getApproved(tokenId) == address(this) || nft.isApprovedForAll(msg.sender, address(this)), //两者满足其一即可
+            //nft.getApproved(tokenId) == address(this)检查是否对本合约地址进行过单独授权上架NFT
+            //nft.isApprovedForAll(msg.sender, address(this))检查是否对本合约地址批量授权过一些NFT的上架许可
+            "Marketplace not approved"
+        );
+
+        listings[nftAddress][tokenId] = Listing({  //给结构体的字段赋值
+            seller: msg.sender,  //上架者为卖家
+            nftAddress: nftAddress, //NFT所在合约地址
+            tokenId: tokenId, //NFT的唯一编码
+            price: price,  //价格
+            royaltyReceiver: royaltyReceiver, //版税接收者
+            royaltyPercent: royaltyPercent,  //版税比例
+            isListed: true //将上架状态设为True
+        });
+
+        emit Listed(msg.sender, nftAddress, tokenId, price, royaltyReceiver, royaltyPercent); //触发上架事件
+    }
+
+
+
+    //购买NFT
+    function buyNFT(address nftAddress, uint256 tokenId) external payable nonReentrant {  //nonReentrant：来自 ReentrancyGuard，防止重入攻击（保护资金安全）//非常巧妙，值得做笔记
+        Listing memory item = listings[nftAddress][tokenId];  //声明一个Listing类型的变量叫item,用来存储NFT的上架信息
+        require(item.isListed, "Not listed");  //需要该NFT已上架
+        require(msg.value == item.price, "Incorrect ETH sent"); //付款金额要等于价格
+        require(
+            item.royaltyPercent + marketplaceFeePercent <= 10000,  //版税比例与手续费比例之和不得超过100%，防止总费用超过买家支付总额（即 100%）
+            "Combined fees exceed 100%"
+        );
+        //计算三方分账的金额
+        uint256 feeAmount = (msg.value * marketplaceFeePercent) / 10000;  //平台抽成
+        uint256 royaltyAmount = (msg.value * item.royaltyPercent) / 10000; //作者分到的版税钱
+        //除以10000是为了还原真实数据，因为比例是按基点为单位计算的，假如基点是5系统就是乘以5，而基点5等于0.05%，机器不会识别为百分数按0.0005计算，乘以5而不乘0.0005相当于扩大了10000倍，最后要除以10000
+        uint256 sellerAmount = msg.value - feeAmount - royaltyAmount; //卖家收到的钱
+
+        // 平台费大于0的话，即平台有钱收
+        if (feeAmount > 0) {
+            payable(feeRecipient).transfer(feeAmount);//发钱给平台
+        }
+
+        // 版税费大于零的话，即作者有版税要收，
+        if (royaltyAmount > 0 && item.royaltyReceiver != address(0)) { //地址也不要为空
+            payable(item.royaltyReceiver).transfer(royaltyAmount);  //发钱给作者
+        }
+        //平台费和版税费，如若没有输入相应的比例，这两个值是有可能为零的
+
+        // 发钱给卖家（从计算公式看，卖家一定会拿到正数的钱，所以这里不用进行金额逻辑判断
+        payable(item.seller).transfer(sellerAmount);
+
+        // 给买家转让NFT所有权
+        //调用外部 NFT 合约的转账函数，把 NFT 转给买家
+        //语法格式：接口变量.目标函数名（）//注意：这里没声明变量接收，而是直接把地址类型强制转换成接口类型；目标函数所在合约地址和NFT所在合约地址同属一个
+        IERC721(item.nftAddress).safeTransferFrom(item.seller, msg.sender, item.tokenId);
+
+        //删除NFT上架信息
+        delete listings[nftAddress][tokenId];
+        //触发购买事件
+        emit Purchase(
+            msg.sender,
+            nftAddress,
+            tokenId,
+            msg.value,
+            item.seller,
+            item.royaltyReceiver,
+            royaltyAmount,
+            feeAmount
+        );
+    }
+    
+
+    //取消上架
+    function cancelListing(address nftAddress, uint256 tokenId) external {
+        Listing memory item = listings[nftAddress][tokenId]; //声明一个变量接收上架信息
+        require(item.isListed, "Not listed"); //确保状态是已上架
+        require(item.seller == msg.sender, "Not the seller");  //下架操作者必须是卖家
+
+        delete listings[nftAddress][tokenId]; //删除上架信息 
+        emit Unlisted(msg.sender, nftAddress, tokenId);  //触发下架事件
+    }
+
+
+    //获取上架信息
+    function getListing(address nftAddress, uint256 tokenId) external view returns (Listing memory) {
+        return listings[nftAddress][tokenId];
+    }
+    
+
+    //自动触发的函数（触发条件：收到纯ETH,没有calldata）：不接收直接转账
+    receive() external payable {
+        revert("Direct ETH not accepted"); 
+    }
+
+
+    //当调用的函数不存在 或 数据格式错误 或 合约没函数但有人发了 calldata，就会自动触发本函数，拒绝入账
+    fallback() external payable {
+        revert("Unknown function");
+    }
+}
+
