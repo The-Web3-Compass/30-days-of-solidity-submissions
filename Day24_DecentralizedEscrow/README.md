@@ -1,81 +1,50 @@
-Day 24 – Decentralized Escrow (Advanced Multi-Milestone System)
+# Day 24 – Decentralized Escrow (Advanced Multi-Milestone System)
 
-This smart contract implements a decentralized escrow system supporting:
+## Project Overview
 
-✅ Buyer
-✅ Seller
-✅ Arbiter (dispute resolver)
-✅ Multi-milestone payments
-✅ Deposit deadlines
-✅ Delivery deadlines
-✅ Auto-penalty handling
-✅ Full state-machine logic
+Day 24 focuses on creating an advanced decentralized escrow contract that supports multiple milestones, strict deadlines for both deposit and delivery, automated penalty handling, and an arbitration mechanism for disputes. The objective was to design a practical escrow workflow that moves through controlled states from deployment to completion.
 
-Everything is written in Foundry with a structured folder format.
+## Contract Structure (src Folder)
 
-Features
+**DecentralizedEscrow.sol** is the single smart contract that handles the entire logic. The contract defines the buyer, seller, and arbiter, along with milestone data, deadlines, and internal states. Milestones include delivery deadlines, payment amounts, and status tracking. The contract uses events, enums, state variables, and internal checks to ensure a controlled and predictable execution flow.
 
-Multi-milestone flow
+## Additional Features Implemented
 
-Secure ETH handling
+Compared to the base structure, the following enhancements were added:
 
-Delivery confirmation
+1. Multi-milestone payment system.
+2. Deposit deadline enforcement and contract cancellation if missed.
+3. Delivery deadlines for each milestone with automatic penalty if delayed.
+4. State-machine control for all major stages of the contract.
+5. Arbiter-based dispute resolution for rejected deliveries.
+6. Automated ETH handling for deposits and milestone-level payouts.
 
-Dispute resolution
+## Functions Tested in Remix
 
-Escrow cancellation logic
+The following key functions were verified in Remix to demonstrate the intended workflow:
 
-Withdraw & auto-release
+1. Constructor – initializes buyer, seller, arbiter, deadlines, and milestones.
+2. deposit() – buyer deposits the required escrow amount and activates the contract.
+3. submitDelivery() – seller marks a milestone as delivered.
+4. approveDelivery() – buyer approves and releases milestone payment.
+5. rejectDelivery() – buyer rejects and raises a dispute.
+6. resolveDispute() – arbiter resolves the dispute and assigns payment.
+7. autoTriggerDeadline() – checks for missed deadlines and applies penalty logic.
 
-Folder Structure
-src/            – Smart contract (356+ lines)
-test/           – Foundry test files
-script/         – Deployment scripts
-out/            – Build output
-outputs/        – Execution screenshots
-cache/          – Compiler cache
-README.md       – Project documentation
-foundry.toml    – Foundry configuration
-.gitignore      – Ignored files
+## Outputs
 
+The outputs folder contains screenshots showing the complete flow: contract deployment, initial state, deposit, delivery submission, buyer approval, arbiter action, and Foundry build confirmation.
 
-Save the file.
+## Foundry Commands Used
 
-✅ STEP 2 — STAGE EVERYTHING
+forge build
 
-From inside 30-days-of-solidity-submissions:
+forge test
 
-cd ~/30-days-of-solidity-submissions
-git add Day24_DecentralizedEscrow
+## Summary
 
+This task demonstrates a complete escrow lifecycle, including deposits, multi-step delivery, approvals, penalties, and dispute management. The project follows a clear state-driven design with strict deadline rules and secure ETH movement. The folder is fully organized in Foundry format with code, test structure, and deployment outputs.
 
-Check:
+---
 
-git status
-
-
-You MUST see:
-
-Changes to be committed:
-  new file: Day24_DecentralizedEscrow/README.md
-  new file: Day24_DecentralizedEscrow/outputs/....
-  ... etc ...
-
- STEP 3 — COMMIT
-git commit -m "Update Day 24 - Added README and outputs"
-
- STEP 4 — PUSH
-git push origin main
-
- NOW YOU WILL SEE DAY24 WITH README + OUTPUTS ON GITHUB
-
-Everything is now correct and aligned.
-
- Final Check
-
-Reply back with the output of:
-
-git status
-
-
-Then I’ll confirm you are 100% clean and synced.
+# End of the Project.
