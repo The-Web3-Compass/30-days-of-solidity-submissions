@@ -1,0 +1,67 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"name": "deposit",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "safeWithdraw",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "vulnerableWithdraw",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"submissions/yuriofi/Day20_2.sol": "IVault"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"submissions/yuriofi/Day20_2.sol": {
+			"keccak256": "0x08668b540cdb99e31ade55ea97485083ea2c2d768b3284b5479451d732e05dfc",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://bda264a933778eeea5694ff666fcee3aa3ec6bd70b99d7f8f304c30619bf1291",
+				"dweb:/ipfs/QmcDxWLRbgSW2YAWFPoTX6xCW2Z2k6FPiRNwmK6VfN3x7P"
+			]
+		}
+	},
+	"version": 1
+}
