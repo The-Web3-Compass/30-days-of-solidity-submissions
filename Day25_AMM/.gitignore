@@ -1,0 +1,24 @@
+# Compiler files
+cache/
+out/
+
+# Dependencies (do NOT upload OpenZeppelin or any forge installs)
+lib/
+
+# Ignores development broadcast logs
+!/broadcast
+/broadcast/*/31337/
+# Ignore dry-run results
+/broadcast/**/dry-run/
+
+# Docs
+docs/
+
+# Environment variables
+.env
+
+# Node Modules (in case you ever add a frontend)
+node_modules/
+
+# OS files
+.DS_Store
