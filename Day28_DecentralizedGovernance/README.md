@@ -1,66 +1,76 @@
-## Foundry
+# Day 28 – Decentralized Governance
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+This project implements a complete on-chain governance workflow using Foundry. The system includes an ERC20 governance token, proposal creation, weighted voting, timelock delay, and final execution. The contract allows token holders to participate in decentralized decision-making while enforcing quorum and execution delays.
 
-Foundry consists of:
+## Project Overview
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+The governance system contains:
 
-## Documentation
+1. A governance token contract used for vote weight.
+2. A governance contract handling proposals, voting, timelock, and execution.
+3. Scripts for basic contract deployment.
+4. Tests validating proposal creation, voting, timelock expiration, and final execution.
+5. Output screenshots demonstrating deployments and transaction flows.
 
-https://book.getfoundry.sh/
+## What Was Implemented
 
-## Usage
+### GovernanceToken.sol
 
-### Build
+A basic ERC20 token used as a governance token.
+Holders receive voting power equal to their token balance.
+Key points:
 
-```shell
-$ forge build
-```
+* Standard ERC20 implementation.
+* Required for proposal voting weight.
 
-### Test
+### DecentralizedGovernance.sol
 
-```shell
-$ forge test
-```
+The main governance contract.
+Key functionalities:
 
-### Format
+* Create proposals with a description, target contract address, and calldata.
+* Token-weighted voting (for/against).
+* Simple deposit requirement for proposal creation.
+* Quorum check before passing a proposal.
+* Timelock delay before execution.
+* Final execution of proposal calls.
 
-```shell
-$ forge fmt
-```
+Important elements:
 
-### Gas Snapshots
+* `createProposal` stores proposal data.
+* `vote` verifies token balance and records support.
+* `finalize` checks quorum and marks the proposal passed.
+* `execute` runs the proposal after timelock.
+* `hasVoted` prevents duplicate voting.
 
-```shell
-$ forge snapshot
-```
+### foundry.toml
 
-### Anvil
+Used to configure Foundry test and build settings.
+Sets directories, Solidity version, and optimizer settings.
 
-```shell
-$ anvil
-```
+### .gitignore
 
-### Deploy
+Used to exclude unnecessary folders such as `out`, `cache`, and `lib` so the repository remains clean.
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
+## Foundry Commands Used
 
-### Cast
+* `forge init` – initialize the project
+* `forge build` – compile all contracts
+* `forge test -vvv` – run detailed tests
+* `anvil` – local blockchain for interactive debugging
+* Deployment and execution through Remix for visual clarity
 
-```shell
-$ cast <subcommand>
-```
+## Expected Outputs
 
-### Help
+During testing and Remix execution:
 
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+* Proposal creation emits a ProposalCreated event.
+* Voting updates vote weight based on token balance.
+* Finalization shows whether quorum is met.
+* Execution triggers the target contract call and updates state (Counter increments).
+* Timelock prevents early execution.
+
+All execution outputs and screenshots are included inside the `outputs` folder.
+
+---
+# End of the project.
