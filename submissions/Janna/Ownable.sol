@@ -29,4 +29,3 @@ contract Ownable {
         emit OwnershipTransferred(previous, _newOwner);
     }
 }
-
