@@ -1,66 +1,64 @@
-## Foundry
+# Day 27 - Yield Farming Contract
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+This task implements a complete Yield Farming system using Solidity. The goal was to create a staking and rewards mechanism where users can deposit a token, accumulate rewards over time, and later withdraw both their stake and earned rewards. This project was built in Foundry for the official submission, and the same logic was also tested on Remix using two custom ERC20 tokens.
 
-Foundry consists of:
+## What was Built 
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+Created two ERC20 tokens using a SimpleToken contract: one token acts as the staking token and the other as the reward token. We then deployed a YieldFarming contract that handles staking, unstaking, updating user reward data, distributing rewards, and allowing the owner to refill the reward pool. All core staking logic is implemented with a reward-per-second model.
 
-## Documentation
+The project includes a Foundry project structure, source files, gitignore configuration, screenshots, and a separate workflow file.
 
-https://book.getfoundry.sh/
+## SimpleToken
 
-## Usage
+SimpleToken is a basic ERC20 token used for both the staking and reward tokens. It uses OpenZeppelin’s ERC20 implementation and mints an initial supply to the deployer. This contract was used to create StakeToken and RewardToken during Remix testing.
 
-### Build
+## YieldFarming Contract
 
-```shell
-$ forge build
+The YieldFarming contract manages user staking and reward calculations. It stores user stake information, updates rewards based on time passed, and ensures correct transfer of tokens. The contract uses ReentrancyGuard for safety and allows the owner to refill the reward pool. Key actions include stake, unstake, claimRewards, pendingRewards, and emergencyWithdraw.
+
+## Foundry Commands Used
+```
+forge init
+forge install OpenZeppelin/openzeppelin-contracts
+forge build
+forge test
+
+```
+These commands set up the project, installed dependencies, compiled the contracts, and ensured everything worked correctly.
+
+## Foundry.toml
+
+The Foundry.toml file defines the remappings required for OpenZeppelin libraries, the source and output directories, and the Solidity version used. It ensures the project compiles correctly without needing Remix URL imports.
+
+## Gitignore
+
+The gitignore file excludes the lib, out, cache, and broadcast folders. This prevents unnecessary dependencies, artifacts, and heavy folders from being pushed to GitHub, keeping the submission clean. The lib folder caused issues before, so it was specifically excluded.
+
+## Outputs and Testing
+
+Screenshots were captured from Remix to demonstrate the following steps:
+
+```
+Deploying the staking token
+Deploying the reward token
+Deploying the YieldFarming contract
+Approving tokens
+Staking tokens
+Checking user stake data
+Checking pending rewards
+Refilling the reward pool
+Claiming rewards
+Unstaking tokens
+
 ```
 
-### Test
+These images were added inside the outputs folder as evidence of correct execution.
 
-```shell
-$ forge test
-```
+## Summary
 
-### Format
+Day 27 introduced a complete yield farming system with staking, reward tracking, and safe withdrawal mechanisms. The project included ERC20 token creation, reward distribution logic, testing in Remix, and a clean Foundry setup for submission. All required files were prepared without the lib folder and submitted in a separate directory to avoid conflicts.
 
-```shell
-$ forge fmt
-```
+---
 
-### Gas Snapshots
+# End of The project.
 
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
