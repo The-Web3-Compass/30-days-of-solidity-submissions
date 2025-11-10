@@ -173,6 +173,19 @@
 			},
 			{
 				"inputs": [],
+				"name": "checkDecimals",
+				"outputs": [
+					{
+						"internalType": "uint8",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "checkRainfallAndClaim",
 				"outputs": [],
 				"stateMutability": "nonpayable",
@@ -381,11 +394,11 @@
 			]
 		},
 		"submissions/Serena Y/Day18-CropInsurance.sol": {
-			"keccak256": "0xdc091c298e260da7e95c7fb66a5cedbacdfeb5ce4fcdb4aebb7094ed8a6b0b17",
+			"keccak256": "0x9cfbe8b9e5ef89f3e6ca60e10243c20d51b8333171d0b3cf00304078cb8753d6",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://44f4d713c3d9a251741419517d4280a4c2a46a50344b6e7247edbb69767308ec",
-				"dweb:/ipfs/QmVFsfps6zLPV1Bir8Nc435Y4g7t9uxJCA76BiEcHsVwYG"
+				"bzz-raw://a5eae479cf72364eb455b8ffcb293aff47232c6e32ac1f4de8106f5994a75ea5",
+				"dweb:/ipfs/QmNcewdVdcphFCHuyo4uApEXBZe7X22mDt6qmXN8YwpFsf"
 			]
 		}
 	},
