@@ -14,11 +14,11 @@ contract InjectiveBankDemo {
     constructor() {
         TOKEN_ADDRESS = address(this);
 
-        // Optional: set metadata once
+        
         bool ok = BANK.setMetadata("DemoToken", "DMT", 18);
         emit BankOp("setMetadata", ok);
 
-        // optional initial mint to deployer
+        
         bool minted = BANK.mint(msg.sender, 1_000 * 10**18);
         emit BankOp("mint", minted);
     }
