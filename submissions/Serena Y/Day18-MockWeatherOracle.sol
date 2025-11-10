@@ -52,23 +52,26 @@ contract MockWeatherOracle is AggregatorV3Interface, Ownable {//继承合约，O
 
     // Function to get current rainfall with random variation
     function _rainfall() public view returns (int256) {
+        //这是一个叫做rainfall的函数，用来生成随机降雨量，返回一个随机值
         // Use block information to generate pseudo-random variation
-        uint256 blocksSinceLastUpdate = block.number - _lastUpdateBlock;
+        uint256 blocksSinceLastUpdate = block.number - _lastUpdateBlock;//计算自上次更新以来的区块数
         uint256 randomFactor = uint256(keccak256(abi.encodePacked(
-            block.timestamp,
-            block.coinbase,
-            blocksSinceLastUpdate
-        ))) % 1000; // Random number between 0 and 999
+            //keccak256(...)： 对这个字节串进行 Keccak-256 哈希运算
+            //abi.encodePacked(...)： 将括号内的三个变量（block.timestamp、block.coinbase、blocksSinceLastUpdate）紧密地打包成一个字节串
+            block.timestamp,//当前区块时间戳
+            block.coinbase,//当前区块的矿工地址
+            blocksSinceLastUpdate//自从上次更新以来的区块数
+        ))) % 1000; // % 1000 (取模运算)： 这会返回 randomFactor 除以 1000 的余数。
 
         // Return random rainfall between 0 and 999mm
-        return int256(randomFactor);
+        return int256(randomFactor);//个介于 0 到 999 之间的整数
     }
 
     // Function to update random rainfall
-    function _updateRandomRainfall() private {
-        _roundId++;
-        _timestamp = block.timestamp;
-        _lastUpdateBlock = block.number;
+    function _updateRandomRainfall() private {//这是一个叫做更新随机降雨量的函数，不返回数值 生成一个新的轮次ID和时间戳
+        _roundId++;//轮次 ID 递增
+        _timestamp = block.timestamp;//更新时间戳
+        _lastUpdateBlock = block.number;//更新区块号
     }
 
     // Function to force update rainfall (anyone can call)

@@ -290,11 +290,11 @@
 			]
 		},
 		"submissions/Serena Y/Day18-MockWeatherOracle.sol": {
-			"keccak256": "0xf74fe460ec0f5ddc63843f39fe28243723598bc53babf203d8eb6c38b954cbce",
+			"keccak256": "0x1e836c771f14146cf866883c931caf803898e94f6598f1566524d2a4b09089e2",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://469a70ee1ef11bc314cdf2a051640e390ecb68d681df30d4e02e0b49cffe0b16",
-				"dweb:/ipfs/QmYQs4bUXeX9NAmHG5oj6bctTAD2c9Yfe8g8nU8d92KXcp"
+				"bzz-raw://6a8ddabd155a20dbcd07ac03263e2857ab965f8932813daa087ed3e8f6ae1307",
+				"dweb:/ipfs/QmXpUzLSHn5Mb91aqAqMoxa433aqyzfQfwHhzGERukTtrQ"
 			]
 		}
 	},
