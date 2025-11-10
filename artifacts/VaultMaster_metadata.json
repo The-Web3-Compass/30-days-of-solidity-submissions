@@ -6,6 +6,33 @@
 	"output": {
 		"abi": [
 			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					}
+				],
+				"name": "OwnableInvalidOwner",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "OwnableUnauthorizedAccount",
+				"type": "error"
+			},
+			{
 				"anonymous": false,
 				"inputs": [
 					{
@@ -84,7 +111,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "ownerAddress",
+				"name": "owner",
 				"outputs": [
 					{
 						"internalType": "address",
@@ -96,10 +123,17 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "renounceOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "_newOwner",
+						"name": "newOwner",
 						"type": "address"
 					}
 				],
@@ -128,8 +162,30 @@
 			}
 		],
 		"devdoc": {
+			"errors": {
+				"OwnableInvalidOwner(address)": [
+					{
+						"details": "The owner is not a valid owner account. (eg. `address(0)`)"
+					}
+				],
+				"OwnableUnauthorizedAccount(address)": [
+					{
+						"details": "The caller account is not authorized to perform an operation."
+					}
+				]
+			},
 			"kind": "dev",
-			"methods": {},
+			"methods": {
+				"owner()": {
+					"details": "Returns the address of the current owner."
+				},
+				"renounceOwnership()": {
+					"details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby disabling any functionality that is only available to the owner."
+				},
+				"transferOwnership(address)": {
+					"details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+				}
+			},
 			"version": 1
 		},
 		"userdoc": {
@@ -140,7 +196,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"submissions/iCat798/11-钱库控制合约/Day11-VaultMaster.sol": "VaultMaster"
+			"submissions/iCat798/11-钱库控制合约/VaultMaser2.sol": "VaultMaster"
 		},
 		"evmVersion": "prague",
 		"libraries": {},
@@ -154,20 +210,28 @@
 		"remappings": []
 	},
 	"sources": {
-		"submissions/iCat798/11-钱库控制合约/Day11-VaultMaster.sol": {
-			"keccak256": "0x5f333ccd2d46b0fc5fe6e03653718db4496b620e6da23ee8548a54d343dd31aa",
+		"@openzeppelin/contracts/access/Ownable.sol": {
+			"keccak256": "0xff6d0bb2e285473e5311d9d3caacb525ae3538a80758c10649a4d61029b017bb",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://dfdc4fc075d33ce1e9d577e35e9a3814ea1925da906e3cfdae63ff45e68af9aa",
-				"dweb:/ipfs/QmPtEJGpqS6yeNvrMDSTMA8tcNMjaQxuvPZqLxhQvv7mxz"
+				"bzz-raw://8ed324d3920bb545059d66ab97d43e43ee85fd3bd52e03e401f020afb0b120f6",
+				"dweb:/ipfs/QmfEckWLmZkDDcoWrkEvMWhms66xwTLff9DDhegYpvHo1a"
 			]
 		},
-		"submissions/iCat798/11-钱库控制合约/Ownable.sol": {
-			"keccak256": "0x2ab58ad0f07ab94f0a71c889e0cead42d758b0837a3ce1c401e30c6629141ccf",
+		"@openzeppelin/contracts/utils/Context.sol": {
+			"keccak256": "0x493033a8d1b176a037b2cc6a04dad01a5c157722049bbecf632ca876224dd4b2",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://7adea53efaf26ebfe96cf80962bb2abb20ce19c67c7b4a2d939546312c1c7f97",
-				"dweb:/ipfs/QmfYTxeRUjpcNPNrsbT5J657HapgqFDPuce4gfY1x9aVRm"
+				"bzz-raw://6a708e8a5bdb1011c2c381c9a5cfd8a9a956d7d0a9dc1bd8bcdaf52f76ef2f12",
+				"dweb:/ipfs/Qmax9WHBnVsZP46ZxEMNRQpLQnrdE4dK8LehML1Py8FowF"
+			]
+		},
+		"submissions/iCat798/11-钱库控制合约/VaultMaser2.sol": {
+			"keccak256": "0x22933c594ea4495365c9941793622456b003828770c5fcb9337240ff1d1efa28",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2474533872723c6b90ec7f513c9d431d5b6feefc387066e45e3537a06b214625",
+				"dweb:/ipfs/QmVT1QsAhEmN9YUmaZ52qEZ8qFWKpcTbbiZEjRbDUR6f9c"
 			]
 		}
 	},
