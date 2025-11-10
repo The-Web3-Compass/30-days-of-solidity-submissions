@@ -1,0 +1,130 @@
+Script started on 2025-10-31 16:00:15+00:00 [TERM="xterm-256color" TTY="/dev/pts/6" COLUMNS="168" LINES="36"]
+[?2004h]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions/submissions/DeepakKumar[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions/submissions/DeepakKumar[00m$ [7mexport ORGANIZER_PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7b[27m[7mf[27m[7m4f2ff80[27m[A]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions/submissions/DeepakKumar[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions/submissions/DeepakKumar[00m$ export ORGANIZER_PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+[?2004l[?2004h]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions/submissions/DeepakKumar[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions/submissions/DeepakKumar[00m$ [7mcast send --rpc-url http://127.0.0.1:8545 --private-key $ORGANIZER_PRIVATE_KEY --create[27m[7m [27m[7m"${BYTECODE}000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000696b7b80000000000000000000000000000[27m[7m0[27m[7m00000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000b576562332053756d6d6974000000000000000000000000000000000000000000"[27m[A[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ccast send --rpc-url http://127.0.0.1:8545 --private-key $ORGANIZER_PRIVATE_KEY --create "${BYTECODE}000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000696b7b80000000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000b576562332053756d6d6974000000000000000000000000000000000000000000"
+[?2004l
+blockHash            0x553eb4c9157a0020dc4c933aa281306fde21cfbc2d26d2bc2b002bc50bcdec5c
+blockNumber          5
+contractAddress      0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
+cumulativeGasUsed    53866
+effectiveGasPrice    609237638
+from                 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+gasUsed              53866
+logs                 []
+logsBloom            0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+root                 
+status               1 (success)
+transactionHash      0xa2173c86da5c3ceebec8343ce4c51b5b02d19369aea290639fc7c413225a4eb7
+transactionIndex     0
+type                 2
+blobGasPrice         1
+blobGasUsed          
+[?2004h]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions/submissions/DeepakKumar[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions/submissions/DeepakKumar[00m$ [7mcast call 0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0 "getMessageHash(address)" 0x709979[27m[7m7[27m[7m0C51812dc3A010C7d01b50e0d17dc79C8[27m[A]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions/submissions/DeepakKumar[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions/submissions/DeepakKumar[00m$ cast call 0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0 "getMessageHash(address)" 0x70997970C51812dc3A010C7d01b50e0d17dc79C8
+[?2004l0xd81e1b5a215095ada9583ca4a0725b91dc755b157d7f26cba0d2df49d36f5348
+[?2004h]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions/submissions/DeepakKumar[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions/submissions/DeepakKumar[00m$ [7mcast wallet sign --private-key $ORGANIZER_PRIVATE_KEY 0xeb696c7bed2674f6daba2a15e2fa113[27m[7mb[27m[7m9e2923b35f6a4c74aa55200f4c3312b2[27m[A]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions/submissions/DeepakKumar[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions/submissions/DeepakKumar[00m$ cast wallet sign --private-key $ORGANIZER_PRIVATE_KEY 0xeb696c7bed2674f6daba2a15e2fa113b9e2923b35f6a4c74aa55200f4c3312b2
+[?2004l0x2af035cfab15f20f035c80abc0fbeab63ec53d56d376574bd66c8edd95fb44295e59c64e4601a006b2c12868bd4b89db9a65261fc5e1dad000691d6ff27f49c61c
+[?2004h]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions/submissions/DeepakKumar[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions/submissions/DeepakKumar[00m$ [7mcast send 0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0 --rpc-url http://127.0.0.1:8545 --[27m[7mp[27m[7mrivate-key 0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d "checkIn(bytes)" 0x2af035cfab15f20f035c80abc0fbeab63ec53d56d376574bd66c8edd95fb44295e59c6[27m[7m4[27m[7me4601a006b2c12868bd4b89db9a65261fc5e1dad000691d6ff27f49c61c[27m[A[A]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions/submissions/DeepakKumar[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions/submissions/DeepakKumar[00m$ cast send 0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0 --rpc-url http://127.0.0.1:8545 --private-key 0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d "checkIn(bytes)" 0x2af035cfab15f20f035c80abc0fbeab63ec53d56d376574bd66c8edd95fb44295e59c64e4601a006b2c12868bd4b89db9a65261fc5e1dad000691d6ff27f49c61c
+[?2004l[1m[31mError[0m[1m:[0m Failed to estimate gas: server returned an error response: error code 3: execution reverted: Invalid signature, data: "0x08c379a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000011496e76616c6964207369676e6174757265000000000000000000000000000000": Error("Invalid signature")
+[?2004h]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions/submissions/DeepakKumar[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions/submissions/DeepakKumar[00m$ [7mcast call 0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0 "hasAttended(address)" 0x70997970C[27m[7m5[27m[7m1812dc3A010C7d01b50e0d17dc79C8[27m[A]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions/submissions/DeepakKumar[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions/submissions/DeepakKumar[00m$ cast call 0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0 "hasAttended(address)" 0x70997970C51812dc3A010C7d01b50e0d17dc79C8
+[?2004l0x0000000000000000000000000000000000000000000000000000000000000000
+[?2004h]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions/submissions/DeepakKumar[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions/submissions/DeepakKumar[00m$ [K]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions/submissions/DeepakKumar[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions/submissions/DeepakKumar[00m$ [K]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions/submissions/DeepakKumar[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions/submissions/DeepakKumar[00m$ [K]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions/submissions/DeepakKumar[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions/submissions/DeepakKumar[00m$ [K]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions/submissions/DeepakKumar[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions/submissions/DeepakKumar[00m$ [K]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions/submissions/DeepakKumar[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions/submissions/DeepakKumar[00m$ [K]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions/submissions/DeepakKumar[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions/submissions/DeepakKumar[00m$ [K]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions/submissions/DeepakKumar[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions/submissions/DeepakKumar[00m$ [K]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions/submissions/DeepakKumar[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions/submissions/DeepakKumar[00m$ [K]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions/submissions/DeepakKumar[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions/submissions/DeepakKumar[00m$ [K]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions/submissions/DeepakKumar[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions/submissions/DeepakKumar[00m$ [K]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions/submissions/DeepakKumar[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions/submissions/DeepakKumar[00m$ [K]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions/submissions/DeepakKumar[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions/submissions/DeepakKumar[00m$ [K]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions/submissions/DeepakKumar[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions/submissions/DeepakKumar[00m$ [7mcd ~/30-days-of-solidity-submissions/submissions/DeepakKumar/Day19_signthis[27m
+[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ccd ~/30-days-of-solidity-submissions/submissions/DeepakKumar/Day19_signthis
+[A
+[?2004l[?2004h]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions/submissions/DeepakKumar/Day19_signthis[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions/submissions/DeepakKumar/Day19_signthis[00m$ [7mmkdir Output_screenshots[27m
+[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cmkdir Output_screenshots
+[A
+[?2004l[?2004h]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions/submissions/DeepakKumar/Day19_signthis[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions/submissions/DeepakKumar/Day19_signthis[00m$ [7mcp "/mnt/c/Users/jyash/OneDrive/Desktop/Day19 outpputs/terminal 1.png" .[27m[7m/[27m[7mOutput_screenshots/1_anvil_and_tests.png [27m
+
+[7mcp "/mnt/c/Users/jyash/OneDrive/Desktop/Day19 outpputs/terminal 2.png" ./Output_screenshots/2_deployment_and_signature.png[27m
+
+[7mcp "/mnt/c/Users/jyash/OneDrive/Desktop/Day19 outpputs/Note.txt" ./Output_screenshots/note.txt[27m
+[A[A[A[A[A[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ccp "/mnt/c/Users/jyash/OneDrive/Desktop/Day19 outpputs/terminal 1.png" ./Output_screenshots/1_anvil_and_tests.png
+
+cp "/mnt/c/Users/jyash/OneDrive/Desktop/Day19 outpputs/terminal 2.png" ./Output_screenshots/2_deployment_and_signature.png
+
+cp "/mnt/c/Users/jyash/OneDrive/Desktop/Day19 outpputs/Note.txt" ./Output_screenshots/note.txt
+[A
+[?2004l[?2004h]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions/submissions/DeepakKumar/Day19_signthis[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions/submissions/DeepakKumar/Day19_signthis[00m$ [7mls Output_screenshots[27m
+[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cls Output_screenshots
+[A
+[?2004l[0m[01;32m1_anvil_and_tests.png[0m  [01;32m2_deployment_and_signature.png[0m  [01;32mnote.txt[0m
+[?2004h]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions/submissions/DeepakKumar/Day19_signthis[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions/submissions/DeepakKumar/Day19_signthis[00m$ [7mgit add Output_screenshots[27m
+[7mgit commit -m "Add Output screenshots and note for Day19 SignThis"[27m
+[7mgit push origin main[27m
+[A[A[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cgit add Output_screenshots
+git commit -m "Add Output screenshots and note for Day19 SignThis"
+git push origin main
+[A
+[?2004l[main a6ca95a] Add Output screenshots and note for Day19 SignThis
+ 3 files changed, 6 insertions(+)
+ create mode 100755 submissions/DeepakKumar/Day19_signthis/Output_screenshots/1_anvil_and_tests.png
+ create mode 100755 submissions/DeepakKumar/Day19_signthis/Output_screenshots/2_deployment_and_signature.png
+ create mode 100755 submissions/DeepakKumar/Day19_signthis/Output_screenshots/note.txt
+To https://github.com/Deepakkumar2206/30-days-of-solidity-submissions.git
+ [31m! [rejected]       [m main -> main (fetch first)
+[31merror: failed to push some refs to 'https://github.com/Deepakkumar2206/30-days-of-solidity-submissions.git'
+[m[33mhint: Updates were rejected because the remote contains work that you do not[m
+[33mhint: have locally. This is usually caused by another repository pushing to[m
+[33mhint: the same ref. If you want to integrate the remote changes, use[m
+[33mhint: 'git pull' before pushing again.[m
+[33mhint: See the 'Note about fast-forwards' in 'git push --help' for details.[m
+[?2004h]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions/submissions/DeepakKumar/Day19_signthis[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions/submissions/DeepakKumar/Day19_signthis[00m$ [7mcd ~/30-days-of-solidity-submissions[27m
+[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ccd ~/30-days-of-solidity-submissions
+[A
+[?2004l[?2004h]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions[00m$ [7mgit pull --rebase origin main[27m
+[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cgit pull --rebase origin main
+[A
+[?2004lremote: Enumerating objects: 16, done.[K
+remote: Counting objects:   6% (1/16)[Kremote: Counting objects:  12% (2/16)[Kremote: Counting objects:  18% (3/16)[Kremote: Counting objects:  25% (4/16)[Kremote: Counting objects:  31% (5/16)[Kremote: Counting objects:  37% (6/16)[Kremote: Counting objects:  43% (7/16)[Kremote: Counting objects:  50% (8/16)[Kremote: Counting objects:  56% (9/16)[Kremote: Counting objects:  62% (10/16)[Kremote: Counting objects:  68% (11/16)[Kremote: Counting objects:  75% (12/16)[Kremote: Counting objects:  81% (13/16)[Kremote: Counting objects:  87% (14/16)[Kremote: Counting objects:  93% (15/16)[Kremote: Counting objects: 100% (16/16)[Kremote: Counting objects: 100% (16/16), done.[K
+remote: Compressing objects:   9% (1/11)[Kremote: Compressing objects:  18% (2/11)[Kremote: Compressing objects:  27% (3/11)[Kremote: Compressing objects:  36% (4/11)[Kremote: Compressing objects:  45% (5/11)[Kremote: Compressing objects:  54% (6/11)[Kremote: Compressing objects:  63% (7/11)[Kremote: Compressing objects:  72% (8/11)[Kremote: Compressing objects:  81% (9/11)[Kremote: Compressing objects:  90% (10/11)[Kremote: Compressing objects: 100% (11/11)[Kremote: Compressing objects: 100% (11/11), done.[K
+remote: Total 11 (delta 8), reused 0 (delta 0), pack-reused 0 (from 0)[K
+Unpacking objects:   9% (1/11)Unpacking objects:  18% (2/11)Unpacking objects:  27% (3/11)Unpacking objects:  36% (4/11)Unpacking objects:  45% (5/11)Unpacking objects:  54% (6/11)Unpacking objects:  63% (7/11)Unpacking objects:  72% (8/11)Unpacking objects:  81% (9/11)Unpacking objects:  90% (10/11)Unpacking objects: 100% (11/11)Unpacking objects: 100% (11/11), 4.13 KiB | 2.06 MiB/s, done.
+From https://github.com/Deepakkumar2206/30-days-of-solidity-submissions
+ * branch            main       -> FETCH_HEAD
+   3b2baa5..a2ae0fb  main       -> origin/main
+Rebasing (1/1)[KSuccessfully rebased and updated refs/heads/main.
+[?2004h]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions[00m$ [7mgit push origin main[27m
+[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cgit push origin main
+[A
+[?2004lEnumerating objects: 13, done.
+Counting objects:   7% (1/13)Counting objects:  15% (2/13)Counting objects:  23% (3/13)Counting objects:  30% (4/13)Counting objects:  38% (5/13)Counting objects:  46% (6/13)Counting objects:  53% (7/13)Counting objects:  61% (8/13)Counting objects:  69% (9/13)Counting objects:  76% (10/13)Counting objects:  84% (11/13)Counting objects:  92% (12/13)Counting objects: 100% (13/13)Counting objects: 100% (13/13), done.
+Delta compression using up to 32 threads
+Compressing objects:  11% (1/9)Compressing objects:  22% (2/9)Compressing objects:  33% (3/9)Compressing objects:  44% (4/9)Compressing objects:  55% (5/9)Compressing objects:  66% (6/9)Compressing objects:  77% (7/9)Compressing objects:  88% (8/9)Compressing objects: 100% (9/9)Compressing objects: 100% (9/9), done.
+Writing objects:  11% (1/9)Writing objects:  22% (2/9)Writing objects:  33% (3/9)Writing objects:  44% (4/9)Writing objects:  55% (5/9)Writing objects:  66% (6/9)Writing objects:  77% (7/9)Writing objects:  88% (8/9), 1.10 MiB | 1.24 MiB/sWriting objects: 100% (9/9), 1.10 MiB | 1.24 MiB/sWriting objects: 100% (9/9), 1.31 MiB | 1.29 MiB/s, done.
+Total 9 (delta 4), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas:   0% (0/4)[Kremote: Resolving deltas:  25% (1/4)[Kremote: Resolving deltas:  50% (2/4)[Kremote: Resolving deltas:  75% (3/4)[Kremote: Resolving deltas: 100% (4/4)[Kremote: Resolving deltas: 100% (4/4), completed with 4 local objects.[K
+To https://github.com/Deepakkumar2206/30-days-of-solidity-submissions.git
+   a2ae0fb..c83eb1f  main -> main
+[?2004h]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-submissions[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-submissions[00m$ [7mcd ~/30-days-of-solidity-deepak/Day19_signthis[27m
+[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ccd ~/30-days-of-solidity-deepak/Day19_signthis
+[A
+[?2004l[?2004h]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-deepak/Day19_signthis[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-deepak/Day19_signthis[00m$ [7mmkdir Output_screenshots[27m
+[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cmkdir Output_screenshots
+[A
+[?2004l[?2004h]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-deepak/Day19_signthis[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-deepak/Day19_signthis[00m$ [7mcp -r ~/30-days-of-solidity-submissions/submissions/DeepakKumar/Day19_signthis/Output_screenshots ./O[27m[7mu[27m[7mtput_screenshots [27m
+[A[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ccp -r ~/30-days-of-solidity-submissions/submissions/DeepakKumar/Day19_signthis/Output_screenshots ./Output_screenshots
+[A
+[?2004l[?2004h]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-deepak/Day19_signthis[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-deepak/Day19_signthis[00m$ [7mls Output_screenshots[27m
+[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cls Output_screenshots
+[A
+[?2004l[0m[01;34mOutput_screenshots[0m
+[?2004h]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-deepak/Day19_signthis[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-deepak/Day19_signthis[00m$ [7mls Output_screenshots[27m
+[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cls Output_screenshots
+[A
+[?2004l[0m[01;34mOutput_screenshots[0m
+[?2004h]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-deepak/Day19_signthis[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-deepak/Day19_signthis[00m$ [7mrm -r Output_screenshots/Output_screenshots[27m
+[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Crm -r Output_screenshots/Output_screenshots
+[A
+[?2004l[?2004h]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-deepak/Day19_signthis[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-deepak/Day19_signthis[00m$ [7mcp ~/30-days-of-solidity-submissions/submissions/DeepakKumar/Day19_signthis/Output_screenshots/* ./Ou[27m[7mt[27m[7mput_screenshots/ [27m
+[A[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ccp ~/30-days-of-solidity-submissions/submissions/DeepakKumar/Day19_signthis/Output_screenshots/* ./Output_screenshots/
+[A
+[?2004l[?2004h]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-deepak/Day19_signthis[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-deepak/Day19_signthis[00m$ [7mls Output_screenshots[27m
+[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cls Output_screenshots
+[A
+[?2004l[0m[01;32m1_anvil_and_tests.png[0m  [01;32m2_deployment_and_signature.png[0m  [01;32mnote.txt[0m
+[?2004h]0;deepakkumar@Yashwinii: ~/30-days-of-solidity-deepak/Day19_signthis[01;32mdeepakkumar@Yashwinii[00m:[01;34m~/30-days-of-solidity-deepak/Day19_signthis[00m$ [7mgit add Output_screenshots[27m
+[7mgit commit -m "Add Output screenshots and note for Day19 SignThis"[27m
+[7mgit pull --rebase origin main[27m
+[7mgit push origin main[27m
+[A[A[A[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cgit add Output_screenshots
+git commit -m "Add Output screenshots and note for Day19 SignThis"
+git pull --rebase or
