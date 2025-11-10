@@ -1,4 +1,4 @@
-# Day 29 – Simple Stablecoin
+# Day 29 - Simple Stablecoin
 
 This project implements a basic over-collateralized stablecoin system. The goal was to understand how stablecoins maintain value using collateral, price feeds, and mint/redeem functions. The project was built and tested using Foundry, with a local mock price feed and mock ERC20 token.
 
