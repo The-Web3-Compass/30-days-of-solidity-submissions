@@ -252,7 +252,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"submissions/iCat798/Day12.sol": "SimpleERC20"
+			"submissions/iCat798/12-第一次ERC20合约/Day12-SimpleERC20.sol": "SimpleERC20"
 		},
 		"evmVersion": "prague",
 		"libraries": {},
@@ -266,12 +266,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"submissions/iCat798/Day12.sol": {
-			"keccak256": "0x804ac9a716fa747ecf0d89855f10805783898df5b5af0d9212e8c4275761064f",
+		"submissions/iCat798/12-第一次ERC20合约/Day12-SimpleERC20.sol": {
+			"keccak256": "0x3c0a651c759ea0379d28a5795fc4f5ac50c81c70f296e80c2d4434c93f021188",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://5113bba09e260be4cecd1b61fa8d4787d1ebca896fad71406cbb1728978b36f9",
-				"dweb:/ipfs/QmSpJnKHcGL9hCGD5JVfh4P8wYRjNM2pJ4szTPScNpBt2r"
+				"bzz-raw://f06e412b770cd17703a905204e93b20de97bb7607b2f08e0b10949849e742afc",
+				"dweb:/ipfs/QmbcX9NcQ7BEz3SbL1uUc6DNUzrYvMJwEP5ZdZf3UCBrDE"
 			]
 		}
 	},
