@@ -21,7 +21,8 @@ contract MyToken{
         balanceOf[msg.sender] = totalSupply;
         emit Transfer(address(0), msg.sender, _initialSupply);
     } 
-
+ 
+     // ！！！virtual 以便在子合约中重写（重新实现）⇒ 在代币发售期间限制代币的转账
     function _transfer(address _from, address _to, uint256 _value)internal virtual{
         require(_to != address(0), "Cannot transfer to the zero address");
         balanceOf[_from]-= _value;
