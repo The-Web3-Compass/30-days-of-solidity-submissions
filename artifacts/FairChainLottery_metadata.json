@@ -1,0 +1,496 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "vrfCoordinator",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_subscriptionId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "_keyHash",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_entryFee",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "have",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "want",
+						"type": "address"
+					}
+				],
+				"name": "OnlyCoordinatorCanFulfill",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "have",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "coordinator",
+						"type": "address"
+					}
+				],
+				"name": "OnlyOwnerOrCoordinator",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "ZeroAddress",
+				"type": "error"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "vrfCoordinator",
+						"type": "address"
+					}
+				],
+				"name": "CoordinatorSet",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					}
+				],
+				"name": "OwnershipTransferRequested",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					}
+				],
+				"name": "OwnershipTransferred",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "acceptOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "callbackGasLimit",
+				"outputs": [
+					{
+						"internalType": "uint32",
+						"name": "",
+						"type": "uint32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "endLottery",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "enter",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "entryFee",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getPlayers",
+				"outputs": [
+					{
+						"internalType": "address payable[]",
+						"name": "",
+						"type": "address[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "keyHash",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "latestRequestId",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "lotteryState",
+				"outputs": [
+					{
+						"internalType": "enum FairChainLottery.LOTTERY_STATE",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "numWords",
+				"outputs": [
+					{
+						"internalType": "uint32",
+						"name": "",
+						"type": "uint32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "players",
+				"outputs": [
+					{
+						"internalType": "address payable",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "requestId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "randomWords",
+						"type": "uint256[]"
+					}
+				],
+				"name": "rawFulfillRandomWords",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "recentWinner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "requestConfirmations",
+				"outputs": [
+					{
+						"internalType": "uint16",
+						"name": "",
+						"type": "uint16"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "s_vrfCoordinator",
+				"outputs": [
+					{
+						"internalType": "contract IVRFCoordinatorV2Plus",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_vrfCoordinator",
+						"type": "address"
+					}
+				],
+				"name": "setCoordinator",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "startLottery",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "subscriptionId",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"constructor": {
+					"details": "初始化VRF配置和彩票状态"
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"acceptOwnership()": {
+					"notice": "Allows an ownership transfer to be completed by the recipient."
+				},
+				"constructor": {
+					"notice": "构造函数执行顺序： 1.首先初始化父合约VRFConSumerBaseV2Plus 2.设置参数 3.最后初始化彩票状态为关闭"
+				},
+				"owner()": {
+					"notice": "Get the current owner"
+				},
+				"setCoordinator(address)": {
+					"notice": "Sets the VRF Coordinator addressThis method should only be callable by the coordinator or contract owner"
+				},
+				"transferOwnership(address)": {
+					"notice": "Allows an owner to begin transferring ownership to a new address."
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"submissions/Zora/FairChainLottery.sol": "FairChainLottery"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@chainlink/contracts/src/v0.8/shared/access/ConfirmedOwner.sol": {
+			"keccak256": "0xf73016e2473f54ab8d5c7e3c4ab2fa280a185ccfc80d2be48ac5d18016c3f717",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://f051e82857cc14b3a975f8c09eece2ca349d4954e83165a2b56ed659aad40c9e",
+				"dweb:/ipfs/QmRNMQ5jQQ3a9LZgsQqmQxYJxhTQKQrRtP4Wc7TAjYS43N"
+			]
+		},
+		"@chainlink/contracts/src/v0.8/shared/access/ConfirmedOwnerWithProposal.sol": {
+			"keccak256": "0x521cf41e477e502d133e050a5f35625f2ec652327af7f1b21abf5b898f9b8df9",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://65198b68ed110b9900174be8b3ef682da28f7645fbaa21e4ccd97e8b4a971501",
+				"dweb:/ipfs/QmfDu99JhbBFnAFdw95jjnGgXEohyRvA7XPQf4NEpheytc"
+			]
+		},
+		"@chainlink/contracts/src/v0.8/shared/interfaces/IOwnable.sol": {
+			"keccak256": "0x19f12817caa863b6785cf1e9085c66a93042fe906e41926bcb4a12bec9558d60",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://d1cf3f784c42642747c263cfa7b9462846d5ce8ff84467470ec2703a659b925d",
+				"dweb:/ipfs/Qmbz2qYFMNM3CVYNKgwJV5Kqx5FFHSrb8zXEsYbJXyjFnP"
+			]
+		},
+		"@chainlink/contracts/src/v0.8/vrf/dev/VRFConsumerBaseV2Plus.sol": {
+			"keccak256": "0xb8be2be9ad825b833975179c27367a01dfbaa987751f298205f16ab73afcf703",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://ea682207321f6c8fb68c51d524fb66cfc384555a7d9eb978682ab3185bf51fef",
+				"dweb:/ipfs/QmZFEK8JhYU6bGyJH28EcpUvQZdcD1zr6EeZmf8Ko7KBFt"
+			]
+		},
+		"@chainlink/contracts/src/v0.8/vrf/dev/interfaces/IVRFCoordinatorV2Plus.sol": {
+			"keccak256": "0x7fa2fd69fb4a3313506f4d556667fd0c918d43441dbdb6ffa41339ac97e1e5b1",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://d97cea325765ba779ad1b858608da8e1f4e5a297785941a039f2d2b3b0384de0",
+				"dweb:/ipfs/QmawxEDkw6UrJuRJJK8ZdqjT98hjv2rifjEe8MJtKeL7bc"
+			]
+		},
+		"@chainlink/contracts/src/v0.8/vrf/dev/interfaces/IVRFMigratableConsumerV2Plus.sol": {
+			"keccak256": "0xd1b8053c786c6771bc5d27ea0cfa6fbf73fbbc0f3d900ac0fea50a7ebcd581b1",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://48b0ea904bf7f2f9e742a64d074af5bb7895f0ee309990d1088a4fb6361efc96",
+				"dweb:/ipfs/QmauY45Bzw6wDKFKMZHJSRi8ZybjuegLrQp9e1M14CUGFy"
+			]
+		},
+		"@chainlink/contracts/src/v0.8/vrf/dev/interfaces/IVRFSubscriptionV2Plus.sol": {
+			"keccak256": "0xb782e66b6a2a87df6f70c2a8aa3aa6e4db5711edfe5a831b9d585a4b975bb7a8",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://9cf200f084cf8f20c368c1cebeb06f4a1fa2392b282b7ffc1e01f824718b00a1",
+				"dweb:/ipfs/QmbZNV5LxMLD2m9nLYkARyq39ouq28kVPPbUD1yDVeCp8v"
+			]
+		},
+		"@chainlink/contracts/src/v0.8/vrf/dev/libraries/VRFV2PlusClient.sol": {
+			"keccak256": "0xb0b1a6f3f0d59aca5c805994d8f64c24f570c280422f976dbae20f8b5b24b47c",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://f50a9db38564469f443866bb1e8067f4f934616195afe282c00733d1c1cc7419",
+				"dweb:/ipfs/QmfKLv5z7KzxNKCZfH9wC9b4ukkXqz8w8HEqmJcYAvdREH"
+			]
+		},
+		"submissions/Zora/FairChainLottery.sol": {
+			"keccak256": "0xb5fd2c9fdcb0f5fc3bb9fd1158ffd5a9a6591d98514d134bcc524abbdc7c887d",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://38ee06c7756fd17d65237dab7c8eb64eb8ba86d7bdd9e4a887ae6b1540441d10",
+				"dweb:/ipfs/QmWmYhAwLj1azuCvmMfPXHLrRpSbyNd6SYovQqd3UKs2z1"
+			]
+		}
+	},
+	"version": 1
+}
