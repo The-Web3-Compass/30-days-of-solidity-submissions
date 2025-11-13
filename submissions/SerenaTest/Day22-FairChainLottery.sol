@@ -5,7 +5,7 @@ import {VRFConsumerBaseV2Plus} from "@chainlink/contracts/src/v0.8/vrf/dev/VRFCo
 import {VRFV2PlusClient} from "@chainlink/contracts/src/v0.8/vrf/dev/libraries/VRFV2PlusClient.sol";
 
 contract FairChainLottery is VRFConsumerBaseV2Plus{
-    enum  LOTTERY_STATUS{OPEN,CLOSE,CALCULATING}  //彩票游戏状态：进行 结束 计算胜者中
+    enum  LOTTERY_STATUS{OPEN,CLOSED,CALCULATING}  //彩票游戏状态：进行 结束 计算胜者中
     LOTTERY_STATUS public lotteryStatus;
     
     address payable[] public players; //本轮游戏参与者
@@ -76,11 +76,6 @@ contract FairChainLottery is VRFConsumerBaseV2Plus{
         (bool success,) = winnerAdr.call{value: address(this).balance}("");
         require(success,"Send failed!");
 
-    }
-    
-    //获取最近的获胜者
-    function getRecentWinner() external view returns (address payable) {
-        return recentWinner;
     }
 
     //查参与者
