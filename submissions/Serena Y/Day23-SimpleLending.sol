@@ -8,9 +8,11 @@ pragma solidity ^0.8.0;
 contract SimpleLending {
     // Token balances for each user
     mapping(address => uint256) public depositBalances;
+    //用户地址-存入借贷池子的eth数量
 
     // Borrowed amounts for each user
     mapping(address => uint256) public borrowBalances;
+    //用户地址-借款账本
 
     // Collateral provided by each user
     mapping(address => uint256) public collateralBalances;
