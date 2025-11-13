@@ -24,7 +24,7 @@ contract VaultManager{
     // 创建基础存款箱
     function createBasicBox() external returns (address){
 
-        // ？？？部署一个新的 BasicDepositBox 合约并将其地址存储在变量 box 中。
+        // 部署一个新的 BasicDepositBox 合约并将其地址存储在变量 box 中。
         BasicDepositBox box = new BasicDepositBox();
 
         // 将新存款箱添加到发送者拥有的存款箱列表中
@@ -73,7 +73,7 @@ contract VaultManager{
 
     function nameBox(address boxAddress, string memory name ) external{
 
-        // ？？？将通用地址转换为接口
+        // 将通用地址转换为接口
         IDepositBox box = IDepositBox(boxAddress);
 
         // 检查所有权
@@ -87,8 +87,9 @@ contract VaultManager{
     function storeSecret(address boxAddress, string calldata secret) external{
         IDepositBox box = IDepositBox(boxAddress);
         require(box.getOwner() == msg.sender, "Not the box owner");
-
-        // ？？？没有触发事件，因为存款箱本身会触发一个（SecretStored）
+        
+        // 调用存款箱的 storeSecret 函数
+        // 没有触发事件，因为存款箱本身会触发一个（SecretStored）
         box.storeSecret(secret);
     }
 
@@ -99,22 +100,25 @@ contract VaultManager{
         IDepositBox box = IDepositBox(boxAddress);
         require(box.getOwner() == msg.sender, "Not the box owner");
 
-        // ？？？调用存款箱 transferOwnership()：真正的数据所有权和业务逻辑归属于存储箱合约—VaultManager 不是其所有者—因此，这一步确保了权限变更在存储箱内部自主完成。
+        // 调用存款箱 transferOwnership()：真正的数据所有权和业务逻辑归属于存储箱合约—VaultManager 不是其所有者—因此，这一步确保了权限变更在存储箱内部自主完成。
         box.transferOwnership(newOwner);
 
         // 更新 VaultManager 的映射
-        address[] storage boxes = userDepositBoxes[msg.sender];
+        address[] storage boxes = userDepositBoxes[msg.sender]; // 获取发送者的存款箱列表
 
-        // ？？？从发送者列表中移除存储箱：循环查找正在被转移的那个存款箱
+        // 从发送者列表中移除存储箱：循环查找正在被转移的那个存款箱
         for(uint i = 0; i < boxes.length; i++){
-
+            // 找到匹配的存款箱地址（boxAddress）
+            if (boxes[i] == boxAddress) { 
             // 找到后将它与数组中的最后一项交换
             boxes[i] = boxes[boxes.length - 1];
 
             // 删除最后一项
             boxes.pop();
-
+            
+            // 跳出循环（因为已经找到并移除了目标）
             break;
+            }
         }
 
         // 将存储箱添加到新所有者的列表

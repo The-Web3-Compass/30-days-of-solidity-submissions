@@ -34,7 +34,7 @@ abstract contract BaseDepositBox is IDepositBox {
     }
 
     // 转移所有权
-    // ？？？ 既有virtual又有override
+    // virtual针对子合约（允许未来的子合约继续重写）；override针对母合约的（实现/重写接口或母合约的函数）
     function transferOwnership(address newOwner) external virtual override onlyOwner{
         require(newOwner != address(0), "Invalid Address");
         emit OwnershipTransferred(owner, newOwner); 
