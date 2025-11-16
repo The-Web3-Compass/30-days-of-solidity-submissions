@@ -1,24 +1,29 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";//从 OpenZeppelin 导入了 ERC20 合约
 
 
 /// @title Automated Market Maker with Liquidity Token
 contract AutomatedMarketMaker is ERC20 {
-    IERC20 public tokenA;
-    IERC20 public tokenB;
+    IERC20 public tokenA;//tokenA 表现得像ERC20代币
+    IERC20 public tokenB;//tokenB 表现得像ERC20代币
 
-    uint256 public reserveA;
-    uint256 public reserveB;
+    uint256 public reserveA;//池中代币 A 的数量
+    uint256 public reserveB;//池中代币 B 的数量
 
-    address public owner;
+    address public owner;//存储部署合约的地址
 
     event LiquidityAdded(address indexed provider, uint256 amountA, uint256 amountB, uint256 liquidity);
+    //该事件在有人添加代币到池子时触发。
     event LiquidityRemoved(address indexed provider, uint256 amountA, uint256 amountB, uint256 liquidity);
+    //事件在有人 移除池中流动性 时记录
     event TokensSwapped(address indexed trader, address tokenIn, uint256 amountIn, address tokenOut, uint256 amountOut);
+    //当有人兑换 一种代币换另一种代币时触发该事件
 
     constructor(address _tokenA, address _tokenB, string memory _name, string memory _symbol) ERC20(_name, _symbol) {
+        require(_tokenA != address(0) && _tokenB != address(0), "Tokens must be valid");
+        require(_tokenA != _tokenB, "Tokens must be different");
         tokenA = IERC20(_tokenA);
         tokenB = IERC20(_tokenB);
         owner = msg.sender;
@@ -26,14 +31,14 @@ contract AutomatedMarketMaker is ERC20 {
 
     /// @notice Add liquidity to the pool
     function addLiquidity(uint256 amountA, uint256 amountB) external {
-        require(amountA > 0 && amountB > 0, "Amounts must be > 0");
+        require(amountA > 0 && amountB > 0, "Amounts must be > 0");//不允许有人存入零个代币。
 
         tokenA.transferFrom(msg.sender, address(this), amountA);
         tokenB.transferFrom(msg.sender, address(this), amountB);
 
         uint256 liquidity;
         if (totalSupply() == 0) {
-            liquidity = sqrt(amountA * amountB);
+            liquidity = sqrt(amountA * amountB);//给第一个添加流动性的人：流动性等于A*B再开根号
         } else {
             liquidity = min(
                 amountA * totalSupply() / reserveA,
@@ -118,12 +123,12 @@ contract AutomatedMarketMaker is ERC20 {
     }
 
     /// @dev Utility: Return the smaller of two values
-    function min(uint256 a, uint256 b) internal pure returns (uint256) {
-        return a < b ? a : b;
+    function min(uint256 a, uint256 b) internal pure returns (uint256) {//返回较小的数
+        return a < b ? a : b;//如果a<b结果为真，返回a 如果a<b结果为假 返回b
     }
 
     /// @dev Utility: Babylonian square root
-    function sqrt(uint256 y) internal pure returns (uint256 z) {
+    function sqrt(uint256 y) internal pure returns (uint256 z) {//巴比伦平方根算法
         if (y > 3) {
             z = y;
             uint256 x = y / 2 + 1;
