@@ -4,8 +4,10 @@ pragma solidity ^0.8.20;
 
 
 contract EnhancedSimpleEscrow {
-    enum EscrowState { AWAITING_PAYMENT, AWAITING_DELIVERY, COMPLETE, DISPUTED, CANCELLED }
+    //设置状态：付款  交易中  完成   争议  取消  
+    enum EscrowState {AWAITING_PAYMENT, AWAITING_DELIVERY, COMPLETE, DISPUTED, CANCELLED}
 
+    //immutable只能在构造函数中初始化一次、之后不可修改
     address public immutable buyer;
     address public immutable seller;
     address public immutable arbiter;
@@ -31,21 +33,23 @@ contract EnhancedSimpleEscrow {
         deliveryTimeout = _deliveryTimeout;
     }
 
+    //阻止随机ETH转账
     receive() external payable {
         revert("Direct payments not allowed");
     }
 
+    //买家付款 锁定ETH
     function deposit() external payable {
         require(msg.sender == buyer, "Only buyer can deposit");
         require(state == EscrowState.AWAITING_PAYMENT, "Already paid");
         require(msg.value > 0, "Amount must be greater than zero");
-
         amount = msg.value;
         state = EscrowState.AWAITING_DELIVERY;
         depositTime = block.timestamp;
         emit PaymentDeposited(buyer, amount);
     }
-
+    
+    //确认交易
     function confirmDelivery() external {
         require(msg.sender == buyer, "Only buyer can confirm");
         require(state == EscrowState.AWAITING_DELIVERY, "Not in delivery state");
@@ -55,14 +59,16 @@ contract EnhancedSimpleEscrow {
         emit DeliveryConfirmed(buyer, seller, amount);
     }
 
+    //买/卖家提出争议
     function raiseDispute() external {
         require(msg.sender == buyer || msg.sender == seller, "Not authorized");
         require(state == EscrowState.AWAITING_DELIVERY, "Can't dispute now");
 
-        state = EscrowState.DISPUTED;
+        state = EscrowState.DISPUTED;  //进入争议状态
         emit DisputeRaised(msg.sender);
     }
-
+     
+    //通过传入的布尔值直接判定钱款归买方还是卖方
     function resolveDispute(bool _releaseToSeller) external {
         require(msg.sender == arbiter, "Only arbiter can resolve");
         require(state == EscrowState.DISPUTED, "No dispute to resolve");
@@ -77,6 +83,7 @@ contract EnhancedSimpleEscrow {
         }
     }
 
+    //超时取消订单
     function cancelAfterTimeout() external {
         require(msg.sender == buyer, "Only buyer can trigger timeout cancellation");
         require(state == EscrowState.AWAITING_DELIVERY, "Cannot cancel in current state");
@@ -88,6 +95,7 @@ contract EnhancedSimpleEscrow {
         emit DeliveryTimeoutReached(buyer);
     }
 
+    //手动取消订单
     function cancelMutual() external {
         require(msg.sender == buyer || msg.sender == seller, "Not authorized");
         require(
@@ -105,6 +113,7 @@ contract EnhancedSimpleEscrow {
         emit EscrowCancelled(msg.sender);
     }
 
+    //获取剩余时间
     function getTimeLeft() external view returns (uint256) {
         if (state != EscrowState.AWAITING_DELIVERY) return 0;
         if (block.timestamp >= depositTime + deliveryTimeout) return 0;
