@@ -379,11 +379,11 @@
 	},
 	"sources": {
 		"submissions/iCat798/21-简易的NFT合约 - ERC721/SimpleNFT.sol": {
-			"keccak256": "0x2150d1d4229baf2eaedb24f235db185c5c6f8e8eae94dee44664629fdee8c293",
+			"keccak256": "0x6d3b4aaf602f16fcaf061591d844806cd85d9bef7764efd5acc781b47a5c6ba4",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://0a0f2679ac7c0c7169d1dd350057fddff58ffdd29695742b54f2638a3570e37e",
-				"dweb:/ipfs/QmQ4Bfhb1vbmBGJG1DpvWTeJzZNd78NjV8ztJ9WUqf2D68"
+				"bzz-raw://1b75b0d6ebc68945603dc7a63f5c83ef1232075afeed20dcf2160c65ee22294f",
+				"dweb:/ipfs/Qmc1TqkfneTF7SoAweAqNeVzapK8pYX2uP2n89fWW5NZrC"
 			]
 		}
 	},
