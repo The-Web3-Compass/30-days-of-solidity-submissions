@@ -33,8 +33,14 @@ contract AutomatedMarketMaker is ERC20 {
     function addLiquidity(uint256 amountA, uint256 amountB) external {
         require(amountA > 0 && amountB > 0, "Amounts must be > 0");//不允许有人存入零个代币。
 
-        tokenA.transferFrom(msg.sender, address(this), amountA);
-        tokenB.transferFrom(msg.sender, address(this), amountB);
+        //tokenA.transferFrom(msg.sender, address(this), amountA);
+        //tokenB.transferFrom(msg.sender, address(this), amountB);
+
+        bool successA = tokenA.transferFrom(msg.sender, address(this), amountA);
+        require(successA, "Transfer A failed (Check Allowance/Balance)");
+
+        bool successB = tokenB.transferFrom(msg.sender, address(this), amountB);
+        require(successB, "Transfer B failed (Check Allowance/Balance)");
 
         uint256 liquidity;
         if (totalSupply() == 0) {

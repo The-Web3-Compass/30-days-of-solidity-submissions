@@ -775,11 +775,11 @@
 			]
 		},
 		"submissions/Serena Y/Day25-AutomatedMarketMaker.sol": {
-			"keccak256": "0x889cde3b86b2b5651c24f537ab11bf2c41d17ce82b442388e47a2737b884d687",
+			"keccak256": "0xa36ed1b7ac018d22bb98f42988e8c89a1c8ce6e110863ccb43a10d3b35235c1b",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://4b0e58de8dcbf182bc00220062391c8c8090eeb16d2aea1c597b3f8ad6a8f65c",
-				"dweb:/ipfs/QmThMgNf3KvJGK88EfxS7qJFHkxFaCJEEY655ZUExyNAXT"
+				"bzz-raw://2853972101fa881e8cbe6baad583cefddc580f1e7255db50a71d6ec90ecc02f7",
+				"dweb:/ipfs/QmeVtBrhHSaWBw7aXLdHPxZKc8hHMm6LP1yg9RMDJHYorA"
 			]
 		}
 	},
