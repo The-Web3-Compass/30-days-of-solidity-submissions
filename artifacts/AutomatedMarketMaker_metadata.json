@@ -758,11 +758,11 @@
 			]
 		},
 		"submissions/SerenaTest/Day25/AutomatedMarketMaker.sol": {
-			"keccak256": "0xc48ef3ce6c7a801a02f74654c411a262d2fa55ac2888315cc315f40b8d189d33",
+			"keccak256": "0xa5a2789748a844e2cb5163c492ddedfcef7ae4fad378aae83b6b04eb520734a0",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e48ad800c3ae916072fa879206f44ef0813eacee6d3e41eb2ed895bd198e6fd8",
-				"dweb:/ipfs/QmVzvqykYiyfF9uGdQEZeVjNgU8WGPTujYUuBqkyhbzesw"
+				"bzz-raw://785271f7aa4ce295ae3024540e9673e4b42bdc434b29c45bf18868f9ca663298",
+				"dweb:/ipfs/QmWLnQeKkXQebiYJ6wtrrB3StSd4XzHtJWcaMorAmPUTke"
 			]
 		}
 	},
