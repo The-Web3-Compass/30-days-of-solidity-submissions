@@ -1,0 +1,11 @@
+[default]
+src = "src"
+out = "out"
+lib = "lib"
+test = "test"
+ffi = true
+optimizer = true
+optimizer_runs = 200
+solc_version = "0.8.19"
+
+# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
