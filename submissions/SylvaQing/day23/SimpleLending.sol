@@ -134,7 +134,4 @@ contract SimpleLending{
         return address(this).balance;
     }
 
-
-
-
 }
