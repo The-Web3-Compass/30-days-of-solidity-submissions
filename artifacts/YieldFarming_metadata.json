@@ -367,6 +367,14 @@
 				"dweb:/ipfs/QmeCfPykghhMc81VJTrHTC7sF6CRvaA1FXVq2pJhwYp1dV"
 			]
 		},
+		"@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol": {
+			"keccak256": "0xd6fa4088198f04eef10c5bce8a2f4d60554b7ec4b987f684393c01bf79b94d9f",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://f95ee0bbd4dd3ac730d066ba3e785ded4565e890dbec2fa7d3b9fe3bad9d0d6e",
+				"dweb:/ipfs/QmSLr6bHkPFWT7ntj34jmwfyskpwo97T9jZUrk5sz3sdtR"
+			]
+		},
 		"@openzeppelin/contracts/utils/math/SafeCast.sol": {
 			"keccak256": "0x195533c86d0ef72bcc06456a4f66a9b941f38eb403739b00f21fd7c1abd1ae54",
 			"license": "MIT",
@@ -376,11 +384,11 @@
 			]
 		},
 		"submissions/Serena Y/Day27-YieldFarming.sol": {
-			"keccak256": "0xdb40a9af734c02d61c7d2bad756c46fb5a2de0ce2f291cbc48a76c70e0c89e31",
+			"keccak256": "0x54bda0cd0143fe5e91d1a84e5a94449ea4d71c967e4fb6c282aa9f275a2e86cf",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://89bcf1af411fbbcc7b891476cf3ce9df3efc61044e4187117fa1828772432105",
-				"dweb:/ipfs/QmZQ77AVkQ3exW8tDx5QFWpq1TtvuTK8L5nRAsR7zRBrpK"
+				"bzz-raw://e992176bf6ca28a7563f57bed5c72b5b2b49dae0332e68570cfa77e79e3052b2",
+				"dweb:/ipfs/QmSv3SVYfN7UfHnr35tPiXFLA5XpAjuSiBq3PuTFTzpwLg"
 			]
 		}
 	},

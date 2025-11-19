@@ -4,14 +4,15 @@ pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";//这个导入让我们访问 ERC-20 接口
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";// 重入保护
-import "@openzeppelin/contracts/utils/math/SafeCast.sol"; // SafeCast 有助于防止在我们跨不同大小的数字进行数学运算时意外溢出或数据丢失
+import "@openzeppelin/contracts/utils/math/SafeCast.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";//// 用于获取 ERC-20 元数据(小数位数)的接口
 
-// 用于获取 ERC-20 元数据(小数位数)的接口
-interface IERC20Metadata is IERC20 {
+/// 用于获取 ERC-20 元数据(小数位数)的接口
+/*interface IERC20Metadata is IERC20 {
     function decimals() external view returns (uint8);//返回代币使用的小数位数
     function name() external view returns (string memory);//返回人类可读的代币名称(例如，"Dai Stablecoin")
     function symbol() external view returns (string memory);//返回简短的股票代码符号(例如，"DAI")
-}
+}*/
 
 /// @title 收益耕作平台
 ///     质押代币以随时间赚取奖励,可选紧急提取和管理员补充
@@ -63,6 +64,7 @@ contract YieldFarming is ReentrancyGuard {//YieldFarming 合约继承自 OpenZep
         } catch (bytes memory) {
             stakingTokenDecimals = 18; // 如果获取失败,默认为 18 位小数
         }
+
     }
 
     ///     质押代币以开始赚取奖励
