@@ -80,6 +80,14 @@ contract DecentralizedGovernance is ReentrancyGuard {//继承自  ReentrancyGuar
         //检查用户是否有足够的token
         require(_targets.length == _calldatas.length, "Targets and calldatas length mismatch");
         //确保目标和调用数据匹配
+       /* (bool success, bytes memory reason) = address(governanceToken).call(
+    abi.encodeWithSelector(
+        governanceToken.transferFrom.selector, 
+        msg.sender, 
+        address(this), 
+        proposalDepositAmount));
+// 如果 transferFrom 失败，则打印一个明确的错误信息
+require(success, string(reason)); // 这将把代币合约内部的 revert 消息暴露出来！*/
 
         governanceToken.transferFrom(msg.sender, address(this), proposalDepositAmount);
         //收取提案押金

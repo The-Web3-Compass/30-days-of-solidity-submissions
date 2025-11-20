@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.20;
 
-interface IERC20 {
-    function approve(address spender, uint256 amount) external returns (bool);
-    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
-    function balanceOf(address account) external view returns (uint256);
-    function totalSupply() external view returns (uint256);
-    // 接口中只需要包含我们需要用到的函数
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+
+contract GovernanceToken is ERC20 {
+    constructor() ERC20("GovernanceToken", "GT") {
+        _mint(msg.sender, 1000000 * 10 ** decimals()); // Mint 1 million tokens to yourself
+    }
 }
