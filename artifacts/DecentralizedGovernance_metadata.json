@@ -628,11 +628,11 @@
 			]
 		},
 		"submissions/Serena Y/Day28-DecentralisedGovernance Contract.sol": {
-			"keccak256": "0xa27aa306514304d926207e83b1c4f4adc63abb10854d8cfd3f2dce6663a96cc1",
+			"keccak256": "0xdd9e8498a5e5d8a699e13b8ce9b121194214cb234300f90b8636393904d29dcd",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://1f0530f22725dfc1738da622e6fd227538bc8d1a1bb61239593e590a4189e568",
-				"dweb:/ipfs/QmV376NToeXXcrTZ3p3sFs6kGF6fGFZJjLFanXEgHdmmTE"
+				"bzz-raw://6a4e64e75e1c2ad81480cb42992c3de63e954fb2109a7ef0aaa56ff8530fae6e",
+				"dweb:/ipfs/QmU7gixS4ec9p18CFsijjuQ9Qn9wAVxkMYRdA2rSTCYgwt"
 			]
 		}
 	},
