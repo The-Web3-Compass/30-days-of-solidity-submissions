@@ -1229,11 +1229,11 @@
 			]
 		},
 		"submissions/Serena Y/Day29-SimpleStablecoin.sol": {
-			"keccak256": "0x962fb35a9122b5758c25a60cf566a3d4f4de51b3d7ee996b982740b65a48bddd",
+			"keccak256": "0x7aec51c8ae689933e1f515dc247770b8a6e4e5eede7ef27489a7a356581c85a0",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e9377011da4dbf50911852a63a70cd7e30ef121a2455b34de3750a67c23022ff",
-				"dweb:/ipfs/QmeJQAo9Ne99trkixdEv3kB7vL7sj1MPFeoA4pNoKX5Cs4"
+				"bzz-raw://7abae2eb709896a98a6dcc1399a2214a736750f30799165cef33217baef58aa0",
+				"dweb:/ipfs/Qmd1pLt95Q24vamwoV2XewyyJmnEXYBJsxR6tK9pZRfx7B"
 			]
 		}
 	},
