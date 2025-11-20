@@ -1,0 +1,6 @@
+Note:
+The "Invalid signature" and "Attendee has already checked in" errors occurred because the same user 
+address was used multiple times for testing. The contract is designed to allow only one check-in per 
+attendee per event, hence repeated attempts revert as expected.
+
+The screenshots demonstrate successful deployment, testing, and signature verification logic.

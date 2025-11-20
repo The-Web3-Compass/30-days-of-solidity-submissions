@@ -1,0 +1,3 @@
+GasSaverTest:testCannotVoteTwice() (gas: 57477)
+GasSaverTest:testVoteOnce() (gas: 62230)
+GasSaverTest:testWinningProposal() (gas: 64148)
