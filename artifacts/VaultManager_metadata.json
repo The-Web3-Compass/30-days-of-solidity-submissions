@@ -1,0 +1,301 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "boxAddress",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "boxType",
+						"type": "string"
+					}
+				],
+				"name": "BoxCreated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "boxAddress",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					}
+				],
+				"name": "BoxNamed",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "createBasicBox",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "createPremiumBox",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "lockDuration",
+						"type": "uint256"
+					}
+				],
+				"name": "createTimeLockedBox",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "boxAddress",
+						"type": "address"
+					}
+				],
+				"name": "getBoxInfo",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "boxType",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "depositTime",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "boxAddress",
+						"type": "address"
+					}
+				],
+				"name": "getBoxName",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "getUserBoxes",
+				"outputs": [
+					{
+						"internalType": "address[]",
+						"name": "",
+						"type": "address[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "boxAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					}
+				],
+				"name": "nameBox",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "boxAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "secret",
+						"type": "string"
+					}
+				],
+				"name": "storeSecret",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "boxAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferBoxOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"submissions/Zora/VaultManager.sol": "VaultManager"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"submissions/Zora/BaseDepositBox.sol": {
+			"keccak256": "0x709add5c5bf59faa0b5e7fc4172bbe1b89cde0382bd5c063734727365c348aef",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://82cd5e34e34270a7917879ead9b6dbbb020a413bffac57054b55503fa4cfca7f",
+				"dweb:/ipfs/QmXRnKpkwMSwaPaZkKjvsxAcjMXWkqfMPiB51W9zu7ENeL"
+			]
+		},
+		"submissions/Zora/BasicDepositBox.sol": {
+			"keccak256": "0x077e7af594b6e2a6bcc312078f361cdac4a01ed173282149cdb34c5ec89d4049",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://96e8c373642354bb807a830f1e58433eb9378866f9843c899ec3aa2ac7ad7b15",
+				"dweb:/ipfs/QmXrSqxbYuxBERNZswWuKfDYyv7LX5uKAgnrmev51KHL28"
+			]
+		},
+		"submissions/Zora/IDepositBox.sol": {
+			"keccak256": "0x545f94b90ebffaaef757353b5201fea3ebc07f17ad30cd48b74c38dfbf12edfc",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://ff81bca1bf94fdeba460cba43d71f115cf6dd6410dd5273b975d6c803e0bfb14",
+				"dweb:/ipfs/QmcBLv2JvL4bY4iCFd17trJiBwuc4qFQfMUZDrDRtpzC7e"
+			]
+		},
+		"submissions/Zora/PremiumDepositBox.sol": {
+			"keccak256": "0x638ff78418387c052c67ee1c0d1222861c43cb543da06ca770d294cb15338143",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://8d7ada4d10b65b068a060505918c2fa085842be8215388cbdd13dec8357665f2",
+				"dweb:/ipfs/QmNMVuqULS6wdwxSBqGVUmpupgqJjyKhmRyh1sGPwgDpht"
+			]
+		},
+		"submissions/Zora/TimeLockedDepositBox.sol": {
+			"keccak256": "0x31c08b0e9e9238bde334fd645cb980e9b026f81f4a8d6896ff9808b6344d76ee",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://e979e4a8d7f7f26badb089ceb28e9f205206480fe309013726ef0baa5a84930a",
+				"dweb:/ipfs/QmewCrYzHBq1cb2g4sAQZ8sEbvYpHCsHBDcy62MDsj7JEQ"
+			]
+		},
+		"submissions/Zora/VaultManager.sol": {
+			"keccak256": "0x4ad3454d409c77b6d08aa396282846a663baee5c8691d76cfbcc8bc655ed9a01",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://40ea446f78e5e3bc67128bf78bfe9a5a7ea4a5891cbaca1291b7d81ed6134fda",
+				"dweb:/ipfs/QmWWMmArtiN3wF4bemkDi8H17qYLPJgJQaqW2C4cYVpmsd"
+			]
+		}
+	},
+	"version": 1
+}

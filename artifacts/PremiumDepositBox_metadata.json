@@ -1,0 +1,211 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					}
+				],
+				"name": "MetadataUpdated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "previousOwner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "OwnershipTransferred",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					}
+				],
+				"name": "SecretStored",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "getBoxType",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getDepositTime",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getMetaData",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getOwner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getSecret",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_metadata",
+						"type": "string"
+					}
+				],
+				"name": "setMetadata",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_secret",
+						"type": "string"
+					}
+				],
+				"name": "storeSecret",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"submissions/Zora/PremiumDepositBox.sol": "PremiumDepositBox"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"submissions/Zora/BaseDepositBox.sol": {
+			"keccak256": "0x709add5c5bf59faa0b5e7fc4172bbe1b89cde0382bd5c063734727365c348aef",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://82cd5e34e34270a7917879ead9b6dbbb020a413bffac57054b55503fa4cfca7f",
+				"dweb:/ipfs/QmXRnKpkwMSwaPaZkKjvsxAcjMXWkqfMPiB51W9zu7ENeL"
+			]
+		},
+		"submissions/Zora/IDepositBox.sol": {
+			"keccak256": "0x545f94b90ebffaaef757353b5201fea3ebc07f17ad30cd48b74c38dfbf12edfc",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://ff81bca1bf94fdeba460cba43d71f115cf6dd6410dd5273b975d6c803e0bfb14",
+				"dweb:/ipfs/QmcBLv2JvL4bY4iCFd17trJiBwuc4qFQfMUZDrDRtpzC7e"
+			]
+		},
+		"submissions/Zora/PremiumDepositBox.sol": {
+			"keccak256": "0x638ff78418387c052c67ee1c0d1222861c43cb543da06ca770d294cb15338143",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://8d7ada4d10b65b068a060505918c2fa085842be8215388cbdd13dec8357665f2",
+				"dweb:/ipfs/QmNMVuqULS6wdwxSBqGVUmpupgqJjyKhmRyh1sGPwgDpht"
+			]
+		}
+	},
+	"version": 1
+}
