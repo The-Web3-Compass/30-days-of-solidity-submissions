@@ -1,0 +1,61 @@
+// SPDX-License-Identifier:MIT
+pragma solidity ^0.8.0;
+
+contract AuctionHouse{
+    //拍卖会要素
+    address public owner;
+    string public item;
+
+    uint256 public startPrice;
+    uint256 public duration;
+    uint256 public endTime;
+    bool public isEnd;
+
+    uint256 private  highestBid;
+    address private  highestBidder;
+
+    mapping(address=>uint) public bids;
+    address[] public bidders;
+
+    //构造函数
+    constructor(string memory _item,uint _biddingTime){
+        owner=msg.sender;
+        item=_item;
+        endTime=block.timestamp+_biddingTime;
+    }
+
+    //出价
+    function bid(uint amount) external {
+        require(block.timestamp<endTime,unicode"拍卖会已经结束");
+        require(amount>startPrice,unicode"拍卖金额要大于起拍价");
+        require(amount>bids[msg.sender],unicode"新标价要更高");
+
+        //保证有地址
+        if(bids[msg.sender]==0){
+            bidders.push(msg.sender);
+        }
+
+        bids[msg.sender]=amount;
+
+        if(amount>highestBid){
+            highestBid=amount;
+            highestBidder=msg.sender;
+        }
+
+    }
+    //拍卖结束
+    function endAuction() external {
+        require(block.timestamp>=endTime,unicode"拍卖还未结束");
+        require(!isEnd,unicode"拍卖已经结束");
+        isEnd=true;
+    }
+    //查看结果
+    function getWinner () external view returns(address,uint256){
+        require(isEnd,unicode"拍卖还未结束");
+        return(highestBidder,highestBid);
+    }
+    //查看所有出价者
+    function getAllBidders() external view returns(address[] memory){
+        return bidders;
+    }
+}
