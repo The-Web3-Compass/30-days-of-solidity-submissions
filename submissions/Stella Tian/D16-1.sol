@@ -1,0 +1,12 @@
+//SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+Add commentMore actions
+contract AchievementsPlugin{
+    mapping(address => string) public latestAchievement;
+    function setAchievement(address user, string memory achievement) public{
+        latestAchievement[user] = achievement;
+    }
+    function getAcheievement(address user)public view returns(string memory){
+        return latestAchievement[user];
+    }
+}
