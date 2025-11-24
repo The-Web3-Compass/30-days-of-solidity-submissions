@@ -1,0 +1,62 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract AdminOnly {
+    address public Owner;
+    uint256 public TreasureAmount;
+    mapping(address => uint256) public WithdrawalAllowance;
+    mapping(address => bool) public HasWithdrawn;
+    
+    constructor() {
+        Owner = msg.sender;
+    }
+    
+    modifier OnlyOwner() {
+        require(msg.sender == Owner, "Access denied: Only the owner can perform this action");
+        _;
+    }
+    
+    function AddTreasure(uint256 amount) public OnlyOwner {
+        TreasureAmount += amount;
+    }
+    
+    function ApproveWithdrawal(address recipient, uint256 amount) public OnlyOwner {
+        require(amount <= TreasureAmount, "Not enough treasure available");
+        WithdrawalAllowance[recipient] = amount;
+    }
+    
+    
+    function WithdrawTreasure(uint256 amount) public {
+
+        if(msg.sender == Owner){
+            require(amount <= TreasureAmount, "Not enough treasury available for this action.");
+            TreasureAmount-= amount;
+
+            return;
+        }
+        uint256 allowance = WithdrawalAllowance[msg.sender];
+        
+        require(allowance > 0, "You don't have any treasure allowance");
+        require(!HasWithdrawn[msg.sender], "You have already withdrawn your treasure");
+        require(allowance <= TreasureAmount, "Not enough treasure in the chest");
+        require(allowance >= amount, "Cannot withdraw more than you are allowed"); 
+        
+        HasWithdrawn[msg.sender] = true;
+        TreasureAmount -= allowance;
+        WithdrawalAllowance[msg.sender] = 0;
+        
+    }
+
+    function ResetWithdrawalStatus(address user) public OnlyOwner {
+        HasWithdrawn[user] = false;
+    }
+    
+    function TransferOwnership(address NewOwner) public OnlyOwner {
+        require(NewOwner != address(0), "Invalid address");
+        Owner = NewOwner;
+    }
+    
+    function GetTreasureDetails() public view OnlyOwner returns (uint256) {
+        return TreasureAmount;
+    }
+}
