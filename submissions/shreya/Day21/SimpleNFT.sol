@@ -7,7 +7,6 @@ interface IERC721 {
     event ApprovalForAll(address indexed owner, address indexed operator, bool approved);
 
     function balanceOf(address owner) external view returns (uint256);
-    function ownerOf(uint256 tokenId) external view returns (address);  
     function ownerOf(uint256 tokenId) external view returns (address);
 
     function approve(address to, uint256 tokenId) external;
@@ -20,7 +19,6 @@ interface IERC721 {
     function safeTransferFrom(address from, address to, uint256 tokenId) external;
     function safeTransferFrom(address from, address to, uint256 tokenId, bytes calldata data) external;
 }
- 
 
 interface IERC721Receiver {
     function onERC721Received(address operator, address from, uint256 tokenId, bytes calldata data) external returns (bytes4);
@@ -115,7 +113,6 @@ contract SimpleNFT is IERC721 {
         _balances[from] -= 1;
         _balances[to] += 1;
         _owners[tokenId] = to;
- 
 
         delete _tokenApprovals[tokenId];
         emit Transfer(from, to, tokenId);
