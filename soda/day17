@@ -1,0 +1,26 @@
+//SPDX-License-Identifier: MIT
+
+pragma solidity ^0.8.0;
+
+import "./SubscriptionStorageLayout.sol";
+
+contract SubcriptionLogicV1 is SubscriptionStorageLayout{
+
+    function addPlan(uint8 planId, uint256 price, uint256 duration)external{
+        palnPrice[planId] = price;
+        planDuration[planId] = duration;
+    }
+
+    function subscribe(uint8 planId) external payable{
+        require(planPrices[planId]>0, "Invalid plan");
+        require(msg.value >= planPrices[planId], "Insufficient funds");
+
+        Subscription storage s= subscriptions[msg.sender];
+        if(block.timestamp < s.expiry){
+            s.expiry += planDuration[palnId];
+        }
+        else{
+            s.expiry = block.timestamp + planDuration[planId];
+        }
+    }
+}
