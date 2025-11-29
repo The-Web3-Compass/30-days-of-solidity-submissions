@@ -1,0 +1,236 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "uint8",
+						"name": "planId",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "price",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "duration",
+						"type": "uint256"
+					}
+				],
+				"name": "addPlan",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "isActive",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "logicContract",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "pause",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint8",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"name": "planDuration",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint8",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"name": "planPrices",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "resumeAccount",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint8",
+						"name": "planId",
+						"type": "uint8"
+					}
+				],
+				"name": "subscribe",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "subscriptions",
+				"outputs": [
+					{
+						"internalType": "uint8",
+						"name": "planId",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "expiry",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "paused",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"submissions/Serena Y/Day17-SubscriptionLogicV2.sol": "SubscriptionLogicV2"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"submissions/Serena Y/Day17-SubscriptionLogicV1.sol": {
+			"keccak256": "0x00639f9c1e03425aefd67e08d1b4d60ece2fc1687886f5d19b2d95da8ed21bbb",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2f64f11d96818a869b513712cc56de88e835f1aa23a369bf8f0eaf74a1f3da92",
+				"dweb:/ipfs/Qme32VSmJEJatAidc7rSuNcRbde9pEyRBHojtwZyiwbkSh"
+			]
+		},
+		"submissions/Serena Y/Day17-SubscriptionLogicV2.sol": {
+			"keccak256": "0xee049633f996604ff20ec7abb0bbcb8d52d21d6cec048ed7291d6dc7cfb048de",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6b3ac414ac7df3d660cb0194334564c0834fcd7147c1b1fe67f6b5971abf5be4",
+				"dweb:/ipfs/QmfKHLDLqueRb3vZ46BxEzRsrvBa2BUUkk2HDVXH9VGkJW"
+			]
+		},
+		"submissions/Serena Y/Day17-SubscriptionStorageLayout.sol": {
+			"keccak256": "0x8047e51f3b8d4267a311f83ecfc2417ab3590eb1ff4b6fb4a572342f08b4cf3c",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://1939dad79d8cf74ab81c2c1f9451437eff8f81c7f0dbea0bebbfef2752b3b380",
+				"dweb:/ipfs/QmUMC9FMdZPKf7HvH4gcHY6wgwo5ueG8wrsSYcmaUX5j1z"
+			]
+		}
+	},
+	"version": 1
+}

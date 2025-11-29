@@ -1,0 +1,104 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "equippedWeapon",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "getWeapon",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "weapon",
+						"type": "string"
+					}
+				],
+				"name": "setWeapon",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"details": "Stores and retrieves a user's equipped weapon. Meant to be called via PluginStore.",
+			"kind": "dev",
+			"methods": {},
+			"title": "WeaponStorePlugin",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"submissions/Serena Y/Day16-WeaponStorePlugin.sol": "WeaponStorePlugin"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"submissions/Serena Y/Day16-WeaponStorePlugin.sol": {
+			"keccak256": "0x358e4f6836223b45e598e7bf1cb31385714fa7c7ce914b7f034b9fc9f7a26f3b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://77cbe1544e0a42f8af6911080d82cd2c6d3d6ee3090ea1b9db9ec5fda73bd3ee",
+				"dweb:/ipfs/QmVcXgoayzhCgam6gKpCW5G4JCUsXCP1zuerVzGorfUzXN"
+			]
+		}
+	},
+	"version": 1
+}
