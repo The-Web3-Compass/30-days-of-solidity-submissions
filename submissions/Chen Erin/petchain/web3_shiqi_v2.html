@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pet Identity Studio</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Ethers v5 -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 text-amber-950">
+<div class="min-h-screen flex flex-col">
+
+    <header class="border-b border-amber-200 bg-white/70 backdrop-blur">
+        <div class="mx-auto max-w-6xl px-4 py-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div class="flex items-center gap-4">
+                <div class="h-12 w-12 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 shadow-lg shadow-orange-200 flex items-center justify-center text-2xl">
+                    🐾
+                </div>
+                <div>
+                    <p class="text-xs uppercase tracking-[0.4em] text-amber-500">Petchain</p>
+                    <h1 class="text-2xl font-bold text-amber-900" data-i18n="brand_title">宠物链上创作工作室</h1>
+                    <p class="text-sm text-amber-600" data-i18n="brand_desc">Sepolia · IPFS · Soulbound Love</p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:items-end sm:text-right text-sm text-amber-700 gap-2">
+                <div class="flex items-center gap-2">
+                    <button id="langToggle"
+                            class="rounded-full border border-amber-200 px-4 py-2 text-xs font-semibold text-amber-700 transition hover:bg-amber-50">
+                        English
+                    </button>
+                    <button id="connectBtn"
+                            class="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-amber-500 to-orange-500 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-orange-200/70 transition hover:shadow-orange-300/90"
+                            data-i18n="connect_wallet">
+                        连接钱包
+                    </button>
+                </div>
+                <p id="walletAddress" data-i18n="wallet_prompt">连接钱包即可开始体验</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1">
+        <section class="mx-auto max-w-6xl px-4 py-10 grid gap-6 lg:grid-cols-[1.2fr,0.8fr]">
+            <div class="rounded-3xl border border-amber-100 bg-white/80 backdrop-blur p-8 shadow-xl shadow-orange-100">
+                <p class="text-sm font-medium uppercase tracking-[0.4em] text-amber-500" data-i18n="hero_tag">链上宠物护照</p>
+                <h2 class="mt-4 text-3xl sm:text-4xl font-bold leading-tight text-amber-950" data-i18n="hero_title">为宠物打造永久身份、时刻与故事</h2>
+                <p class="mt-4 text-lg text-amber-700 leading-relaxed" data-i18n="hero_desc">铸造可验证的身份 NFT，上传 IPFS 影像，并在任意 Sepolia dApp 中证明归属权。</p>
+                <div class="mt-6 grid gap-4 sm:grid-cols-3">
+                    <div class="rounded-2xl border border-amber-100 bg-amber-50/80 p-4">
+                        <p class="text-xs uppercase text-amber-500 tracking-wide">Network</p>
+                        <p class="text-2xl font-semibold text-amber-900">Sepolia</p>
+                        <p class="text-sm text-amber-600" data-i18n="hero_network_note">低成本 · 高可靠</p>
+                    </div>
+                    <div class="rounded-2xl border border-orange-100 bg-orange-50/80 p-4">
+                        <p class="text-xs uppercase text-orange-500 tracking-wide">Storage</p>
+                        <p class="text-2xl font-semibold text-orange-900">IPFS</p>
+                        <p class="text-sm text-orange-600" data-i18n="hero_storage_note">Powered by Pinata</p>
+                    </div>
+                    <div class="rounded-2xl border border-rose-100 bg-rose-50/80 p-4">
+                        <p class="text-xs uppercase text-rose-500 tracking-wide">Moments</p>
+                        <p class="text-2xl font-semibold text-rose-900">Forever</p>
+                        <p class="text-sm text-rose-600" data-i18n="hero_moments_note">时间戳见证陪伴</p>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-3xl border border-orange-100 bg-gradient-to-br from-orange-50 via-rose-50 to-white p-8 shadow-lg shadow-orange-100">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-semibold text-amber-900" data-i18n="flow_title">创作流程</h3>
+                    <span class="rounded-full bg-white/70 px-3 py-1 text-xs font-semibold text-orange-500" data-i18n="flow_status">Ready</span>
+                </div>
+                <ul class="mt-6 space-y-4 text-sm text-amber-800">
+                    <li class="flex items-start gap-3">
+                        <span class="mt-0.5 text-lg">✨</span>
+                        <div>
+                            <p class="font-semibold" data-i18n="flow_step1_title">步骤 1 · 铸造宠物身份</p>
+                            <p class="text-amber-600" data-i18n="flow_step1_desc">填写资料、上传头像、确认 Sepolia 链交易。</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="mt-0.5 text-lg">📸</span>
+                        <div>
+                            <p class="font-semibold" data-i18n="flow_step2_title">步骤 2 · 发布链上时刻</p>
+                            <p class="text-amber-600" data-i18n="flow_step2_desc">照片上传至 Pinata，写入 PetMoments 合约。</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="mt-0.5 text-lg">🛡️</span>
+                        <div>
+                            <p class="font-semibold" data-i18n="flow_step3_title">步骤 3 · 分享与验证（待上线）</p>
+                            <p class="text-amber-600" data-i18n="flow_step3_desc">所有信息可链上追溯，随时向社区展示。</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="mx-auto max-w-6xl px-4 pb-10">
+            <div class="grid gap-6 md:grid-cols-3">
+                <div class="rounded-2xl border border-amber-100 bg-white/80 p-6 shadow-sm">
+                    <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-amber-50 text-2xl">🛡️</div>
+                    <h3 class="text-lg font-semibold text-amber-900" data-i18n="feature_identity_title">身份溯源</h3>
+                    <p class="mt-2 text-sm text-amber-700" data-i18n="feature_identity_desc">生日、品种、特征永久上链，真实可信。</p>
+                </div>
+                <div class="rounded-2xl border border-orange-100 bg-white/80 p-6 shadow-sm">
+                    <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-orange-50 text-2xl">🌈</div>
+                    <h3 class="text-lg font-semibold text-orange-900" data-i18n="feature_canvas_title">创意画布</h3>
+                    <p class="mt-2 text-sm text-orange-700" data-i18n="feature_canvas_desc">为每个 Token 打造 IPFS 画廊，链上可验证。</p>
+                </div>
+                <div class="rounded-2xl border border-rose-100 bg-white/80 p-6 shadow-sm">
+                    <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-rose-50 text-2xl">🤝</div>
+                    <h3 class="text-lg font-semibold text-rose-900" data-i18n="feature_community_title">社区即用（待上线）</h3>
+                    <p class="mt-2 text-sm text-rose-700" data-i18n="feature_community_desc">随处分享宠物卡片，即刻证明真伪与归属。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mx-auto max-w-6xl px-4 pb-16 space-y-6">
+            <nav class="flex flex-wrap gap-2 rounded-2xl border border-amber-100 bg-white/70 p-2 text-sm font-semibold text-amber-600">
+                <button class="tab-trigger" data-page-target="mint" data-i18n="nav_mint">宠物 NFT</button>
+                <button class="tab-trigger" data-page-target="moments" data-i18n="nav_moments">宠物时刻</button>
+            </nav>
+
+            <section class="tab-section space-y-8" data-page-section="mint">
+                <div class="grid gap-6 lg:grid-cols-[1.1fr,0.9fr]">
+                    <div class="rounded-3xl border border-amber-100 bg-white/90 p-6 shadow-lg shadow-orange-100">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm uppercase tracking-[0.4em] text-amber-500">Mint</p>
+                                <h3 class="text-2xl font-semibold text-amber-900" data-i18n="mint_section_title">创建宠物身份 NFT</h3>
+                            </div>
+                            <span class="rounded-full bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-600" data-i18n="mint_step_badge">步骤一</span>
+                        </div>
+                        <div class="mt-6 grid gap-4 md:grid-cols-2">
+                            <label class="flex flex-col gap-2 text-sm font-medium text-amber-800">
+                                <span data-i18n="field_pet_name">宠物名字</span>
+                                <input id="petName" placeholder="例如：Mochi" class="input" data-i18n="placeholder_pet_name" data-i18n-attr="placeholder">
+                            </label>
+                            <label class="flex flex-col gap-2 text-sm font-medium text-amber-800">
+                                <span data-i18n="field_species">物种</span>
+                                <input id="species" placeholder="Dog / Cat" class="input" data-i18n="placeholder_species" data-i18n-attr="placeholder">
+                            </label>
+                            <label class="flex flex-col gap-2 text-sm font-medium text-amber-800">
+                                <span data-i18n="field_breed">品种</span>
+                                <input id="breed" placeholder="柴犬、英短..." class="input" data-i18n="placeholder_breed" data-i18n-attr="placeholder">
+                            </label>
+                            <label class="flex flex-col gap-2 text-sm font-medium text-amber-800">
+                                <span data-i18n="field_birthday">生日</span>
+                                <input id="birthday" type="date" class="input">
+                            </label>
+                            <label class="flex flex-col gap-2 text-sm font-medium text-amber-800">
+                                <span data-i18n="field_traits">特征</span>
+                                <input id="traits" placeholder="好奇、勇敢..." class="input" data-i18n="placeholder_traits" data-i18n-attr="placeholder">
+                            </label>
+                            <label class="flex flex-col gap-2 text-sm font-medium text-amber-800">
+                                <span data-i18n="field_city">城市</span>
+                                <input id="city" placeholder="Shanghai, Beijing..." class="input" data-i18n="placeholder_city" data-i18n-attr="placeholder">
+                            </label>
+                        </div>
+
+                        <div class="mt-6 rounded-2xl border border-dashed border-amber-200 bg-amber-50/60 p-5">
+                            <p class="font-medium text-amber-900" data-i18n="upload_photo_title">📸 上传宠物写真</p>
+                            <p class="text-sm text-amber-600" data-i18n="upload_photo_desc">建议方形图片，限制 5MB 以内。</p>
+                            <input type="file" id="imageInput" lang="en" class="mt-4 block w-full text-sm text-amber-700 file:mr-4 file:rounded-full file:border-0 file:bg-gradient-to-r file:from-amber-400 file:to-orange-400 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:brightness-105">
+                        </div>
+
+                        <button id="mintBtn"
+                                class="mt-6 w-full rounded-2xl bg-gradient-to-r from-emerald-500 to-green-500 py-3 text-lg font-semibold text-white shadow-lg shadow-emerald-200 transition hover:shadow-emerald-300">
+                            <span data-i18n="mint_button">开始铸造</span>
+                        </button>
+                        <p id="status" class="mt-3 text-center text-sm text-amber-700" data-i18n="mint_status_idle">准备在 Sepolia 铸造。</p>
+                    </div>
+
+                    <div class="rounded-3xl border border-orange-100 bg-white/90 p-6 shadow-lg shadow-orange-100">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm uppercase tracking-[0.4em] text-orange-500">Collection</p>
+                                <h3 class="text-2xl font-semibold text-orange-900" data-i18n="collection_title">我的宠物</h3>
+                            </div>
+                            <span class="rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold text-orange-500">On-chain</span>
+                        </div>
+                        <div id="myPetsContainer" class="mt-4 space-y-4 text-sm text-orange-700">
+                            <p data-i18n="my_pets_placeholder">连接钱包后可查看已铸造的宠物。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="tab-section hidden space-y-8" data-page-section="moments">
+                <div class="grid gap-6 lg:grid-cols-2">
+                    <div class="rounded-3xl border border-amber-100 bg-white/90 p-6 shadow">
+                        <p class="text-sm uppercase tracking-[0.4em] text-amber-500" data-i18n="select_pet_label">Select Pet</p>
+                        <h3 class="text-2xl font-semibold text-amber-900" data-i18n="select_pet_title">选择要管理的 NFT</h3>
+                        <select id="momentTokenSelect" class="input mt-4">
+                            <option value="" data-i18n="select_pet_placeholder">请先连接钱包并选择宠物</option>
+                        </select>
+                        <div id="selectedPetInfo" class="mt-6 rounded-2xl border border-dashed border-amber-200 bg-amber-50/70 p-4 text-sm text-amber-700" data-i18n="selected_pet_placeholder">
+                            连接钱包后可查看宠物详情。
+                        </div>
+                    </div>
+
+                    <div class="rounded-3xl border border-orange-100 bg-white/90 p-6 shadow">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm uppercase tracking-[0.4em] text-orange-500" data-i18n="moment_label">Moment</p>
+                                <h3 class="text-2xl font-semibold text-orange-900" data-i18n="moment_form_title">发布新的宠物时刻</h3>
+                            </div>
+                            <span class="rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold text-orange-500" data-i18n="moment_step_badge">步骤二</span>
+                        </div>
+                        <input type="file" id="momentImageInput" lang="en"
+                               class="mt-6 block w-full text-sm text-orange-700 file:mr-4 file:rounded-full file:border-0 file:bg-gradient-to-r file:from-orange-400 file:to-rose-400 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:brightness-105">
+                        <textarea id="momentDescription" rows="4"
+                                  class="mt-4 w-full rounded-2xl border border-orange-100 bg-orange-50/50 p-4 text-sm text-orange-900 focus:border-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-200"
+                                  placeholder="记录宠物此刻的小故事..." data-i18n="moment_description_placeholder" data-i18n-attr="placeholder"></textarea>
+                        <button id="publishMomentBtn"
+                                class="mt-4 w-full rounded-2xl bg-gradient-to-r from-orange-500 to-rose-500 py-3 text-lg font-semibold text-white shadow-lg shadow-rose-200 transition hover:shadow-rose-300">
+                            <span data-i18n="publish_moment_button">发布时刻</span>
+                        </button>
+                        <p id="momentStatus" class="mt-3 text-sm text-orange-700" data-i18n="moment_status_idle"></p>
+                    </div>
+                </div>
+
+                <div class="rounded-3xl border border-rose-100 bg-white/90 p-6 shadow">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <div>
+                            <p class="text-sm uppercase tracking-[0.4em] text-rose-500" data-i18n="moments_gallery_label">Moments Gallery</p>
+                            <h3 class="text-2xl font-semibold text-rose-900" data-i18n="moments_gallery_title">链上可验证</h3>
+                        </div>
+                        <span class="rounded-full bg-rose-50 px-3 py-1 text-xs font-semibold text-rose-500" data-i18n="moments_gallery_badge">Live feed</span>
+                    </div>
+                    <div id="momentsGrid" class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3"></div>
+                </div>
+            </section>
+        </section>
+    </main>
+</div>
+
+<div id="momentModal" class="hidden fixed inset-0 bg-black/60 z-10 flex items-center justify-center px-4">
+    <div class="bg-white/95 rounded-3xl shadow-2xl max-w-2xl w-full p-6 relative max-h-[90vh] overflow-auto">
+        <button id="closeMomentModal" class="absolute right-4 top-4 text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
+        <img id="modalMomentImage" class="w-full rounded-2xl object-contain max-h-[70vh] mb-4 bg-gray-100" src="" alt="Moment detail">
+        <p id="modalMomentDescription" class="text-gray-800 mb-2"></p>
+        <p id="modalMomentTime" class="text-sm text-gray-500"></p>
+    </div>
+</div>
+
+<style>
+    .input {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border-radius: 1rem;
+        border: 1px solid rgba(251, 191, 36, 0.4);
+        background: rgba(255, 255, 255, 0.9);
+        color: #92400e;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .input::placeholder {
+        color: rgba(146, 64, 14, 0.5);
+    }
+
+    .input:focus {
+        border-color: rgba(249, 115, 22, 0.7);
+        box-shadow: 0 0 0 3px rgba(251, 146, 60, 0.2);
+        outline: none;
+    }
+
+    .tab-trigger {
+        padding: 0.65rem 1.5rem;
+        border-radius: 999px;
+        border: 2px solid transparent;
+        transition: all 0.2s ease;
+        color: rgba(146, 64, 14, 0.6);
+    }
+
+    .tab-trigger.active {
+        color: #92400e;
+        border-color: rgba(251, 146, 60, 0.8);
+        background: white;
+        box-shadow: 0 8px 20px rgba(251, 191, 36, 0.15);
+    }
+</style>
+
+<script>
+    const CONTRACT_ADDRESS = "0x9BC104faedA14611e72c51204Aed25a4D015b803";
+    const PET_MOMENTS_ADDRESS = "0x76E1D86d882C6d4DC7393350Eec45f0279C09dFc";
+    const PINATA_JWT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiJlZjk1ZWRhZS0zOTE2LTQyZDgtODRhMy0xZDU2YjdmZGY2MGEiLCJlbWFpbCI6ImJvd3V0aW5nQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJwaW5fcG9saWN5Ijp7InJlZ2lvbnMiOlt7ImRlc2lyZWRSZXBsaWNhdGlvbkNvdW50IjoxLCJpZCI6IkZSQTEifSx7ImRlc2lyZWRSZXBsaWNhdGlvbkNvdW50IjoxLCJpZCI6Ik5ZQzEifV0sInZlcnNpb24iOjF9LCJtZmFfZW5hYmxlZCI6ZmFsc2UsInN0YXR1cyI6IkFDVElWRSJ9LCJhdXRoZW50aWNhdGlvblR5cGUiOiJzY29wZWRLZXkiLCJzY29wZWRLZXlLZXkiOiI0Mzk1YmJkOWI2MTQ2NzAzZDJjNCIsInNjb3BlZEtleVNlY3JldCI6ImQyNDUzM2I5ZTJjOTJkN2Y3ODliYmJhYTBlN2E2NzI2ZTJiYjhhNzIyYTIxMzY2MDM0YTY5ZDA1Y2VjYjM4MDgiLCJleHAiOjE3OTUwNzE5MTV9.IrG3zq0gyqJ-7u9opkfhXSItbf20KW5aUAz8EJqmVLY";
+    const PINATA_FILE_ENDPOINT = "https://api.pinata.cloud/pinning/pinFileToIPFS";
+    const PINATA_METADATA_ENDPOINT = "https://api.pinata.cloud/pinning/pinJSONToIPFS";
+    const ABI = [
+        "function mintPet(string,string,string,uint64,string,string,string) external returns (uint256)",
+        "function tokenURI(uint256) view returns (string)",
+        "event PetMinted(uint256 indexed petId, address indexed owner)"
+    ];
+    const PET_MOMENTS_ABI = [
+        "function addMoment(uint256,string,string) external",
+        "function getAllMoments(uint256) view returns (tuple(string imageURI,string description,uint64 timestamp)[])"
+    ];
+
+    const tabButtons = document.querySelectorAll("[data-page-target]");
+    const tabSections = document.querySelectorAll("[data-page-section]");
+    const walletAddressEl = document.getElementById("walletAddress");
+    const statusEl = document.getElementById("status");
+    const momentStatusEl = document.getElementById("momentStatus");
+    const myPetsContainer = document.getElementById("myPetsContainer");
+    const mintBtn = document.getElementById("mintBtn");
+    const momentTokenSelect = document.getElementById("momentTokenSelect");
+    const selectedPetInfo = document.getElementById("selectedPetInfo");
+    const imageInput = document.getElementById("imageInput");
+    const momentImageInput = document.getElementById("momentImageInput");
+    const momentDescriptionInput = document.getElementById("momentDescription");
+    const publishMomentBtn = document.getElementById("publishMomentBtn");
+    const momentsGrid = document.getElementById("momentsGrid");
+    const momentModal = document.getElementById("momentModal");
+    const modalMomentImage = document.getElementById("modalMomentImage");
+    const modalMomentDescription = document.getElementById("modalMomentDescription");
+    const modalMomentTime = document.getElementById("modalMomentTime");
+    const closeMomentModalBtn = document.getElementById("closeMomentModal");
+    const langToggleBtn = document.getElementById("langToggle");
+    const mintBtnLabel = document.querySelector("#mintBtn [data-i18n='mint_button']");
+    const publishMomentBtnLabel = document.querySelector("#publishMomentBtn [data-i18n='publish_moment_button']");
+    const fileInputs = [imageInput, momentImageInput];
+
+    let currentLang = "zh";
+
+    const translations = {
+        zh: {
+            brand_title: "宠物链上创作工作室",
+            brand_desc: "Sepolia · IPFS · Soulbound Love",
+            connect_wallet: "连接钱包",
+            wallet_prompt: "连接钱包即可开始体验",
+            wallet_connected: "已连接：{{address}}",
+            hero_tag: "链上宠物护照",
+            hero_title: "为宠物打造永久身份、时刻与故事",
+            hero_desc: "铸造可验证的身份 NFT，上传 IPFS 影像，并在任意 Sepolia dApp 中证明归属权。",
+            hero_network_note: "低成本 · 高可靠",
+            hero_storage_note: "Powered by Pinata",
+            hero_moments_note: "时间戳见证陪伴",
+            flow_title: "创作流程",
+            flow_status: "Ready",
+            flow_step1_title: "步骤 1 · 铸造宠物身份",
+            flow_step1_desc: "填写资料、上传头像、确认 Sepolia 链交易。",
+            flow_step2_title: "步骤 2 · 发布链上时刻",
+            flow_step2_desc: "照片上传至 Pinata，写入 PetMoments 合约。",
+            flow_step3_title: "步骤 3 · 分享与验证（待上线）",
+            flow_step3_desc: "所有信息可链上追溯，随时向社区展示。",
+            feature_identity_title: "身份溯源",
+            feature_identity_desc: "生日、品种、特征永久上链，真实可信。",
+            feature_canvas_title: "创意画布",
+            feature_canvas_desc: "为每个 Token 打造 IPFS 画廊，链上可验证。",
+            feature_community_title: "社区即用（待上线）",
+            feature_community_desc: "随处分享宠物卡片，即刻证明真伪与归属。",
+            nav_mint: "宠物 NFT",
+            nav_moments: "宠物时刻",
+            mint_section_title: "创建宠物身份 NFT",
+            mint_step_badge: "步骤一",
+            field_pet_name: "宠物名字",
+            placeholder_pet_name: "例如：Mochi",
+            field_species: "物种",
+            placeholder_species: "例如：狗、猫",
+            field_breed: "品种",
+            placeholder_breed: "柴犬、英短...",
+            field_birthday: "生日",
+            field_traits: "特征",
+            placeholder_traits: "好奇、勇敢...",
+            field_city: "城市",
+            placeholder_city: "例如：上海、北京",
+            upload_photo_title: "📸 上传宠物写真",
+            upload_photo_desc: "建议方形图片，限制 5MB 以内。",
+            mint_button: "开始铸造",
+            mint_status_idle: "准备在 Sepolia 铸造。",
+            collection_title: "我的宠物",
+            my_pets_placeholder: "连接钱包后可查看已铸造的宠物。",
+            select_pet_label: "选择宠物",
+            select_pet_title: "选择要管理的 NFT",
+            select_pet_placeholder: "请先连接钱包并选择宠物",
+            selected_pet_placeholder: "连接钱包后可查看宠物详情。",
+            moment_label: "宠物时刻",
+            moment_form_title: "发布新的宠物时刻",
+            moment_step_badge: "步骤二",
+            moment_description_placeholder: "记录宠物此刻的小故事...",
+            publish_moment_button: "发布时刻",
+            moments_gallery_label: "Moments Gallery",
+            moments_gallery_title: "链上可验证",
+            moments_gallery_badge: "Live feed",
+            moment_status_idle: "",
+            install_metamask: "请先安装 MetaMask！",
+            connect_wallet_message: "请先连接钱包。",
+            loading: "加载中...",
+            no_pets: "尚未铸造宠物。",
+            gallery_locked: "铸造宠物后可解锁画廊。",
+            gallery_need_wallet: "请先连接钱包。",
+            select_pet_to_view: "请选择宠物后查看时刻。",
+            select_pet_detail_prompt: "请选择宠物查看详情。",
+            loading_metadata: "正在加载元数据...",
+            load_failed_prefix: "加载失败：{{message}}",
+            pinata_jwt_missing: "请在顶部配置 Pinata JWT",
+            pinata_invalid_response: "Pinata 返回异常",
+            pinata_request_failed: "Pinata 请求失败",
+            pinata_empty_response: "Pinata 返回空响应",
+            ipfs_hash_missing: "未获取到 IpfsHash",
+            select_pet_option: "选择要查看的宠物",
+            select_pet_none: "暂无可用宠物",
+            no_moments: "暂无时刻，快来发布第一条吧！",
+            no_description: "暂无描述",
+            upload_moment_photo_alert: "请上传时刻照片。",
+            fill_description_alert: "请填写描述。",
+            uploading_image: "图片上传中...",
+            submitting_transaction: "提交链上交易...",
+            publish_success: "✅ 发布成功！",
+            publish_failed: "❌ 发布失败：{{message}}",
+            processing_text: "处理中...",
+            mint_uploading_image: "图片上传中...",
+            mint_uploading_metadata: "元数据上传中...",
+            mint_minting: "Sepolia 链上铸造中...",
+            mint_success: "🎉 铸造成功！Tx: {{hash}}",
+            mint_error: "❌ 出错：{{message}}",
+            upload_pet_photo_alert: "请上传宠物照片！",
+            connect_wallet_network_alert: "请先连接钱包并确保已切换到正确网络。",
+            choose_pet_alert: "请选择一个宠物。",
+            token_id_label: "Token ID: {{id}}"
+        },
+        en: {
+            brand_title: "On-chain Pet Studio",
+            brand_desc: "Sepolia · IPFS · Soulbound Love",
+            connect_wallet: "Connect Wallet",
+            wallet_prompt: "Connect wallet to get started",
+            wallet_connected: "Connected: {{address}}",
+            hero_tag: "On-chain Pet Passport",
+            hero_title: "Give Your Pet a Permanent Identity & Story",
+            hero_desc: "Mint verifiable identity NFTs, store images on IPFS, and prove ownership across any Sepolia dApp.",
+            hero_network_note: "Low cost · High reliability",
+            hero_storage_note: "Powered by Pinata",
+            hero_moments_note: "Timestamps that capture companionship",
+            flow_title: "Creation Flow",
+            flow_status: "Ready",
+            flow_step1_title: "Step 1 · Mint the identity",
+            flow_step1_desc: "Fill the details, upload an avatar, and confirm the Sepolia transaction.",
+            flow_step2_title: "Step 2 · Publish moments",
+            flow_step2_desc: "Send photos to Pinata and write them into the PetMoments contract.",
+            flow_step3_title: "Step 3 · Share & verify (coming soon)",
+            flow_step3_desc: "Every detail is traceable on-chain so you can prove it anytime.",
+            feature_identity_title: "Provable identity",
+            feature_identity_desc: "Birthdays, breeds, and traits stay on-chain forever.",
+            feature_canvas_title: "Creative canvas",
+            feature_canvas_desc: "Give each token an IPFS gallery with verifiable media.",
+            feature_community_title: "Community ready (coming soon)",
+            feature_community_desc: "Share the pet card anywhere and prove authenticity instantly.",
+            nav_mint: "Pet NFT",
+            nav_moments: "Pet Moments",
+            mint_section_title: "Create a pet identity NFT",
+            mint_step_badge: "Step 1",
+            field_pet_name: "Pet name",
+            placeholder_pet_name: "e.g. Mochi",
+            field_species: "Species",
+            placeholder_species: "e.g. Dog, Cat",
+            field_breed: "Breed",
+            placeholder_breed: "Shiba Inu, British Shorthair...",
+            field_birthday: "Birthday",
+            field_traits: "Traits",
+            placeholder_traits: "Curious, brave...",
+            field_city: "City",
+            placeholder_city: "e.g. Shanghai, Beijing",
+            upload_photo_title: "📸 Upload a portrait",
+            upload_photo_desc: "Square images recommended, max 5 MB.",
+            mint_button: "Start minting",
+            mint_status_idle: "Ready to mint on Sepolia.",
+            collection_title: "My Pets",
+            my_pets_placeholder: "Connect wallet to see your minted pets.",
+            select_pet_label: "Select Pet",
+            select_pet_title: "Choose the NFT to manage",
+            select_pet_placeholder: "Connect your wallet and pick a pet",
+            selected_pet_placeholder: "Connect wallet to view pet details.",
+            moment_label: "Moment",
+            moment_form_title: "Publish a new moment",
+            moment_step_badge: "Step 2",
+            moment_description_placeholder: "Tell a short story about this moment...",
+            publish_moment_button: "Publish moment",
+            moments_gallery_label: "Moments Gallery",
+            moments_gallery_title: "On-chain proof",
+            moments_gallery_badge: "Live feed",
+            moment_status_idle: "",
+            install_metamask: "Please install MetaMask first!",
+            connect_wallet_message: "Please connect your wallet.",
+            loading: "Loading...",
+            no_pets: "No pets minted yet.",
+            gallery_locked: "Mint a pet to unlock the gallery.",
+            gallery_need_wallet: "Please connect your wallet.",
+            select_pet_to_view: "Select a pet to view its moments.",
+            select_pet_detail_prompt: "Select a pet to see the details.",
+            loading_metadata: "Loading metadata...",
+            load_failed_prefix: "Failed to load: {{message}}",
+            pinata_jwt_missing: "Please configure the Pinata JWT at the top.",
+            pinata_invalid_response: "Unexpected response from Pinata",
+            pinata_request_failed: "Pinata request failed",
+            pinata_empty_response: "Pinata returned an empty response",
+            ipfs_hash_missing: "Missing IpfsHash",
+            select_pet_option: "Choose a pet to view",
+            select_pet_none: "No pets available",
+            no_moments: "No moments yet—share the very first one!",
+            no_description: "No description",
+            upload_moment_photo_alert: "Please upload a moment photo.",
+            fill_description_alert: "Please enter a description.",
+            uploading_image: "Uploading image...",
+            submitting_transaction: "Submitting on-chain transaction...",
+            publish_success: "✅ Moment posted!",
+            publish_failed: "❌ Publish failed: {{message}}",
+            processing_text: "Processing...",
+            mint_uploading_image: "Uploading image...",
+            mint_uploading_metadata: "Uploading metadata...",
+            mint_minting: "Minting on Sepolia...",
+            mint_success: "🎉 Minted successfully! Tx: {{hash}}",
+            mint_error: "❌ Error: {{message}}",
+            upload_pet_photo_alert: "Please upload a pet photo!",
+            connect_wallet_network_alert: "Connect your wallet and switch to the correct network first.",
+            choose_pet_alert: "Please choose a pet.",
+            token_id_label: "Token ID: {{id}}"
+        }
+    };
+
+    function formatTranslation(lang, key, params) {
+        if (!key) return "";
+        const pack = translations[lang] || translations.zh;
+        let template = pack[key];
+        if (template == null && lang !== "zh") {
+            template = translations.zh[key];
+        }
+        if (template == null) return "";
+        if (!params) return template;
+        return template.replace(/\{\{\s*(\w+)\s*\}\}/g, (_, match) => (params[match] != null ? params[match] : ""));
+    }
+
+    function updateElementTranslation(el) {
+        if (!el) return;
+        const key = el.dataset.i18nDynamicKey || el.dataset.i18n;
+        if (!key) return;
+        let params = null;
+        if (el.dataset.i18nParams) {
+            try {
+                params = JSON.parse(el.dataset.i18nParams);
+            } catch (err) {
+                params = null;
+            }
+        }
+        const translation = formatTranslation(currentLang, key, params);
+        const attr = el.dataset.i18nAttr || "text";
+        if (attr === "text") {
+            el.textContent = translation;
+        } else if (attr === "html") {
+            el.innerHTML = translation;
+        } else {
+            el[attr] = translation;
+        }
+    }
+
+    function setDynamicTranslation(el, key, params) {
+        if (!el) return;
+        if (key) {
+            el.dataset.i18nDynamicKey = key;
+        } else {
+            delete el.dataset.i18nDynamicKey;
+        }
+        if (params) {
+            el.dataset.i18nParams = JSON.stringify(params);
+        } else {
+            delete el.dataset.i18nParams;
+        }
+        updateElementTranslation(el);
+    }
+
+    function renderMessage(container, key, className = "text-sm text-amber-500", params) {
+        if (!container) return;
+        container.innerHTML = "";
+        const p = document.createElement("p");
+        p.className = className;
+        p.dataset.i18n = key;
+        if (params) {
+            p.dataset.i18nParams = JSON.stringify(params);
+        }
+        container.appendChild(p);
+        updateElementTranslation(p);
+    }
+
+    function applyTranslations(lang) {
+        const resolvedLang = lang === "zh" ? "zh-CN" : "en";
+        document.documentElement.lang = resolvedLang;
+        fileInputs.forEach(input => {
+            if (input) input.setAttribute("lang", "en");
+        });
+        document.querySelectorAll("[data-i18n]").forEach(updateElementTranslation);
+        if (langToggleBtn) {
+            langToggleBtn.textContent = lang === "zh" ? "English" : "中文";
+        }
+    }
+
+    function t(key, params) {
+        return formatTranslation(currentLang, key, params);
+    }
+
+    applyTranslations(currentLang);
+
+    if (langToggleBtn) {
+        langToggleBtn.addEventListener("click", () => {
+            currentLang = currentLang === "zh" ? "en" : "zh";
+            applyTranslations(currentLang);
+        });
+    }
+
+    function setActivePage(page) {
+        tabSections.forEach(section => {
+            if (section.dataset.pageSection === page) {
+                section.classList.remove("hidden");
+            } else {
+                section.classList.add("hidden");
+            }
+        });
+
+        tabButtons.forEach(btn => {
+            if (btn.dataset.pageTarget === page) {
+                btn.classList.add("active");
+            } else {
+                btn.classList.remove("active");
+            }
+        });
+    }
+
+    tabButtons.forEach(btn => btn.addEventListener("click", () => setActivePage(btn.dataset.pageTarget)));
+    setActivePage("mint");
+
+    let provider, signer, contract, petMomentsContract;
+    let myPetIds = [];
+    let currentMoments = [];
+
+    document.getElementById("connectBtn").onclick = async function () {
+        if (!window.ethereum) return alert(t("install_metamask"));
+
+        await ethereum.request({ method: "eth_requestAccounts" });
+
+        provider = new ethers.providers.Web3Provider(window.ethereum);
+        signer = provider.getSigner();
+
+        contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+        petMomentsContract = new ethers.Contract(PET_MOMENTS_ADDRESS, PET_MOMENTS_ABI, signer);
+
+        const address = await signer.getAddress();
+        setDynamicTranslation(walletAddressEl, "wallet_connected", { address });
+        await renderMyPets();
+    };
+
+    async function loadMyPets() {
+        if (!signer || !contract) return [];
+        const address = await signer.getAddress();
+        const filter = contract.filters.PetMinted(null, address);
+        const logs = await contract.queryFilter(filter);
+        return logs.map(log => log.args.petId.toString());
+    }
+
+    async function renderMyPets() {
+        if (!myPetsContainer) return;
+
+        if (!contract) {
+            renderMessage(myPetsContainer, "connect_wallet_message", "text-sm text-orange-600");
+            if (selectedPetInfo) renderMessage(selectedPetInfo, "selected_pet_placeholder", "text-sm text-amber-700");
+            if (momentsGrid) renderMessage(momentsGrid, "gallery_need_wallet");
+            if (momentTokenSelect) {
+                momentTokenSelect.innerHTML = "";
+                const opt = document.createElement("option");
+                opt.value = "";
+                opt.dataset.i18n = "select_pet_placeholder";
+                momentTokenSelect.appendChild(opt);
+                updateElementTranslation(opt);
+            }
+            return;
+        }
+
+        renderMessage(myPetsContainer, "loading", "text-sm text-amber-500");
+
+        try {
+            const ids = await loadMyPets();
+            if (!ids.length) {
+                myPetIds = [];
+                renderMessage(myPetsContainer, "no_pets", "text-sm text-orange-600");
+                populateMomentSelect();
+                if (selectedPetInfo) renderMessage(selectedPetInfo, "selected_pet_placeholder", "text-sm text-amber-700");
+                if (momentsGrid) renderMessage(momentsGrid, "gallery_locked", "text-sm text-amber-500");
+                return;
+            }
+
+            myPetIds = ids;
+            populateMomentSelect();
+
+            let html = "";
+            for (const id of ids) {
+                const meta = await fetchTokenMetadata(id);
+                html += `
+            <div class="p-4 bg-gradient-to-br from-orange-50 to-amber-50 border border-amber-100 rounded-2xl shadow flex gap-4 items-center">
+                <img src="${ipfsToHttp(meta.image)}" class="w-20 h-20 rounded-xl object-cover border border-white shadow" />
+                <div>
+                    <p class="font-bold text-lg text-amber-900">${meta.name}</p>
+                    <p class="text-amber-600 text-sm" data-i18n="token_id_label" data-i18n-params='{"id":"${id}"}'></p>
+                </div>
+            </div>
+            `;
+            }
+
+            myPetsContainer.innerHTML = html;
+            myPetsContainer.querySelectorAll("[data-i18n]").forEach(updateElementTranslation);
+        } catch (err) {
+            console.error(err);
+            renderMessage(myPetsContainer, "load_failed_prefix", "text-sm text-red-500", { message: err.message });
+        }
+    }
+
+    function ensurePinataJwt() {
+        if (!PINATA_JWT || PINATA_JWT === "PASTE_YOUR_PINATA_JWT_HERE") {
+            throw new Error(t("pinata_jwt_missing"));
+        }
+    }
+
+    async function pinataFetch(endpoint, options = {}) {
+        ensurePinataJwt();
+        const headers = {
+            ...(options.headers || {}),
+            Authorization: `Bearer ${PINATA_JWT}`
+        };
+
+        const response = await fetch(endpoint, {
+            ...options,
+            headers
+        });
+
+        let data = null;
+        const text = await response.text();
+        if (text) {
+            try {
+                data = JSON.parse(text);
+            } catch (err) {
+                throw new Error(t("pinata_invalid_response"));
+            }
+        }
+
+        if (!response.ok) {
+            const message = data && (data.error || data.message);
+            throw new Error(message || t("pinata_request_failed"));
+        }
+
+        if (!data) {
+            throw new Error(t("pinata_empty_response"));
+        }
+
+        return data;
+    }
+
+    async function uploadImageToPinata(file) {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        const data = await pinataFetch(PINATA_FILE_ENDPOINT, {
+            method: "POST",
+            body: formData
+        });
+
+        if (!data.IpfsHash) throw new Error(t("ipfs_hash_missing"));
+        return `ipfs://${data.IpfsHash}`;
+    }
+
+    function ipfsToHttp(uri) {
+        return uri ? uri.replace("ipfs://", "https://ipfs.io/ipfs/") : "";
+    }
+
+    async function fetchTokenMetadata(tokenId) {
+        const tokenURI = await contract.tokenURI(tokenId);
+        const metadata = await fetch(ipfsToHttp(tokenURI));
+        return metadata.json();
+    }
+
+    function populateMomentSelect() {
+        if (!momentTokenSelect) return;
+        const previous = momentTokenSelect.value;
+        momentTokenSelect.innerHTML = '';
+
+        const placeholder = document.createElement("option");
+        placeholder.value = "";
+        placeholder.dataset.i18n = "select_pet_placeholder";
+        momentTokenSelect.appendChild(placeholder);
+
+        if (!myPetIds.length) {
+            currentMoments = [];
+            setDynamicTranslation(placeholder, "select_pet_none");
+            if (momentsGrid) renderMessage(momentsGrid, "select_pet_to_view");
+            return;
+        } else {
+            setDynamicTranslation(placeholder, "select_pet_option");
+        }
+
+        myPetIds.forEach(id => {
+            const opt = document.createElement("option");
+            opt.value = id;
+            opt.textContent = `Token #${id}`;
+            momentTokenSelect.appendChild(opt);
+        });
+
+        const defaultId = myPetIds.includes(previous) ? previous : myPetIds[0];
+        momentTokenSelect.value = defaultId || "";
+        if (defaultId) {
+            handleTokenSelection(defaultId);
+        }
+    }
+
+    async function handleTokenSelection(tokenId) {
+        if (!tokenId) {
+            if (selectedPetInfo) renderMessage(selectedPetInfo, "select_pet_detail_prompt", "text-sm text-amber-700");
+            if (momentsGrid) renderMessage(momentsGrid, "select_pet_to_view");
+            return;
+        }
+
+        try {
+            if (selectedPetInfo) renderMessage(selectedPetInfo, "loading_metadata", "text-sm text-amber-700");
+            const meta = await fetchTokenMetadata(tokenId);
+            if (selectedPetInfo) {
+                selectedPetInfo.innerHTML = `
+                <div class="flex gap-4 items-center">
+                    <img src="${ipfsToHttp(meta.image)}" class="w-24 h-24 rounded-2xl object-cover border border-white shadow">
+                    <div>
+                        <p class="text-lg font-bold text-amber-900">${meta.name}</p>
+                        <p class="text-sm text-amber-600" data-i18n="token_id_label" data-i18n-params='{"id":"${tokenId}"}'></p>
+                        <p class="text-sm text-amber-600">${meta.description || ''}</p>
+                    </div>
+                </div>`;
+                selectedPetInfo.querySelectorAll("[data-i18n]").forEach(updateElementTranslation);
+            }
+            await renderMoments(tokenId);
+        } catch (err) {
+            console.error(err);
+            if (selectedPetInfo) renderMessage(selectedPetInfo, "load_failed_prefix", "text-sm text-red-500", { message: err.message });
+        }
+    }
+
+    async function renderMoments(tokenId) {
+        if (!momentsGrid) return;
+        if (!petMomentsContract) {
+            renderMessage(momentsGrid, "gallery_need_wallet");
+            return;
+        }
+
+        renderMessage(momentsGrid, "loading");
+
+        try {
+            const moments = await loadMoments(tokenId);
+            currentMoments = moments;
+
+            if (!moments.length) {
+                renderMessage(momentsGrid, "no_moments");
+                return;
+            }
+
+            let html = '';
+            moments.forEach((moment, index) => {
+                html += `
+                    <div class="bg-gradient-to-br from-rose-50 to-orange-50 border border-rose-100 rounded-2xl shadow hover:shadow-lg transition cursor-pointer" data-moment-index="${index}">
+                        <div class="w-full bg-white rounded-t-2xl overflow-hidden flex items-center justify-center">
+                            <img src="${ipfsToHttp(moment.imageURI)}" class="w-full max-h-80 object-contain">
+                        </div>
+                        <div class="p-4">
+                            <p class="text-rose-900 font-medium truncate">${moment.description || t("no_description")}</p>
+                            <p class="text-xs text-rose-500 mt-1">${formatTimestamp(moment.timestamp)}</p>
+                        </div>
+                    </div>
+                `;
+            });
+
+            momentsGrid.innerHTML = html;
+            momentsGrid.querySelectorAll('[data-moment-index]').forEach(card => {
+                card.addEventListener('click', () => {
+                    const idx = parseInt(card.getAttribute('data-moment-index'), 10);
+                    openMomentModal(currentMoments[idx]);
+                });
+            });
+        } catch (err) {
+            console.error(err);
+            renderMessage(momentsGrid, "load_failed_prefix", "text-sm text-red-500", { message: err.message });
+        }
+    }
+
+    async function loadMoments(tokenId) {
+        if (!petMomentsContract) return [];
+        const moments = await petMomentsContract.getAllMoments(tokenId);
+        return moments.map(m => ({
+            imageURI: m.imageURI,
+            description: m.description,
+            timestamp: m.timestamp.toNumber ? m.timestamp.toNumber() : Number(m.timestamp)
+        }));
+    }
+
+    function formatTimestamp(ts) {
+        if (!ts) return '';
+        return new Date(Number(ts) * 1000).toLocaleString();
+    }
+
+    function openMomentModal(moment) {
+        if (!moment) return;
+        modalMomentImage.src = ipfsToHttp(moment.imageURI);
+        modalMomentDescription.textContent = moment.description || t("no_description");
+        modalMomentTime.textContent = formatTimestamp(moment.timestamp);
+        momentModal.classList.remove('hidden');
+    }
+
+    function closeMomentModal() {
+        momentModal.classList.add('hidden');
+    }
+
+    if (closeMomentModalBtn) closeMomentModalBtn.addEventListener('click', closeMomentModal);
+    if (momentModal) {
+        momentModal.addEventListener('click', function (event) {
+            if (event.target === momentModal) closeMomentModal();
+        });
+    }
+
+    if (momentTokenSelect) {
+        momentTokenSelect.addEventListener('change', async function () {
+            await handleTokenSelection(this.value);
+        });
+    }
+
+    publishMomentBtn.onclick = async function () {
+        if (!petMomentsContract) return alert(t("connect_wallet_message"));
+
+        const tokenId = momentTokenSelect.value;
+        if (!tokenId) return alert(t("choose_pet_alert"));
+
+        const file = momentImageInput.files[0];
+        if (!file) return alert(t("upload_moment_photo_alert"));
+
+        const description = momentDescriptionInput.value.trim();
+        if (!description) return alert(t("fill_description_alert"));
+
+        try {
+            if (publishMomentBtn.disabled) return;
+            publishMomentBtn.disabled = true;
+            publishMomentBtn.classList.add("opacity-60", "cursor-not-allowed");
+            if (publishMomentBtnLabel) setDynamicTranslation(publishMomentBtnLabel, "processing_text");
+
+            setDynamicTranslation(momentStatusEl, "uploading_image");
+            const imageURI = await uploadImageToPinata(file);
+
+            setDynamicTranslation(momentStatusEl, "submitting_transaction");
+            const tx = await petMomentsContract.addMoment(tokenId, imageURI, description);
+            await tx.wait();
+
+            setDynamicTranslation(momentStatusEl, "publish_success");
+            momentImageInput.value = "";
+            momentDescriptionInput.value = "";
+
+            await renderMoments(tokenId);
+        } catch (err) {
+            console.error(err);
+            setDynamicTranslation(momentStatusEl, "publish_failed", { message: err.message });
+        } finally {
+            publishMomentBtn.disabled = false;
+            publishMomentBtn.classList.remove("opacity-60", "cursor-not-allowed");
+            if (publishMomentBtnLabel) setDynamicTranslation(publishMomentBtnLabel, null);
+        }
+    };
+
+    async function uploadMetadata(metadata) {
+        const data = await pinataFetch(PINATA_METADATA_ENDPOINT, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(metadata)
+        });
+
+        if (!data.IpfsHash) throw new Error(t("ipfs_hash_missing"));
+        return `ipfs://${data.IpfsHash}`;
+    }
+
+    mintBtn.onclick = async function () {
+        try {
+            if (!contract || !signer) {
+                alert(t("connect_wallet_network_alert"));
+                return;
+            }
+
+            if (mintBtn.disabled) return;
+            mintBtn.disabled = true;
+            mintBtn.classList.add("opacity-60", "cursor-not-allowed");
+            if (mintBtnLabel) setDynamicTranslation(mintBtnLabel, "processing_text");
+
+            const name = petName.value;
+            const speciesValue = species.value;
+            const breedValue = breed.value;
+            const traitsValue = traits.value;
+            const cityValue = city.value;
+
+            const birthdayTimestamp = Math.floor(new Date(birthday.value).getTime() / 1000);
+            const file = imageInput.files[0];
+            if (!file) return alert(t("upload_pet_photo_alert"));
+
+            setDynamicTranslation(statusEl, "mint_uploading_image");
+            const imageCID = await uploadImageToPinata(file);
+
+            const metadata = {
+                name,
+                description: "Pet identity NFT",
+                image: imageCID,
+                attributes: [
+                    { trait_type: "Species", value: speciesValue },
+                    { trait_type: "Breed", value: breedValue },
+                    { trait_type: "Birthday", value: birthdayTimestamp },
+                    { trait_type: "Traits", value: traitsValue },
+                    { trait_type: "City", value: cityValue }
+                ]
+            };
+
+            setDynamicTranslation(statusEl, "mint_uploading_metadata");
+            const metadataCID = await uploadMetadata(metadata);
+
+            setDynamicTranslation(statusEl, "mint_minting");
+            const tx = await contract.mintPet(
+                name,
+                speciesValue,
+                breedValue,
+                birthdayTimestamp,
+                traitsValue,
+                cityValue,
+                metadataCID
+            );
+
+            await tx.wait();
+            setDynamicTranslation(statusEl, "mint_success", { hash: tx.hash });
+            await renderMyPets();
+        } catch (err) {
+            console.error(err);
+            setDynamicTranslation(statusEl, "mint_error", { message: err.message });
+        } finally {
+            mintBtn.disabled = false;
+            mintBtn.classList.remove("opacity-60", "cursor-not-allowed");
+            if (mintBtnLabel) setDynamicTranslation(mintBtnLabel, null);
+        }
+    };
+</script>
+</body>
+</html>
