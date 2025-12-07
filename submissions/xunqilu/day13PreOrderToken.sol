@@ -27,7 +27,7 @@ contract PreOrderToken is MyToken{
     )
     MyToken(_initialSupply){
         tokenPrice = _tokenPrice;
-        saleStartTime = block.timestamp; //when is this happen?
+        saleStartTime = block.timestamp; 
         saleEndTime = saleStartTime + _saleDurationInSeconds;
         minPurchase = _minPurchase;
         maxPurchase = _maxPurchase;
@@ -53,12 +53,14 @@ contract PreOrderToken is MyToken{
         emit TokenPurchased(msg.sender,tokenAmount,msg.value);
 
     }
-// don't understand this transfer function
+// override transfer in parent contract 
     function transfer(address _to, uint256 _value) public override returns (bool) {
+        // if conditions are meet then execute require
         if(!finalized && msg.sender != address(this) && initialTransferDone){
+            //require false, but now if returns true, so refuse to transfer
             require(false,"Tokens are locked until sale is finalized");
         }
-        return super. transfer(_to,_value);
+        return super. transfer(_to,_value); // call parent contract transfer
     }
 
     function transferFrom(address _from, address _to, uint256 _value)public override returns (bool){
