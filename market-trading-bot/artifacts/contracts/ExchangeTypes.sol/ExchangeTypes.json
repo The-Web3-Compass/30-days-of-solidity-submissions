@@ -1,0 +1,245 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "ExchangeTypes",
+  "sourceName": "contracts/ExchangeTypes.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "MsgType_BatchCancelDerivativeOrders",
+      "outputs": [
+        {
+          "internalType": "ExchangeTypes.MsgType",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MsgType_BatchCancelSpotOrders",
+      "outputs": [
+        {
+          "internalType": "ExchangeTypes.MsgType",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MsgType_BatchCreateDerivativeLimitOrders",
+      "outputs": [
+        {
+          "internalType": "ExchangeTypes.MsgType",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MsgType_BatchCreateSpotLimitOrders",
+      "outputs": [
+        {
+          "internalType": "ExchangeTypes.MsgType",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MsgType_BatchUpdateOrders",
+      "outputs": [
+        {
+          "internalType": "ExchangeTypes.MsgType",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MsgType_CancelDerivativeOrder",
+      "outputs": [
+        {
+          "internalType": "ExchangeTypes.MsgType",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MsgType_CancelSpotOrder",
+      "outputs": [
+        {
+          "internalType": "ExchangeTypes.MsgType",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MsgType_CreateDerivativeLimitOrder",
+      "outputs": [
+        {
+          "internalType": "ExchangeTypes.MsgType",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MsgType_CreateDerivativeMarketOrder",
+      "outputs": [
+        {
+          "internalType": "ExchangeTypes.MsgType",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MsgType_CreateSpotLimitOrder",
+      "outputs": [
+        {
+          "internalType": "ExchangeTypes.MsgType",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MsgType_CreateSpotMarketOrder",
+      "outputs": [
+        {
+          "internalType": "ExchangeTypes.MsgType",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MsgType_DecreasePositionMargin",
+      "outputs": [
+        {
+          "internalType": "ExchangeTypes.MsgType",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MsgType_Deposit",
+      "outputs": [
+        {
+          "internalType": "ExchangeTypes.MsgType",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MsgType_ExternalTransfer",
+      "outputs": [
+        {
+          "internalType": "ExchangeTypes.MsgType",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MsgType_IncreasePositionMargin",
+      "outputs": [
+        {
+          "internalType": "ExchangeTypes.MsgType",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MsgType_SubaccountTransfer",
+      "outputs": [
+        {
+          "internalType": "ExchangeTypes.MsgType",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MsgType_Unknown",
+      "outputs": [
+        {
+          "internalType": "ExchangeTypes.MsgType",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MsgType_Withdraw",
+      "outputs": [
+        {
+          "internalType": "ExchangeTypes.MsgType",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x610201610039600b82828239805160001a607314602c57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600436106101205760003560e01c80635b6c1d80116100ac578063b414e6fb1161007b578063b414e6fb146101a3578063ddc19572146101ab578063f145f45c146101b3578063f43f094e146101bb578063f4c35f02146101c357600080fd5b80635b6c1d8014610183578063a0cf86341461018b578063ac88603914610193578063b16bf2e51461019b57600080fd5b806332eadd41116100f357806332eadd411461015b57806339ecc2be146101635780633eb6ba271461016b5780634e5c3e21146101735780634f78a60e1461017b57600080fd5b80630a778e0514610125578063122e943d146101435780632cad50f21461014b57806331ff022514610153575b600080fd5b61012d601181565b60405160ff909116815260200160405180910390f35b61012d600581565b61012d600381565b61012d600181565b61012d600d81565b61012d600281565b61012d600881565b61012d600c81565b61012d600e81565b61012d600681565b61012d600981565b61012d600481565b61012d601081565b61012d600f81565b61012d600a81565b61012d600781565b61012d600b81565b61012d60128156fea2646970667358221220c392201e45d21811322f30f80e2681be94aa2a70f45117bc090546092b05437264736f6c634300081c0033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600436106101205760003560e01c80635b6c1d80116100ac578063b414e6fb1161007b578063b414e6fb146101a3578063ddc19572146101ab578063f145f45c146101b3578063f43f094e146101bb578063f4c35f02146101c357600080fd5b80635b6c1d8014610183578063a0cf86341461018b578063ac88603914610193578063b16bf2e51461019b57600080fd5b806332eadd41116100f357806332eadd411461015b57806339ecc2be146101635780633eb6ba271461016b5780634e5c3e21146101735780634f78a60e1461017b57600080fd5b80630a778e0514610125578063122e943d146101435780632cad50f21461014b57806331ff022514610153575b600080fd5b61012d601181565b60405160ff909116815260200160405180910390f35b61012d600581565b61012d600381565b61012d600181565b61012d600d81565b61012d600281565b61012d600881565b61012d600c81565b61012d600e81565b61012d600681565b61012d600981565b61012d600481565b61012d601081565b61012d600f81565b61012d600a81565b61012d600781565b61012d600b81565b61012d60128156fea2646970667358221220c392201e45d21811322f30f80e2681be94aa2a70f45117bc090546092b05437264736f6c634300081c0033",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}
