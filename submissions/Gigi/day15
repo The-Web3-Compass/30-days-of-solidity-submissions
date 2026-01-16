@@ -1,0 +1,119 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract GasEfficientVoting {
+
+    // 用uint8代替uint256，减少了读取和写入此变量的Gas
+    uint8 public proposalCount;
+    // 提案结构体，精简struct
+    struct Proposal {
+        bytes32 name;          // 用bytes32代替string，能节省gas
+        uint32 voteCount;      // 支持约4.3亿投票
+        uint32 startTime;      // 支持到2106年
+        uint32 endTime;       
+        bool executed;         
+    }
+
+    // 用mapping替代一个proposals数组
+    mapping(uint8 => Proposal) public proposals;
+
+    // 原为mapping(address => mapping(uint8 => bool)) voted
+    // 优化后每个地址只需一个存储槽即可存储所有投票，使用位运算 AND 检查某人是否投过票，使用位运算 OR 记录投票
+    mapping(address => uint256) private voterRegistry;
+    
+    // 跟踪每个提案有多少投票者投了票
+    mapping(uint8 => uint32) public proposalVoterCount;
+    
+    // indexed将更有效地过滤日志
+    event ProposalCreated(uint8 indexed proposalId, bytes32 name);
+    event Voted(address indexed voter, uint8 indexed proposalId);
+    event ProposalExecuted(uint8 indexed proposalId);
+
+    function createProposal(bytes32 name, uint32 duration) external 
+    {
+        require(duration > 0, "Duration must be > 0"); // 输入验证
+        
+        // 为这个提案生成一个唯一的ID
+        uint8 proposalId = proposalCount; // 使用一个简单的计数器（uint8）而不是推送到数组
+        proposalCount++;
+        
+        // 在内存(memory)中创建提案
+        Proposal memory newProposal = Proposal 
+        // 组装提案
+        ({
+        name: name,
+        voteCount: 0,
+        startTime: uint32(block.timestamp),
+        endTime: uint32(block.timestamp) + duration,
+        executed: false
+        });
+        
+        proposals[proposalId] = newProposal; // 赋值给存储(storage)
+
+        emit ProposalCreated(proposalId, name); // 触发事件,跟踪提案何时被创建
+    }
+    
+    function vote(uint8 proposalId) external {
+        // 检查提案是否存在，ID 必须在有效范围内（0 到 proposalCount - 1）
+        require(proposalId < proposalCount, "Invalid proposal");
+        
+        // 确保投票已经开始并且尚未结束
+        uint32 currentTime = uint32(block.timestamp);
+        require(currentTime >= proposals[proposalId].startTime, "Voting not started");
+        require(currentTime <= proposals[proposalId].endTime, "Voting ended");
+        
+        // 位掩码(Bitmask)检查是否已投票
+        uint256 voterData = voterRegistry[msg.sender];
+        uint256 mask = 1 << proposalId; // 1 << proposalId 创建一个二进制掩码，例如000100（如果 proposalId是2）,位运算AND检查该位是否已在用户的注册表中设置,如果已设置，则用户已投过票。
+
+        require((voterData & mask) == 0, "Already voted");
+        
+        // 使用位运算(bitwise )OR 记录投票,位运算OR 将位置 proposalId 处的位设置为 1，标记投票
+        voterRegistry[msg.sender] = voterData | mask;
+        
+        // 增加投票计数
+        proposals[proposalId].voteCount++;
+        proposalVoterCount[proposalId]++;
+        
+        emit Voted(msg.sender, proposalId);
+    }
+    
+    // 提案存在;投票窗口已结束;提案尚未被执行
+    function executeProposal(uint8 proposalId) external {
+        require(proposalId < proposalCount, "Invalid proposal");
+        require(block.timestamp > proposals[proposalId].endTime, "Voting not ended");
+        require(!proposals[proposalId].executed, "Already executed");
+        
+        proposals[proposalId].executed = true;
+        
+        emit ProposalExecuted(proposalId);
+        
+    }
+
+    // 检查是否已投票
+    function hasVoted(address voter, uint8 proposalId) external view returns (bool) {
+        return (voterRegistry[voter] & (1 << proposalId)) != 0;
+    }
+    
+    function getProposal(uint8 proposalId) external view returns (
+        bytes32 name,
+        uint32 voteCount,
+        uint32 startTime,
+        uint32 endTime,
+        bool executed,
+        bool active
+    ) {
+        require(proposalId < proposalCount, "Invalid proposal");
+        
+        Proposal storage proposal = proposals[proposalId];
+        
+        return (
+            proposal.name,
+            proposal.voteCount,
+            proposal.startTime,
+            proposal.endTime,
+            proposal.executed,
+            (block.timestamp >= proposal.startTime && block.timestamp <= proposal.endTime)
+        );
+    }
+    }

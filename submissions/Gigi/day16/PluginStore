@@ -1,0 +1,68 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+contract PluginStore {
+
+// 定义一个结构体存储每个玩家的姓名和头像 
+struct PlayerProfile {
+        string name;
+        string avatar;
+    }
+// 将每个以太坊地址（玩家）与其PlayerProfile关联起来
+    mapping(address => PlayerProfile) public profiles; // profiles[msg.sender] = ... 将为调用者存储一个个人资料
+
+    // 插件注册表,通过字符串键（如 "achievements" 或 "weapons"）注册插件，并将它们映射到部署的合约地址
+    // 插件目录,每个插件在使用前都必须注册
+    mapping(string => address) public plugins;
+
+    // 允许玩家创建或更新他们的名称和头像
+    function setProfile(string memory _name, string memory _avatar) external {
+        profiles[msg.sender] = PlayerProfile(_name, _avatar);
+    }
+
+    // 允许任何人使用钱包地址查询玩家的个人资料
+    function getProfile(address user) external view returns (string memory, string memory) {
+        PlayerProfile memory profile = profiles[user];
+        return (profile.name, profile.avatar);
+    }
+
+    // 注册插件合约,让插件可被核心合约发现
+    function registerPlugin(string memory key, address pluginAddress) external { //string memory key识别插件的名称
+        plugins[key] = pluginAddress;
+    }
+
+    // 返回插件地址,验证插件是否已注册
+    function getPlugin(string memory key) external view returns (address) {
+        return plugins[key];
+    }
+
+    // 插件执行函数
+function runPlugin(
+    string memory key,
+    string memory functionSignature,
+    address user,
+    string memory argument
+) external {
+    address plugin = plugins[key]; // 获取插件地址
+    require(plugin != address(0), "Plugin not registered"); // 确保插件确实已注册
+
+    bytes memory data = abi.encodeWithSignature(functionSignature, user, argument); // 从字符串构建一个低级函数调用
+    (bool success, ) = plugin.call(data);
+    require(success, "Plugin execution failed"); // 如果插件失败整个交易将回滚
+}
+
+function runPluginView(
+    string memory key,
+    string memory functionSignature,
+    address user
+) external view returns (string memory) {
+    address plugin = plugins[key];
+    require(plugin != address(0), "Plugin not registered");
+
+    bytes memory data = abi.encodeWithSignature(functionSignature, user);
+    (bool success, bytes memory result) = plugin.staticcall(data);
+    require(success, "Plugin view call failed"); 
+
+    return abi.decode(result, (string));
+}
+
+}

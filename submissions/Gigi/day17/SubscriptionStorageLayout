@@ -1,0 +1,18 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+// 只保存状态变量——它不包含任何函数（除了后面继承的逻辑）。其思想是将存储与逻辑分离
+contract SubscriptionStorageLayout {
+    address public logicContract;
+    address public owner;
+
+    struct Subscription {
+        uint8 planId;
+        uint256 expiry; // 订阅何时到期
+        bool paused; // 不删除的情况下临时停用用户的订阅
+    }
+
+    mapping(address => Subscription) public subscriptions;
+    mapping(uint8 => uint256) public planPrices;
+    mapping(uint8 => uint256) public planDuration;
+}
