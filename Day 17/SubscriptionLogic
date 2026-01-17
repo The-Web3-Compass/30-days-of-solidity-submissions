@@ -1,0 +1,17 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+contract SubscriptionLogic {
+    mapping(address => uint) public plan;
+    mapping(address => uint) public expiry;
+
+    function subscribe(uint _plan, uint _duration) external {
+        plan[msg.sender] = _plan;
+        expiry[msg.sender] = block.timestamp + _duration;
+    }
+
+    function upgradePlan(uint _newPlan, uint _duration) external {
+        plan[msg.sender] = _newPlan;
+        expiry[msg.sender] = block.timestamp + _duration;
+    }
+}
