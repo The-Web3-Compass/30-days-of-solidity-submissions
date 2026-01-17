@@ -1,0 +1,126 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_mathAddress",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "a",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "b",
+						"type": "uint256"
+					}
+				],
+				"name": "calculateProduct",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "a",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "b",
+						"type": "uint256"
+					}
+				],
+				"name": "calculateSum",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "mathContract",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"SmartCalculator.sol": "SmartCalculator"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"BasicMath.sol": {
+			"keccak256": "0x4ed143dfb690ee34bc1c3456ee32300882d74b4f45afb12da5518cf6c168904d",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://61f78d0fd3d2347cb280dd4488ff3824ea6297669eb68ec5860b4e25fdf2be06",
+				"dweb:/ipfs/QmU3e7ffpjdWrYJqddzEVCuvH2kUCxpGnmx3uoHi3r4oxZ"
+			]
+		},
+		"SmartCalculator.sol": {
+			"keccak256": "0xee270b828691431297e22ad9f81841f084b370785742e860745e7ee55ce04945",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://8e7bdaf86b05f5806c59c53b7840d64fdf4dad4e9cf6ff529bc382afe50c3203",
+				"dweb:/ipfs/QmWdPc4SNUHLkhjqtD8FQGTSKFvfffzfeCSbANWUVa7gkQ"
+			]
+		}
+	},
+	"version": 1
+}
