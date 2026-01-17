@@ -1,0 +1,122 @@
+//SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+contract TipJar {
+    address public owner;  //操作者（人）
+
+    mapping(string => uint) public huiLv;  //货币转到ETH的汇率（conversionRates)
+    string[] public huoBiDaiMa;  //all货币代码（supportedCurrencies)
+
+    uint public shouJiETH;  //合约总共收集了多少ETH（totalTipsReceived)
+    mapping (address => uint) public faSongETH;  //操作者发送了多少ETH（tipperContributions)
+    mapping (string => uint) public Tips;  //每种货币的小费金额(tipsPerCurrency)
+
+    //owner专属操作权（修饰符）
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only owner can perform this action");
+        _;
+    }
+
+    //是否添加新汇率（owner）-addCurrency(_currencyCode, _rateToEth)
+    function addHuiLv(string memory _huoBi, uint _huiLv) public onlyOwner {
+        require(_huiLv > 0, "Conversion rate must not be 0");  //汇率不得为0/负
+
+        bool huoBiExists = false;  //创建变量，用于检查货币是否存在（currencyExists）
+
+        //看看是不是新的货币，避免货币重复（用代码找，代码→哈希值）
+        for (uint i = 0; i < huoBiDaiMa.length; i++) {  //遍历每一个代码，找找有没有
+            if(keccak256(bytes(huoBiDaiMa[i])) == keccak256(bytes(_huoBi))) {  //用哈希值看看匹不匹配
+                huoBiExists = true;  //哈希值匹配=有了
+                break;  //break终止for循环遍历，找到了就不用找了
+            }
+        }
+
+        //新货币要添加
+        if(!huoBiExists) {
+            huoBiDaiMa.push(_huoBi);
+        }
+        //不管有没有都要更新or设置一下汇率，同时起到定义huoBi(conversionRates)字典的变量的作用
+        huiLv[_huoBi] = _huiLv;
+    }
+
+    //预输入汇率（owner）
+    constructor() {
+        owner = msg.sender;  //constructor没有visibility modifier，直接用代码确认ownership
+        addHuiLv("USD", 5 * 10**14);
+        addHuiLv("EUR", 6 * 10**14);
+        addHuiLv("JPY", 4 * 10**12);
+        addHuiLv("GBP", 7 * 10**14);
+    }
+
+    //转换成ETH（public view，计算机自己算！不得插足）-convertToETH(_currencyCode, _amount)
+    function zhuanHuanETH(string memory _huoBi, uint _amount) public view returns (uint) {
+        require(huiLv[_huoBi] > 0, "Currency must be >0!");  //先检查
+        uint ethAmount = _amount * huiLv[_huoBi];  //算汇率
+        return ethAmount;  //返回值
+    }
+
+    //直接用ETH打赏
+    function tipInETH() public payable {  //有payable才能接收ETH！（函数修饰符）
+        require(msg.value > 0, "Are you serious?");  //资源有限，例行检查
+
+        faSongETH[msg.sender] += msg.value;  //贡献者+贡献值————上榜！
+        shouJiETH += msg.value;  //给总收集的ETH加上————更新总账
+        Tips["ETH"] += msg.value;  //统计这个付费方式（ETH）收到多少tips————分类记账
+    }
+
+    //用外币打赏
+    function tipInOthers(string memory _huoBi, uint _amount) public payable {
+        require(huiLv[_huoBi] > 0, "Currency not supported, please contact administrator!");  //支不支持这种货币？
+        require(_amount > 0, "Are you serious?");  //check
+
+        uint ethAmount = zhuanHuanETH(_huoBi, _amount);  //把前面算好的汇率赋值调用
+        require(msg.value == ethAmount, "");  //检查eth的"实际发送=计算的数量？"
+
+        faSongETH[msg.sender] += msg.value;  //上榜
+        shouJiETH += msg.value;  //更新总账
+        Tips[_huoBi] += _amount;  //分类记账
+    }
+
+    //提现tips（owner）-withdrawTips
+    function tiXian() public onlyOwner {
+        uint contractBalance = address(this).balance;  //查当前地址的ETH余额
+        require(contractBalance > 0, "No more tips!");  //不够就不给提
+
+        (bool success, ) = payable(owner).call{value: contractBalance}("");  //提取ETH(important!!)★★★★★
+        require(success, "Failed!");  //确认提取成功
+
+        shouJiETH = 0;  //提现完清零
+    }
+
+    //转让ownership（owner）
+    function transferOwnership(address _newOwner) public onlyOwner {
+        require(_newOwner != address(0), "Not an available address!");  //快速检查无用0地址
+        owner = _newOwner;  //ownership给你了
+    }
+
+    //获取信息（公开信息）
+    //01 获取支持的货币代码 - getSupportedCurrencies()
+    function getHuoBi() public view returns (string[] memory) {
+        return huoBiDaiMa;
+    }
+
+    //02 获取当前ETH总额 - getContractBalance()
+    function getBalance() public view returns (uint) {
+        return address(this).balance;
+    }
+
+    //03 做排行榜or跟踪个人贡献 - getTipperContribution(_tipper)
+    function getPaiHangBang(address _tipper) public view returns (uint) {
+        return faSongETH [_tipper];
+    }
+
+    //04 获取货币转换结果 - getTipsInCurrency(_currencyCode)
+    function getZhuanHuan(string memory _huoBi) public view returns (uint) {
+        return Tips[_huoBi];
+    }
+
+    //05 获取汇率 - getConversionRate(_currencyCode)
+    function getHuiLv(string memory _huoBi) public view returns (uint) {
+        require(huiLv[_huoBi] > 0, "Currency's not supported, please contact administrator.");  //货币不支持
+        return huiLv[_huoBi];  //货币支持
+    }
+}
