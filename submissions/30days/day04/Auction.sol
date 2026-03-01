@@ -16,7 +16,7 @@ contract Auction{
     item = _item;
     auctionEndTime = block.timestamp +_biddingTime;
  }
- function bid(uint256 amount) private {
+ function bid(uint256 amount) external {
     require(block.timestamp < auctionEndTime,"Auction alredy ended.");
     require(amount > 0,"Bid amount must be greater then ZERO.");
     require(amount > bids[msg.sender],"New bid must be higher then current bid.");
