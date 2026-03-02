@@ -1,0 +1,24 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract ClickCounter {
+    uint256 public counter;
+    mapping(address => uint256) public clicksByUser;
+    
+    event Clicked(address indexed user, uint256 newCount);
+    
+    function click() public {
+        counter++;
+        clicksByUser[msg.sender]++;
+        emit Clicked(msg.sender, counter);
+    }
+    
+    function reset() public {
+        counter = 0;
+    }
+    
+    function decrement() public {
+        require(counter > 0, "Counter is already at zero");
+        counter--;
+    }
+}
