@@ -3,22 +3,36 @@ pragma solidity ^0.8.0;
 
 contract ClickCounter {
     uint256 public counter;
+    address public owner;
     mapping(address => uint256) public clicksByUser;
     
     event Clicked(address indexed user, uint256 newCount);
+    event Decremented(address indexed user, uint256 newCount);
+    event Reset(address indexed user);
     
+    constructor() {
+        owner = msg.sender;
+    }
+    
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Not the contract owner");
+        _;
+    }
+
     function click() public {
         counter++;
         clicksByUser[msg.sender]++;
         emit Clicked(msg.sender, counter);
     }
     
-    function reset() public {
+    function reset() public onlyOwner {
         counter = 0;
+        emit Reset(msg.sender);
     }
     
-    function decrement() public {
+    function decrement() public onlyOwner {
         require(counter > 0, "Counter is already at zero");
         counter--;
+        emit Decremented(msg.sender, counter);
     }
 }
