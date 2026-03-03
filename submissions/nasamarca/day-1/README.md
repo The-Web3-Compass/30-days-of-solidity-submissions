@@ -23,7 +23,7 @@ The goal is to build a simple “digital clicker”: each time `click()` is call
 - Increment the counter (`click()`)
 - Decrement the counter safely (`decrement()`)
 - Reset the counter to zero (`reset()`)
-- Read the current value (`counter` public getter, plus an optional `getCounter()`)
+- Read the current value (`counter` public getter)
 
 The contract also emits events whenever state changes, so off-chain apps (frontends, indexers) can track activity without constantly polling.
 
@@ -96,7 +96,9 @@ When events are emitted:
 ### 1) `click()`
 ```solidity
 function click() external {
-    counter++;
+    unchecked {
+        counter++;
+    }
     emit Clicked(msg.sender, counter);
 }
 ```
@@ -107,14 +109,14 @@ Behavior:
 
 Notes:
 - `external` is slightly more optimal than `public` for functions that are meant to be called from outside the contract.
-- `counter++` is idiomatic and clear.
+- `unchecked { counter++; }` is used because overflowing a `uint256` is practically impossible, saving gas by skipping overflow checks.
 
 ---
 
 ### 2) `decrement()`
 ```solidity
 function decrement() external {
-    require(counter > 0, "COUNTER_IS_ZERO");
+    if (counter == 0) revert CounterIsZero();
     unchecked {
         counter--;
     }
@@ -124,15 +126,15 @@ function decrement() external {
 
 Behavior:
 - Decreases `counter` by 1.
-- If `counter` is already 0, the function reverts with:
-  - `COUNTER_IS_ZERO`
+- If `counter` is already 0, the function reverts with custom error:
+  - `error CounterIsZero()`
 
-Why `require`?
-- Prevents underflow (going below zero), which is invalid for unsigned integers.
+Why Custom Error?
+- `revert CounterIsZero()` is much cheaper (gas-wise) than `require(..., "string message")`.
 
 Why `unchecked`?
 - In Solidity `0.8+`, arithmetic is checked by default (adds extra gas).
-- After `require(counter > 0)`, underflow is impossible, so we can safely use `unchecked` to save gas.
+- After the check `if (counter == 0)`, underflow is impossible, so we can safely use `unchecked` to save gas.
 
 ---
 
@@ -154,19 +156,10 @@ Note:
 
 ---
 
-### 4) `getCounter()`
-```solidity
-function getCounter() external view returns (uint256) {
-    return counter;
-}
-```
-
-Behavior:
-- Returns the current `counter` value.
-
-Note (important):
-- This function is optional/redundant because `counter` is already `public`, so Solidity auto-generates a getter.
-- It’s included here as an explicit example of a `view` function returning a value.
+### 4) Gas Optimizations Added
+- **Custom Errors**: Replaced `require` string messages with `error CounterIsZero()` to save deployment and execution gas.
+- **Unchecked Math**: Used `unchecked { ... }` where overflow/underflow is impossible or checked manually.
+- **Removed Redundant Getter**: Removed `getCounter()` since `public` variable `counter` already provides a free getter.
 
 ---
 
@@ -200,7 +193,7 @@ NatSpec for documentation
    - Call `click` again → counter becomes `2`
    - Call `decrement` → counter becomes `1`
    - Call `reset` → counter becomes `0`
-   - Call `decrement` while counter is `0` → should revert with `COUNTER_IS_ZERO`
+   - Call `decrement` while counter is `0` → should revert with `CounterIsZero` error
 6. Check Remix terminal/logs to see emitted events (`Clicked`, `Decremented`, `Reset`).
 
 ---

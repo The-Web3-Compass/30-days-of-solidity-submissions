@@ -10,6 +10,8 @@ pragma solidity ^0.8.24;
 contract ClickCounter {
     uint256 public counter;
 
+    error CounterIsZero();
+
     event Clicked(address indexed caller, uint256 newCounter);
     event Decremented(address indexed caller, uint256 newCounter);
     event Reset(address indexed caller);
@@ -19,7 +21,9 @@ contract ClickCounter {
      * @dev Callable by anyone.
      */
     function click() external {
-        counter++;
+        unchecked {
+            counter++;
+        }
         emit Clicked(msg.sender, counter);
     }
 
@@ -28,7 +32,7 @@ contract ClickCounter {
      * @dev Reverts if the counter is already 0.
      */
     function decrement() external {
-        require(counter > 0, "COUNTER_IS_ZERO");
+        if (counter == 0) revert CounterIsZero();
         unchecked {
             counter--;
         }
@@ -41,13 +45,5 @@ contract ClickCounter {
     function reset() external {
         counter = 0;
         emit Reset(msg.sender);
-    }
-
-    /**
-     * @notice Returns the current counter value.
-     * @dev This getter is optional because `counter` is already `public`.
-     */
-    function getCounter() external view returns (uint256) {
-        return counter;
     }
 }
