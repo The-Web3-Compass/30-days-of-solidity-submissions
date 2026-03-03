@@ -2,15 +2,17 @@
 pragma solidity ^0.8.0;
 
 contract SaveMyName {
-    string public name;
-    string public bio;
-    bool public isActive;
+    struct Profile {
+        string name;
+        string bio;
+        bool isActive;
+    }
+
+    mapping(address => Profile) public profiles;
 
     function add(string memory _name, string memory _bio) public {
         require(bytes(_bio).length <= 280, "Bio too long");
-        name = _name;
-        bio = _bio;
-        isActive = true;
+        profiles[msg.sender] = Profile(_name, _bio, true);
     }
 
     function retrieve()
@@ -18,6 +20,7 @@ contract SaveMyName {
         view
         returns (string memory, string memory, bool)
     {
-        return (name, bio, isActive);
+        Profile memory userProfile = profiles[msg.sender];
+        return (userProfile.name, userProfile.bio, userProfile.isActive);
     }
 }
