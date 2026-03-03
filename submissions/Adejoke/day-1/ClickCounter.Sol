@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 contract ClickCounter {
     uint256 public counter;
     mapping(address => uint256) public clicksByUser;
-    
+
     event Clicked(address indexed user, uint256 newCount);
     event Decremented(address indexed user, uint256 newCount);
     event Reset(address indexed user);
@@ -14,14 +14,18 @@ contract ClickCounter {
         clicksByUser[msg.sender]++;
         emit Clicked(msg.sender, counter);
     }
-    
+
     function reset() public {
-        counter = 0;
+        uint256 userClicks = clicksByUser[msg.sender];
+        require(userClicks > 0, "Nothing to reset");
+        counter -= userClicks;
+        clicksByUser[msg.sender] = 0;
         emit Reset(msg.sender);
     }
-    
+
     function decrement() public {
-        require(counter > 0, "Counter is already at zero");
+        require(clicksByUser[msg.sender] > 0, "No clicks to decrement");
+        clicksByUser[msg.sender]--;
         counter--;
         emit Decremented(msg.sender, counter);
     }
