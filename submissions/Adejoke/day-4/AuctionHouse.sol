@@ -19,11 +19,11 @@ contract AuctionHouse {
         auctionEndTime = block.timestamp + _biddingTime;
     }
 
-    function bid(uint256 amount) external {
+    function bid() external payable {
         require(block.timestamp < auctionEndTime, "Auction has already ended.");
-        require(amount > 0, "Bid amount must be greater than zero.");
+        require(msg.value > 0, "Bid amount must be greater than zero.");
         require(
-            amount > bids[msg.sender],
+            msg.value > bids[msg.sender],
             "New bid must be higher than your current bid."
         );
 
@@ -31,10 +31,10 @@ contract AuctionHouse {
             bidders.push(msg.sender);
         }
 
-        bids[msg.sender] = amount;
+        bids[msg.sender] = msg.value;
 
-        if (amount > highestBid) {
-            highestBid = amount;
+        if (msg.value > highestBid) {
+            highestBid = msg.value;
             highestBidder = msg.sender;
         }
     }
