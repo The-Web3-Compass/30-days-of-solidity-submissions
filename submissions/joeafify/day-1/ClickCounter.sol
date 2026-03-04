@@ -2,21 +2,35 @@
 pragma solidity ^0.8.26;
 
 contract ClickCounter {
-    // Decalring a vairaibles
     uint public number;
+    address public owner;
 
-    //Declaring a function
+    event Incremented(uint newValue);
+    event Decremented(uint newValue);
+    event Reset();
 
-    function increment () public {
-        number ++;
+    constructor() {
+        owner = msg.sender;
     }
 
-    function decrement () public {
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only owner can call this");
+        _;
+    }
+
+    function increment() public {
+        number++;
+        emit Incremented(number);
+    }
+
+    function decrement() public {
         require(number > 0, "Number must be greater than 0");
-        number --;
+        number--;
+        emit Decremented(number);
     }
 
-    function reset () public {
+    function reset() public onlyOwner {
         number = 0;
+        emit Reset();
     }
 }
