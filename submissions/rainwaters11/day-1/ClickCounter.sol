@@ -4,46 +4,50 @@ pragma solidity ^0.8.0;
 contract ClickCounter {
     
     // ==========================================
-    // 1. STATE VARIABLES (Data Storage)
+    // 1. STATE VARIABLES 
     // ==========================================
     uint256 public counter;
-    
-    // (Requirement 3) Track Who Clicked
+    address public owner; // Tracks who deployed the contract
     mapping(address => uint256) public clicksByUser; 
 
-
     // ==========================================
-    // 2. EVENTS (Notifications)
+    // 2. EVENTS
     // ==========================================
-    // (Requirement 4) Add an Event
     event Clicked(address indexed user, uint256 newCount);
-
+    event Decremented(address indexed user, uint256 newCount); // Added missing event
+    event Reset(address indexed user); // Restored missing event
 
     // ==========================================
-    // 3. FUNCTIONS (Logic & Actions)
+    // 3. CONSTRUCTOR (Runs only once on deployment)
     // ==========================================
-    
-    // (Requirements 3 & 4 Merged) The upgraded click function
-    function click() public {
-        counter++;                               // Increase total count
-        clicksByUser[msg.sender]++;              // Track this specific user's clicks
-        emit Clicked(msg.sender, counter);       // Broadcast the event
+    constructor() {
+        owner = msg.sender; // The person deploying becomes the owner
     }
 
-    // (Requirement 2) A Decrement Function with safety checks
+    // ==========================================
+    // 4. FUNCTIONS 
+    // ==========================================
+    function click() public {
+        counter++;                               
+        clicksByUser[msg.sender]++;              
+        emit Clicked(msg.sender, counter);       
+    }
+
     function decrement() public {
-        // Check 1: Global counter isn't zero
         require(counter > 0, "Counter is already at zero");
-        
-        // Check 2: This specific user actually has clicks to remove
         require(clicksByUser[msg.sender] > 0, "User has no clicks to decrement");
         
-        counter--;                     // Decrease global total
-        clicksByUser[msg.sender]--;    // Decrease the user's specific total
+        counter--;
+        clicksByUser[msg.sender]--;
+        
+        emit Decremented(msg.sender, counter); // Broadcast the decrement
     }
 
-    // (Requirement 1) A Reset Function
     function reset() public {
+        // Access Control: Only the owner can call this!
+        require(msg.sender == owner, "Only the owner can reset the counter");
+        
         counter = 0;
+        emit Reset(msg.sender); // Broadcast the reset
     }
 }
