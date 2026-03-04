@@ -8,6 +8,9 @@ contract PollStation {
     mapping(address => bool) public hasVoted;
     mapping(string => bool) public isCandidate;
 
+    event CandidateAdded(string candidateName);
+    event Voted(address indexed voter, string candidateName);
+
     address public admin;
 
     constructor() {
@@ -20,9 +23,11 @@ contract PollStation {
     }
 
     function addCandidateNames(string memory _candidateNames) public onlyAdmin {
+        require(!isCandidate[_candidateNames], "Candidate already exists");
         candidateNames.push(_candidateNames);
         isCandidate[_candidateNames] = true;
         voteCount[_candidateNames] = 0;
+        emit CandidateAdded(_candidateNames);
     }
 
     function getcandidateNames() public view returns (string[] memory) {
@@ -35,6 +40,7 @@ contract PollStation {
 
         hasVoted[msg.sender] = true;
         voteCount[_candidateNames] += 1;
+        emit Voted(msg.sender, _candidateNames);
     }
 
     function getVote(
