@@ -9,9 +9,11 @@ contract PollStation {
     mapping(address => bool) public hasVoted;
 
     function addCandidateNames(string memory _candidateNames) public {
+        require(!candidateExists[_candidateNames], "Candidate is already registered.");
         candidateNames.push(_candidateNames);
-        voteCount [_candidateNames] = 0;
+        voteCount[_candidateNames] = 0;
         candidateExists[_candidateNames] = true;
+    }
     }
 
     function getCandidateNames() public view returns (string[] memory) {
