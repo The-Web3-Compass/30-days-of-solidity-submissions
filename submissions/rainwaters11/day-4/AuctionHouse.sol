@@ -2,47 +2,77 @@
 pragma solidity ^0.8.0;
 
 contract AuctionHouse {
-    // State variables
     address public highestBidder;
     uint256 public highestBid;
     uint256 public auctionEndTime;
     bool public ended;
 
-    // Events to notify the outside world
+    // NEW: Tracks ETH owed to people who were outbid
+    mapping(address => uint256) public pendingReturns;
+
     event HighestBidIncreased(address bidder, uint256 amount);
     event AuctionEnded(address winner, uint256 amount);
 
-    // When we deploy, we set how many seconds the auction will run
     constructor(uint256 _durationInSeconds) {
-        // block.timestamp is the current network time
         auctionEndTime = block.timestamp + _durationInSeconds;
     }
 
-    // The main bidding logic
-    function bid(uint256 bidAmount) public {
-        // 1. Time Check
+    // UPDATED: 'payable' allows this function to receive actual ETH
+    // We removed the 'bidAmount' parameter because the EVM automatically 
+    // knows how much ETH was sent via 'msg.value'
+    function bid() public payable {
         require(block.timestamp <= auctionEndTime, "The auction has already ended!");
 
-        // 2. Control Flow: If/Else Check
-        if (bidAmount > highestBid) {
-            // We have a new highest bidder!
-            highestBid = bidAmount;
-            highestBidder = msg.sender;
+        // Control Flow: Check if the ETH sent is higher than the current highest bid
+        if (msg.value > highestBid) {
             
-            emit HighestBidIncreased(msg.sender, bidAmount);
+            // If someone else was already the highest bidder, we now owe them a refund!
+            if (highestBid != 0) {
+                pendingReturns[highestBidder] += highestBid;
+            }
+
+            // Update the new winner's details
+            highestBidder = msg.sender;
+            highestBid = msg.value;
+            
+            emit HighestBidIncreased(msg.sender, msg.value);
         } else {
-            // The bid wasn't high enough
+            // The bid wasn't high enough, so we revert. 
+            // (Reverting automatically refunds the ETH they just tried to send!)
             revert("Bid is not high enough to win.");
         }
     }
 
-    // Function to officially close out the auction
+    // NEW: The "Pull over Push" withdrawal pattern.
+    // Outbid users call this to pull their ETH back out of the contract safely.
+    function withdraw() public returns (bool) {
+        uint256 amount = pendingReturns[msg.sender];
+        
+        if (amount > 0) {
+            // SECURITY: We zero out their balance BEFORE sending the ETH
+            // This prevents a famous hack called a "Reentrancy Attack"
+            pendingReturns[msg.sender] = 0;
+            
+            // Send the ETH back to the user
+            (bool success, ) = payable(msg.sender).call{value: amount}("");
+            
+            // If the transfer fails, give them their pending balance back
+            if (!success) {
+                pendingReturns[msg.sender] = amount;
+                return false;
+            }
+        }
+        return true;
+    }
+
     function endAuction() public {
-        // Time Check: Ensure time has actually run out
         require(block.timestamp >= auctionEndTime, "The auction is still running.");
         require(!ended, "The auction has already been finalized.");
 
         ended = true;
         emit AuctionEnded(highestBidder, highestBid);
+        
+        // In a complete marketplace, you would transfer the winning highestBid 
+        // to the item's original seller right here!
     }
 }
