@@ -30,10 +30,16 @@ contract ClickCounter {
         emit Clicked(msg.sender, counter);       // Broadcast the event
     }
 
-    // (Requirement 2) A Decrement Function
+    // (Requirement 2) A Decrement Function with safety checks
     function decrement() public {
+        // Check 1: Global counter isn't zero
         require(counter > 0, "Counter is already at zero");
-        counter--;
+        
+        // Check 2: This specific user actually has clicks to remove
+        require(clicksByUser[msg.sender] > 0, "User has no clicks to decrement");
+        
+        counter--;                     // Decrease global total
+        clicksByUser[msg.sender]--;    // Decrease the user's specific total
     }
 
     // (Requirement 1) A Reset Function
