@@ -20,9 +20,11 @@ contract PollStation {
     }
 
     function addCandidateNames(string memory _candidateNames) public onlyAdmin {
+        require(!isCandidate[_candidateNames], "Candidate already exists");
         candidateNames.push(_candidateNames);
         isCandidate[_candidateNames] = true;
         voteCount[_candidateNames] = 0;
+    }
     }
 
     function getcandidateNames() public view returns (string[] memory) {
