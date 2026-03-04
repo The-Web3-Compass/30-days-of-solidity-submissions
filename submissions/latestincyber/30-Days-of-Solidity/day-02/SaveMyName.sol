@@ -2,15 +2,15 @@
 pragma solidity ^0.8.0;
 
 contract SaveMyName {
-    string name;
-    string bio;
+    mapping(address => string) private names;
+    mapping(address => string) private bios;
 
     function add(string memory _name, string memory _bio) public {
-        name = _name;
-        bio = _bio;
+        names[msg.sender] = _name;
+        bios[msg.sender] = _bio;
     }
 
     function retrieve() public view returns (string memory, string memory) {
-        return (name, bio);
+        return (names[msg.sender], bios[msg.sender]);
     }
 }
