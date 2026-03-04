@@ -1,0 +1,51 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract PollStation {
+    string[] public candidateNames;
+
+    mapping(string => uint256) public voteCount;
+    mapping(address => bool) public hasVoted;
+    mapping(string => bool) public isCandidate;
+
+    event CandidateAdded(string candidateName);
+    event Voted(address indexed voter, string candidateName);
+
+    address public admin;
+
+    constructor() {
+        admin = msg.sender;
+    }
+
+    modifier onlyAdmin() {
+        require(msg.sender == admin, "Not admin");
+        _;
+    }
+
+    function addCandidateNames(string memory _candidateNames) public onlyAdmin {
+        require(!isCandidate[_candidateNames], "Candidate already exists");
+        candidateNames.push(_candidateNames);
+        isCandidate[_candidateNames] = true;
+        voteCount[_candidateNames] = 0;
+        emit CandidateAdded(_candidateNames);
+    }
+
+    function getcandidateNames() public view returns (string[] memory) {
+        return candidateNames;
+    }
+
+    function vote(string memory _candidateNames) public {
+        require(isCandidate[_candidateNames], "Invalid candidate");
+        require(!hasVoted[msg.sender], "Already voted");
+
+        hasVoted[msg.sender] = true;
+        voteCount[_candidateNames] += 1;
+        emit Voted(msg.sender, _candidateNames);
+    }
+
+    function getVote(
+        string memory _candidateNames
+    ) public view returns (uint256) {
+        return voteCount[_candidateNames];
+    }
+}
