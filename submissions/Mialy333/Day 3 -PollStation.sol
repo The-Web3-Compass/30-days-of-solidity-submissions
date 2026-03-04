@@ -15,4 +15,10 @@ contract PollStation{
   function vote(string memory _candidateNames) public {
     voteCount[_candidateNames]++;
   }
+
+  function getCandidateNames() public view returns(string[] memory){
+    return candidateNames;
+  }
+
+
 }
