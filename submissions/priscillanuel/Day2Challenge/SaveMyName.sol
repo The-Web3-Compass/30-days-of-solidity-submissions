@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.20;
 
-contract SaveMyName{
+contract SaveMyName {
     string MyName;
     string bio;
 
@@ -11,10 +11,7 @@ contract SaveMyName{
         bio = _bio;
     }
 
-    function retrieve() public view returns
-     (string memory, string memory)
-    {
+    function retrieve() public view returns (string memory, string memory) {
         return (MyName, bio);
     }
-        
 }
