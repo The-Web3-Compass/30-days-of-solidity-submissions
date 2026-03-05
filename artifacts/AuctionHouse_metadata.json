@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.30+commit.73712a01"
+		"version": "0.8.31+commit.fd3a2265"
 	},
 	"language": "Solidity",
 	"output": {
@@ -8,13 +8,8 @@
 			{
 				"inputs": [
 					{
-						"internalType": "string",
-						"name": "_item",
-						"type": "string"
-					},
-					{
 						"internalType": "uint256",
-						"name": "_biddingTime",
+						"name": "_auctionDuration",
 						"type": "uint256"
 					}
 				],
@@ -22,24 +17,11 @@
 				"type": "constructor"
 			},
 			{
-				"inputs": [],
-				"name": "auctionEndTime",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
 				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
+						"internalType": "uint64",
+						"name": "_amount",
+						"type": "uint64"
 					}
 				],
 				"name": "bid",
@@ -50,12 +32,12 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
+						"internalType": "uint64",
 						"name": "",
-						"type": "uint256"
+						"type": "uint64"
 					}
 				],
-				"name": "bidders",
+				"name": "bids",
 				"outputs": [
 					{
 						"internalType": "address",
@@ -69,12 +51,25 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address",
+						"internalType": "uint256",
 						"name": "",
-						"type": "address"
+						"type": "uint256"
 					}
 				],
-				"name": "bids",
+				"name": "bidsamount",
+				"outputs": [
+					{
+						"internalType": "uint64",
+						"name": "",
+						"type": "uint64"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "endtime",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -87,76 +82,25 @@
 			},
 			{
 				"inputs": [],
-				"name": "endAuction",
-				"outputs": [],
+				"name": "winner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "winnerAddress",
+						"type": "address"
+					}
+				],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
 				"inputs": [],
-				"name": "ended",
+				"name": "winnerbid",
 				"outputs": [
 					{
-						"internalType": "bool",
+						"internalType": "uint64",
 						"name": "",
-						"type": "bool"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "getAllBidders",
-				"outputs": [
-					{
-						"internalType": "address[]",
-						"name": "",
-						"type": "address[]"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "getWinner",
-				"outputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "item",
-				"outputs": [
-					{
-						"internalType": "string",
-						"name": "",
-						"type": "string"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "owner",
-				"outputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
+						"type": "uint64"
 					}
 				],
 				"stateMutability": "view",
@@ -176,9 +120,9 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"submissions/Zora/Day4AuctionHouse.sol": "AuctionHouse"
+			"submissions/MeseretBirhanu/day4/AuctionHouse.sol": "AuctionHouse"
 		},
-		"evmVersion": "prague",
+		"evmVersion": "osaka",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -190,12 +134,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"submissions/Zora/Day4AuctionHouse.sol": {
-			"keccak256": "0x574b87ce8af92554533e6205c5b645d99280da3c4f6741c7fd5cb720244797dc",
+		"submissions/MeseretBirhanu/day4/AuctionHouse.sol": {
+			"keccak256": "0x8147671b4d066c5c3a293b0fbad128cacef66a5bf4f62e498631726ccb26b1ec",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b1859db196cb5442648d956bf206d4771a24caa56aac7e7c84e5b387ad13d575",
-				"dweb:/ipfs/QmeXBXZpeF1jGqyCLmFn3xvQxQnsH8oRYfmyky8Zkd6Cr7"
+				"bzz-raw://1719f7745300517be6f8dbc877bb606cb6904f817cc5cb6dcdf80f97b485e961",
+				"dweb:/ipfs/QmV5NRnEmfe9tNCpNGsgFKSgauqDz1V65Vjdhh6JSLcnk7"
 			]
 		}
 	},
