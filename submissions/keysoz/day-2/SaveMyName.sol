@@ -45,8 +45,10 @@ contract SaveMyName {
     }
 
     function getProfileInfo(uint256 _id) external view returns (string memory, string memory) {
+        if (_id >= id) revert NotExistProfile();
         Person memory existencePerson = idToPerson[_id];
         return (existencePerson.name, existencePerson.bio);
+    }
     }
 
     function getIndex() external view returns (uint256) {
