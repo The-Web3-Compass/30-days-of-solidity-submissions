@@ -41,8 +41,10 @@ contract ClickCounter {
 
     /**
      * @notice Resets the counter back to 0.
+     * @dev No-op when the counter is already zero to save gas and avoid emitting a redundant event.
      */
     function reset() external {
+        if (counter == 0) return;
         counter = 0;
         emit Reset(msg.sender);
     }

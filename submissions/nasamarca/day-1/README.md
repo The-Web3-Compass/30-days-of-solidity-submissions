@@ -141,24 +141,25 @@ Why `unchecked`?
 ### 3) `reset()`
 ```solidity
 function reset() external {
+    if (counter == 0) return;
     counter = 0;
     emit Reset(msg.sender);
 }
 ```
 
 Behavior:
-- Resets `counter` to zero.
-- Emits `Reset(caller)`.
+- If the counter is already `0`, the function does nothing (no event emitted).
+- Otherwise, resets `counter` to zero and emits `Reset(caller)`.
 
 Note:
-- This is a direct write to storage (costs gas).
-- Useful for demonstrating state changes.
+- Skips redundant storage writes and events when already zero to save gas; otherwise performs a direct write.
 
 ---
 
 ### 4) Gas Optimizations Added
 - **Custom Errors**: Replaced `require` string messages with `error CounterIsZero()` to save deployment and execution gas.
 - **Unchecked Math**: Used `unchecked { ... }` where overflow/underflow is impossible or checked manually.
+- **Reset No-Op**: If `counter` is already `0`, `reset()` returns early to avoid redundant storage writes and events.
 - **Removed Redundant Getter**: Removed `getCounter()` since `public` variable `counter` already provides a free getter.
 
 ---
