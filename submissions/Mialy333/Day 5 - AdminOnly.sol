@@ -24,7 +24,7 @@ contract AdminOnly{
 
     function approveWithdrawal(address recipient, uint256 amount) public onlyOwner{
         require(amount <= treasureAmount, "Insufficient funds in the contract"); 
-        withdrawalAllowance[recipient] = amount;
+        withdrawlAllowance[recipient] = amount;
 
     }
 
@@ -35,16 +35,16 @@ contract AdminOnly{
             return;
         }
 
-        uint256 allowance = withdrawalAllowance[msg.sender];
+        uint256 allowance = withdrawlAllowance[msg.sender];
 
         require(allowance > 0, "You do not have any treasure allowance");
-        require(!hashWithdrawn[msg.sender], "You have already withdrawn your treasury");
+        require(!hasWithdrawn[msg.sender], "You have already withdrawn your treasury");
         require(allowance <= treasureAmount, "Not enough treasure in the chest");
         require(amount <= allowance, "Not enough allowance for withdrawal");
 
         hasWithdrawn[msg.sender] = true;
         treasureAmount -= amount;
-        withdrawalAllowance[msg.sender] = 0;
+        withdrawlAllowance[msg.sender] = 0;
     }
 
     function resetWithdrawalStatus(address user) public onlyOwner{
