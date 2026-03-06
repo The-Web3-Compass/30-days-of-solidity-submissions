@@ -27,16 +27,15 @@ contract AuctionHouse {
     }
 
     function placeBid() public payable auctionOngoing {
-        if (msg.value <= maxBidAmount) {
+        uint256 newTotalBid = bidAmounts[msg.sender] + msg.value;
+
+        if (newTotalBid <= maxBidAmount) {
             revert AuctionHouse__BidTooLow();
         }
 
-        uint256 totalBid = bidAmounts[msg.sender] += msg.value;
-
-        if (totalBid > maxBidAmount) {
-            maxBidAmount = totalBid;
-            highestBidder = msg.sender;
-        }
+        bidAmounts[msg.sender] = newTotalBid;
+        maxBidAmount = newTotalBid;
+        highestBidder = msg.sender;
 
         emit BidPlaced(msg.sender, msg.value);
     }
