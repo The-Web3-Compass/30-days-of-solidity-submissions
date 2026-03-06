@@ -70,6 +70,7 @@ contract PollStation {
 
     function getVoterCandidate(address _voter) external view returns (string memory) {
         if (_voter == address(0)) revert PollStation__NonValidVoterAddress(_voter);
+        if (!hasVoted[_voter]) revert PollStation__NonValidVoterAddress(_voter);
         return userVotedCandidate[_voter];
     }
 
