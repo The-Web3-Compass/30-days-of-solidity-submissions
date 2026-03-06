@@ -52,7 +52,9 @@ contract SaveMyName {
     }
 
     function getIndex() external view returns (uint256) {
+        if (!hasProfile[msg.sender]) revert NotExistProfile();
         return ownerToId[msg.sender];
+    }
     }
 
     function getNumberOfProfiles() external view returns (uint256) {
