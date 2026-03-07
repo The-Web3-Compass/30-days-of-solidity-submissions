@@ -22,14 +22,14 @@ contract EtherPiggyBank {
         _;
     }
 
-    function addMembers(address _member) public onlyBankManager(
+    function addMembers(address _member) public onlyBankManager {
         require(_member != address(0), "Invalid address");
         require(_member != msg.sender, "Bank Manager is already a member");
         require(!registeredMembers[_member], "Member already registered");
 
             registeredMembers[_member] = true;
             members.push(_member);
-    )
+    }
 
     function getMembers() public view returns (address[] memory) {
         return members;
