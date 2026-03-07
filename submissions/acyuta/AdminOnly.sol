@@ -55,7 +55,12 @@ contract TreasureChest {
         }
         treasureAmount -= _amount;
         allowAccess[msg.sender].amount -= _amount;
+
+        (bool success, ) = payable(msg.sender).call{value: _amount}("");
+        require(success, "Treasure transfer failed");
+
         emit TreasureWithdrawn(_amount);
+    }
     }
 
     function revokeAllowance(address _user) public ownerOnly{
