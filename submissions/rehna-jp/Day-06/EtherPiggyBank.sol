@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+// import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-contract etherPiggyBank is ReentrancyGuard{
+contract etherPiggyBank{
 
     address bankManager;
 
@@ -72,7 +72,7 @@ contract etherPiggyBank is ReentrancyGuard{
         emit Deposit(msg.sender, msg.value);
     }
 
-    function withdraw(uint amount) external onlyRegisteredMembers nonReentrant{
+    function withdraw(uint amount) external onlyRegisteredMembers {
         require(amount > 0, "Invalid withdraw amount");    
         require(block.timestamp >= lockedUntil, "Funds are locked for group goal");
 
@@ -100,7 +100,7 @@ contract etherPiggyBank is ReentrancyGuard{
         emit Withdraw(msg.sender, amount);
     }
     
-    function emergencyWithdraw(uint amount) external onlyRegisteredMembers nonReentrant {
+    function emergencyWithdraw(uint amount) external onlyRegisteredMembers {
     require(balances[msg.sender] >= amount, "Not enough balance");
 
     uint penalty = (amount * 10) / 100; // 10% penalty
