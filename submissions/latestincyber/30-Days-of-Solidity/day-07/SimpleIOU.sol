@@ -68,7 +68,6 @@ contract SimpleIOU {
 
         balances[msg.sender] -= _amount;
         _to.transfer(_amount);
-        balances[_to] += _amount;
     }
 
     function transferEtherViaCall(address payable _to, uint256 _amount) public onlyRegistered {
