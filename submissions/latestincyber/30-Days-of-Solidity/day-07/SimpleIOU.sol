@@ -81,7 +81,6 @@ contract SimpleIOU {
 
         (bool success, ) = _to.call{value: _amount}("");
         require(success, "Transfer failed.");
-        balances[_to] += _amount;
     }
 
     function withdraw(uint256 _amount) public onlyRegistered {
