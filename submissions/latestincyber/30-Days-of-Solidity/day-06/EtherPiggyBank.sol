@@ -43,7 +43,9 @@ contract EtherPiggyBank {
     function withdraw(uint256 _amount) public onlyRegisteredMembers {
         require(_amount > 0, "Withdrawal amount must be greater than zero.");
         require(balance[msg.sender] >= _amount, "Insufficient balance.");
+        require(address(this).balance >= _amount, "Contract has insufficient Ether.");
         balance[msg.sender] -= _amount;
+        payable(msg.sender).transfer(_amount);
     }
 
     function depositAmountEther() public payable onlyRegisteredMembers {
