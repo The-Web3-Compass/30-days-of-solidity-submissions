@@ -75,9 +75,8 @@ contract AdminOnly {
         emit WithdrawalApproved(_user, _amount);
     }
 
-    function resetWithdrawal(address _user) external checkZeroAddress(_user) onlyOwner onlyApproved(_user) {
+    function resetWithdrawal(address _user) external checkZeroAddress(_user) onlyOwner {
         if (!isWithdrawn[_user]) revert AlreadyNotWithdrawn(_user);
-        if (allowance[_user] == 0) revert NoAllowance(_user);
         isWithdrawn[_user] = false;
         emit WithdrawalReset(_user);
     }
