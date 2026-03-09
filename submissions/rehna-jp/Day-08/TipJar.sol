@@ -21,10 +21,11 @@ contract tipJar{
     event TokenWithdrawn(address indexed creator, address token, uint256 amount);
     event EthWithdrawn(address indexed creator, uint256 amount);
 
-    constructor(){
+    constructor(address _priceFeed){
+        require(_priceFeed != address(0), "Invalid price feed address");
         owner = msg.sender;
         priceFeed = AggregatorV3Interface(
-        0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419
+        _priceFeed
         );
     }
 
