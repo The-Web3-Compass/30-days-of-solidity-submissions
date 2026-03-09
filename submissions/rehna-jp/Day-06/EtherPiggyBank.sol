@@ -26,8 +26,9 @@ contract etherPiggyBank{
     
     constructor(){
         bankManager = msg.sender;
+        registeredMembers[msg.sender] = true;
         members.push(msg.sender);
-        
+    
     }
 
     modifier onlyBankManager{

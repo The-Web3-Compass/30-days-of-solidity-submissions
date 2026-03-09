@@ -42,7 +42,7 @@ contract adminOnly{
         require(amount <= treasureBalance, "Insufficient funds in the treasury");
         require(allowance[msg.sender] > 0, "No Allowance");
         require(!hasWithdrawn[msg.sender], "You have already withdrawn");
-        require(hasWithdrawn[msg.sender] == true, "You can no longer withdraw");
+        // Removed contradictory hasWithdrawn check that made withdrawal impossible for approved users
 
         
          treasureBalance -= amount;
