@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.34;
 
 // File 1: ScientificCalculator.sol
 contract ScientificCalculator {
