@@ -8,5 +8,3 @@ contract ClickCounter {
         counter++;
     }
 }
-
-
