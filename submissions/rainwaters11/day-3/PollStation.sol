@@ -25,14 +25,16 @@ contract PollStation {
     function delegate(address to) public {
         require(!hasVoted[msg.sender], "You already voted or delegated");
         require(to != msg.sender, "Cannot delegate to yourself");
+        require(!hasVoted[to], "Cannot delegate to someone who already voted or delegated");
 
         // Mark the sender as having voted so they can't double-dip
         hasVoted[msg.sender] = true;
-        
+    
         // Add 1 to the chosen delegate's weight
         delegatedWeight[to] += 1;
 
         emit Delegated(msg.sender, to);
+    }
     }
 
     // UPDATED: The Voting Function
