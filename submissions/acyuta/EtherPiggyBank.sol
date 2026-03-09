@@ -23,7 +23,7 @@ contract EtherPiggyBank {
 
         userBalance[msg.sender] -= _amount;
 
-        (bool success, ) = msg.sender.call{value: _amount}("");
+        (bool success, ) = payable(msg.sender).call{value: _amount}("");
         if (!success) revert EtherPiggyBank__TransactionFailed();
 
         emit EthWithdrawn(_amount, msg.sender);
