@@ -15,4 +15,21 @@ contract EtherPiggyBank{
   
   }
 
+  modifier onlyBankManager(){
+    require(bankManager == msg.sender, "Only bank manager can perform this action");
+    _;
+  }
+
+  modifier onlyRegisteredMember(){
+    require(registeredMembers[msg.sender], "Member is not registered");
+    _;
+  }
+
+  function addMembers(address _member) public onlyBankManager{
+    require(_member != address(0), "Invalid address");
+    require(_member != msg.sender, "Bank Manager is already a member");
+    require(!registeredMembers[_member], "Member is already registered");
+    registeredMembers[_member] = true; 
+    members.push(_member);
+  }
 }
