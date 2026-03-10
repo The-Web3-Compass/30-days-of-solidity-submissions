@@ -40,10 +40,16 @@ contract EtherPiggyBank{
   function depositAmount(uint256 _amount) public onlyRegisteredMember{
     require(_amount > 0, "Invalid amount");
     balance[msg.sender] += _amount;
+  } 
 
-    function getBalance() public view returns(uint256){
-      require(condition);
-      return balance[msg.sender];
-    }
+  function depositEther(uint256 _amount) public payable onlyRegisteredMember{
+    require(_amount > 0, "Invalid amount");
+    balance[msg.sender] += msg.value;
   }
-}
+
+    function getBalance(address _member) public view returns(uint256){
+      require(_member != address(0), "Invalid address");
+      return balance[_member];
+    }
+
+  }
