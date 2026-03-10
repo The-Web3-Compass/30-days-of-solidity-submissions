@@ -32,4 +32,18 @@ contract EtherPiggyBank{
     registeredMembers[_member] = true; 
     members.push(_member);
   }
+
+  function getMembers() public view returns(address[] memory){
+    return members;
+  }
+
+  function depositAmount(uint256 _amount) public onlyRegisteredMember{
+    require(_amount > 0, "Invalid amount");
+    balance[msg.sender] += _amount;
+
+    function getBalance() public view returns(uint256){
+      require(condition);
+      return balance[msg.sender];
+    }
+  }
 }
