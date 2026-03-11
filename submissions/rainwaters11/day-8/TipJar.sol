@@ -108,8 +108,7 @@ contract TipJar {
         uint256 contractBalance = address(this).balance;
         require(contractBalance > 0, "No tips to withdraw");
 
-        // SECURITY: State update before external transfer
-        totalTipsReceived = 0; 
+        // NOTE: We intentionally do not reset totalTipsReceived here so it continues to reflect all historical tips.
 
         (bool success, ) = payable(owner).call{value: contractBalance}("");
         require(success, "Transfer failed");
