@@ -35,7 +35,7 @@ contract EtherPiggyBank {
         return members;
     }
 
-    function deposit(uint256 _amount) public onlyRegisteredMembers {
+    function deposit(uint256 _amount) internal {
         require(_amount > 0, "Deposit amount must be greater than zero.");
         balance[msg.sender] += _amount;
     }
