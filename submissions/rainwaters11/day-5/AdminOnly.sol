@@ -43,15 +43,15 @@ contract AdminOnly {
             treasureAmount -= amount;
             return;
         }
-        
+    
         uint256 allowance = withdrawalAllowance[msg.sender];
-        
+    
         // Check if user has an allowance and hasn't withdrawn yet
         require(allowance > 0, "You don't have any treasure allowance");
         require(!hasWithdrawn[msg.sender], "You have already withdrawn your treasure");
         require(allowance <= treasureAmount, "Not enough treasure in the chest");
-        require(amount == allowance, "You must withdraw your full allowance");
-        
+        require(amount == allowance, "You must withdraw your full allowance"); 
+    
         // Mark as withdrawn and reduce treasure
         hasWithdrawn[msg.sender] = true;
         treasureAmount -= amount;
