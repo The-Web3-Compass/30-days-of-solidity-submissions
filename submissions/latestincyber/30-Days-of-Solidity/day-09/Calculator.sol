@@ -40,10 +40,11 @@ contract Calculator {
     }
 
     // divide(a, b)
-    function divide(uint256 a, uint256 b) public pure returns (uin256) {
+    function divide(uint256 a, uint256 b) public pure returns (uint256) {
         require(b != 0, "Cannot divide by zero.");
-        uint256 results = a / b;
+        uint256 result = a / b;
         return result;
+    }
     }
 
     // connecting to another contract, power function
