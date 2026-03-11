@@ -13,6 +13,8 @@ contract ClickCounter {
     }
 
     function decrement() external {
-        number-=1;
+        if (number > 0) {
+            number-=1;
+        }
     }
 }
