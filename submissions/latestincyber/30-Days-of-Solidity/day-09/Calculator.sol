@@ -58,12 +58,13 @@ contract Calculator {
     function calculateSquareRoot(uint256 number) public returns (uint256) {
         require(number >= 0, "Cannot calculate square root of negative number.");
 
-        bytes memory data = abit.encodeWithSignature("squareRoot(int256)", number);
+        bytes memory data = abi.encodeWithSignature("squareRoot(uint256)", number);
         (bool success, bytes memory returnData) = scientificCalculatorAddress.call(data);
         require(success, "External call failed.");
 
         uint256 result = abi.decode(returnData, (uint256));
         return result;
+    }
     }
 
 }
