@@ -14,7 +14,7 @@ contract SimpleFitnessTracker {
     struct WorkoutActivity {
         string activityType;
         uint256 duration;  //in seconds
-        uint256 distence;  //in meters
+        uint256 distance;  //in meters
         uint256 timestamps;
     }
 
@@ -26,7 +26,7 @@ contract SimpleFitnessTracker {
     event UserRegistered(address indexed userAddress, string name, uint256 timeStamp);
     event ProfileUpdated(address indexed userAddress, uint256 newWeight, uint256 timeStamp);
     event WorkoutLogged(address indexed userAddress, string activityType, uint256 duration, uint256 distance, uint256 timeStamp);
-    event MiletoneAchieved(address indexed userAddress, string milestone, uint256 timeStamp);
+    event MilestoneAchieved(address indexed userAddress, string milestone, uint256 timeStamp);
 
     modifier onlyRegistered() {
         require(userProfiles[msg.sender].isRegistered, "User not registered");
@@ -49,7 +49,7 @@ contract SimpleFitnessTracker {
         UserProfile storage profile = userProfiles[msg.sender];
 
         if (_newWeight < profile.weight && (profile.weight - _newWeight) * 100 / profile.weight >= 5) {
-            emit MiletoneAchieved(msg.sender, "Weigth goal reached", block.timestamp);
+            emit MilestoneAchieved(msg.sender, "Weight goal reached", block.timestamp);
         }
 
         profile.weight = _newWeight;
@@ -76,14 +76,14 @@ contract SimpleFitnessTracker {
 
          //Check for workout count milesstones
          if (totalWorkouts[msg.sender] == 10) {
-             emit MiletoneAchieved(msg.sender, "10 workouts done", block.timeStamp);
+             emit MilestoneAchieved(msg.sender, "10 workouts done", block.timeStamp);
          } else if (totalWorkouts[msg.sender] == 50) {
-             emit MiletoneAchieved(msg.sender, "50 workouts done", block.timeStamp);
+             emit MilestoneAchieved(msg.sender, "50 workouts done", block.timeStamp);
          }
 
          //Check for distance milestones
          if (totalDistance[msg.sender] >= 100000 && totalDistance[msg.sender] - _distance < 100000) {
-             emit MiletoneAchieved(msg.sender, "100K Total Distance", block.timeStamp);
+             emit MilestoneAchieved(msg.sender, "100K Total Distance", block.timeStamp);
          }
     }
 }
