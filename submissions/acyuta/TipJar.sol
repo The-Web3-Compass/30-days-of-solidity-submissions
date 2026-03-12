@@ -49,7 +49,7 @@ contract TipJar {
         return _currencycode * 10e18;
     }
 
-    function getBalance() public pure returns (uint) ownerOnly {
-        return tips;
-    }
+    function getBalance() public view returns (uint) ownerOnly {
+            return address(this).balance;
+        }
 }
