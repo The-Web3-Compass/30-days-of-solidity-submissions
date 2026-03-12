@@ -33,14 +33,14 @@ contract TipJar {
         emit TipReceived(msg.sender, msg.value);
     }
 
-    function withDrawTips() public payable ownerOnly {
-        if(msg.value > tips) revert TipJar__NotEnoughTips();
-        (bool success, ) = msg.sender.call{amount: msg.value}("");
-        if (!success) revert TipJar__TransactionFailed();
-        tips -= msg.value;
+    function withDrawTips(uint _amount) public ownerOnly {
+            if (_amount > tips) revert TipJar__NotEnoughTips();
+            tips -= _amount;
+            (bool success, ) = msg.sender.call{value: _amount}("");
+            if (!success) revert TipJar__TransactionFailed();
 
-        emit AmountWithdrawn(msg.value);
-    }
+            emit AmountWithdrawn(_amount);
+        }
 
     function currencyConversionInterval(
         uint _currencycode
