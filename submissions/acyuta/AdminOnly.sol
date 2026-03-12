@@ -61,7 +61,6 @@ contract TreasureChest {
 
         emit TreasureWithdrawn(_amount);
     }
-    }
 
     function revokeAllowance(address _user) public ownerOnly{
         uint256 revokedAmount = allowAccess[_user].amount;
