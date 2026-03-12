@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 contract SendSomeTokens {
-    address public owner;
+    address public immutable owner;
     mapping(address => bool) public registeredFriends;
     address[] public friendList;
     mapping(address => uint256) public balances;
