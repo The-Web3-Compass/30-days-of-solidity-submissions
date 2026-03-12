@@ -22,9 +22,10 @@ contract VaultMaster is Ownable {
     }
 
     function withdraw(address _to, uint256 _amount) public onlyOwner {
-        require(_amount <= getBalance(), "insufficient balance");
-        (bool success, ) = payable(_to).call{value: _amount}("");
-        require(success, "Transfer failed");
-        emit WithdrawSuccessful(_to, _amount);
-    }
+            require(_to != address(0), "invalid recipient");
+            require(_amount <= getBalance(), "insufficient balance");
+            (bool success, ) = payable(_to).call{value: _amount}("");
+            require(success, "Transfer failed");
+            emit WithdrawSuccessful(_to, _amount);
+        }
 }
