@@ -74,7 +74,6 @@ contract SendSomeTokens {
         balances[msg.sender] -= _amount;
 
         (bool success, ) = _to.call{value: _amount}("");
-        balances[_to] += _amount;
         require(success, "Transfer failed");
     }
 
