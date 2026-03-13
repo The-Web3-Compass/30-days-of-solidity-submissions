@@ -35,10 +35,12 @@ contract MistyCoin {
     }
 
     function approve(address _spender, uint256 _value) public returns (bool) {
-        allowance[msg.sender][_spender] = _value;
-        emit Approval(msg.sender, _spender, _value);
-        return true;
-    }
+            uint256 currentAllowance = allowance[msg.sender][_spender];
+            require(_value == 0 || currentAllowance == 0, "Reset allowance to 0 first");
+            allowance[msg.sender][_spender] = _value;
+            emit Approval(msg.sender, _spender, _value);
+            return true;
+        }
 
     function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {
         require(balanceOf[_from] >= _value, "Not enough balance");
