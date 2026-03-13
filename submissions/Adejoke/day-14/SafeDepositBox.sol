@@ -142,7 +142,7 @@ contract MultiSigDepositBox is BaseDepositBox {
         }
     }
 
-    function storeSecret(string calldata) external override onlyMultiSigOwner {
+    function storeSecret(string calldata) external pure override onlyMultiSigOwner {
         revert();
     }
 
@@ -318,7 +318,7 @@ contract DAODepositBox is BaseDepositBox {
         daoSecret = p.proposedSecret;
     }
 
-    function storeSecret(string calldata) external override {
+    function storeSecret(string calldata) external pure override {
         revert();
     }
 
