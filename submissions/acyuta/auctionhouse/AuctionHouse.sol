@@ -22,6 +22,7 @@ contract AuctionHouse {
 
     constructor(string memory _item, uint256 _biddingTime) {
         i_owner = msg.sender;
+        if (bytes(_item).length == 0) revert AuctionHouse__NoItemAdded();
         item = _item;
         auctionEnds = block.timestamp + _biddingTime;
     }
