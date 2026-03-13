@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 
-contract ActivityTracker {
+contract ActivityTracker 
     struct UserProfile {
         string name;
         uint256 weight; // in kg
