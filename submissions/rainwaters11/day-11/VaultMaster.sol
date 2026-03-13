@@ -31,6 +31,7 @@ contract VaultMaster is Ownable, Pausable {
     }
 
     function withdraw(address _to, uint256 _amount) public onlyOwner whenNotPaused {
+        require(_to != address(0), "Invalid recipient");
         require(_amount <= getBalance(), "Insufficient balance");
 
         (bool success, ) = payable(_to).call{value: _amount}("");
