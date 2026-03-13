@@ -37,12 +37,12 @@ contract SendSomeTokens {
         balances[msg.sender] += msg.value;
     }
 
-    function recordDebt(address _debtor, uint256 _amount) public onlyRegistered {
-        require(_debtor != address(0), "Invalid address");
-        require(registeredFriends[_debtor], "Address not registered");
+    function recordDebt(address _creditor, uint256 _amount) public onlyRegistered {
+        require(_creditor != address(0), "Invalid address");
+        require(registeredFriends[_creditor], "Address not registered");
         require(_amount > 0, "Amount must be greater than 0");
 
-        debts[_debtor][msg.sender] += _amount;
+        debts[msg.sender][_creditor] += _amount;
     }
 
     function payFromWallet(address _creditor, uint256 _amount) public onlyRegistered {
