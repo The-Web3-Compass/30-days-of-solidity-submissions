@@ -103,7 +103,8 @@ contract PreorderTokens is SimpleERC20 {
         require(block.timestamp > saleEndTime);
         require(totalRaised >= SOFT_CAP);
         finalized = true;
-        payable(projectOwner).transfer(address(this).balance);
+        (bool success, ) = payable(projectOwner).call{value: address(this).balance}("");
+        require(success, "Transfer failed");
     }
 
     function refund() public {
@@ -113,7 +114,8 @@ contract PreorderTokens is SimpleERC20 {
         uint256 amount = contributions[msg.sender];
         require(amount > 0);
         contributions[msg.sender] = 0;
-        payable(msg.sender).transfer(amount);
+        (bool success, ) = payable(msg.sender).call{value: amount}("");
+        require(success, "Transfer failed");
     }
 
     receive() external payable { 
