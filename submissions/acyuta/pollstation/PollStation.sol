@@ -16,6 +16,7 @@ contract PollStation {
     uint256 private maxVotes;
 
     constructor(string[] memory _candidates) {
+        require(_candidates.length > 0, "At least one candidate required");
         candidates = _candidates;
     }
 
