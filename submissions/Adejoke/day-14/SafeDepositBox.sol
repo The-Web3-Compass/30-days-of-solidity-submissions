@@ -142,7 +142,7 @@ contract MultiSigDepositBox is BaseDepositBox {
         }
     }
 
-    function storeSecret(string calldata) external pure override onlyMultiSigOwner {
+    function storeSecret(string calldata) external view override onlyMultiSigOwner {
         revert();
     }
 
