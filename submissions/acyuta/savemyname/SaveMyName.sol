@@ -7,33 +7,34 @@ contract SaveMyName {
 
     event UserInfoAdded(string newName, string addBio);
 
-    string private name;
-    string private bio;
+    mapping(address => string) private names;
+    mapping(address => string) private bios;
 
     function setName(string calldata _name, string calldata _bio) public {
         if(bytes(_name).length == 0 || bytes(_bio).length == 0 ) {
             revert SaveMyName__NameOrBioEmpty();
         }
-        
-        name = _name;
-        bio = _bio;
+    
+        names[msg.sender] = _name;
+        bios[msg.sender] = _bio;
 
-        emit UserInfoAdded(name, bio);
+        emit UserInfoAdded(_name, _bio);
     }
 
     function greet() public view returns(string memory) {
-        return string(abi.encodePacked("Hello ", name));
+        return string(abi.encodePacked("Hello ", names[msg.sender]));
     }
 
     function getUserInfo() public view returns(string memory) {
-        return string(abi.encodePacked(name,": ", bio));
+        return string(abi.encodePacked(names[msg.sender],": ", bios[msg.sender]));
     }
 
     function getName() public view returns(string memory) {
-        return name;
+        return names[msg.sender];
     }
-    
+
     function getBio() public view returns(string memory) {
-        return bio;
+        return bios[msg.sender];
+    }
     }
 }
