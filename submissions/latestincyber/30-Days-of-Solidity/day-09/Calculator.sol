@@ -65,6 +65,5 @@ contract Calculator {
         uint256 result = abi.decode(returnData, (uint256));
         return result;
     }
-    }
 
 }
