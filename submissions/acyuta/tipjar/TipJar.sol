@@ -84,7 +84,7 @@ contract TipJar {
         return address(this).balance;
     }
 
-    function resetPatronsList() public {
+    function resetPatronsList() public ownerOnly {
         for (
             uint256 funderIndex = 0;
             funderIndex < funders.length;
