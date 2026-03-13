@@ -10,14 +10,35 @@ contract EtherPiggyBank {
     error EtherPiggyBank__Reentrancy();
 
     bool private locked;
+    address private immutable owner;
+    mapping(address => bool) private isRegistered;
     mapping(address => uint) private userBalance;
 
-    function depositEth() public payable {
+    constructor() {
+        owner = msg.sender;
+        isRegistered[msg.sender] = true;
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Not owner");
+        _;
+    }
+
+    modifier onlyRegistered() {
+        require(isRegistered[msg.sender], "Not registered");
+        _;
+    }
+
+    function setRegistered(address user, bool status) external onlyOwner {
+        isRegistered[user] = status;
+    }
+
+    function depositEth() public payable onlyRegistered {
         userBalance[msg.sender] += msg.value;
         emit EthDeposited(msg.value, msg.sender);
     }
 
-    function withdrawEth(uint _amount) public nonReentrancy {
+    function withdrawEth(uint _amount) public onlyRegistered nonReentrancy {
         uint balance = userBalance[msg.sender];
         if (_amount > balance) revert EtherPiggyBank__NotEnoughEth(balance);
 
