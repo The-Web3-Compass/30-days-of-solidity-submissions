@@ -73,7 +73,7 @@ contract AuctionHouse {
 
     function showWinner() public view auctionEnded returns (address, uint256) {
         if(highestBidder == address(0)) revert AuctionHouse__NoItemAdded();
-        return (highestBidder, maxBidAmount);
+        return (highestBidder, bidAmounts[highestBidder]);
     }
 
     function getBiddingAmountOfAUser(
