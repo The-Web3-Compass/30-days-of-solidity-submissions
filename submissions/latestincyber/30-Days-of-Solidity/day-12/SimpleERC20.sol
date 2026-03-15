@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-contract SimpleERC20{
+import "../day-11/Ownable.sol";
+
+contract SimpleERC20 is Ownable {
     string public name = "SimpleToken";
     string public symbol = "SIM";
     utint8 public decimals = 18;
