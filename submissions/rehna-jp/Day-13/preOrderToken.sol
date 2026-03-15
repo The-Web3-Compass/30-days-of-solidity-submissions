@@ -81,7 +81,8 @@ contract SimplifiedTokenSale is SimpleERC20 {
     function finalizeSale() public {
         require(msg.sender == projectOwner && block.timestamp > saleEndTime, "Cannot finalize");
         finalized = true; // Unlocks transfers!
-        payable(projectOwner).transfer(address(this).balance);
+        (bool success, ) = payable(projectOwner).call{value: address(this).balance}("");
+        require(success, "ETH transfer failed");
     }
 
     // Allow receiving ETH directly
