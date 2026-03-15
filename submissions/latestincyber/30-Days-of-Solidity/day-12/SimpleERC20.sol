@@ -48,9 +48,10 @@ contract SimpleERC20 is Ownable {
     }
 
     function mint(address _to, uint256 amount) public onlyOwner {
-        totalSupply += amount;
-        balanceOf[to] += amount;
-        emit Transfer(address(0), to, amount);
+        uint256 scaledAmount = amount * (10 ** uint256(decimals));
+        totalSupply += scaledAmount;
+        balanceOf[_to] += scaledAmount;
+        emit Transfer(address(0), _to, scaledAmount);
     }
 
     function burn(uint256 amount) public {
