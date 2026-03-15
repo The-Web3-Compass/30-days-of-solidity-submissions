@@ -30,7 +30,7 @@ contract SimpleERC20 {
         _;
     }
 
-    function transfer(address _to, uint256 _value) public returns (bool) {
+    function transfer(address _to, uint256 _value) public virtual returns (bool) {
         require(balanceOf[msg.sender] >= _value, "Not enough balance");
         _transfer(msg.sender, _to, _value);
         return true;
