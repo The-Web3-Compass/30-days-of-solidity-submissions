@@ -1,0 +1,56 @@
+{
+	"compiler": {
+		"version": "0.8.31+commit.fd3a2265"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"name": "increment",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"custom:dev-run-script": "./scripts/deploy_with_ethers.ts",
+			"details": "Store & retrieve value in a variable",
+			"kind": "dev",
+			"methods": {},
+			"title": "Storage",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"submissions/Shambhavigantla/clickCounter.sol": "clickCounter"
+		},
+		"evmVersion": "osaka",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"submissions/Shambhavigantla/clickCounter.sol": {
+			"keccak256": "0x41fee30475eb6a2aa2f96746e91392ab8027edcc0cd10785d76fc98e505d512e",
+			"license": "GPL-3.0",
+			"urls": [
+				"bzz-raw://31e2894f4942019accfebf3e73365a217aefec2dc7a1755d6233bcbef8fc3fbf",
+				"dweb:/ipfs/QmYCWLYz9nkMHTy25hpSU5fNmiedFNGUuuMEsQcsVn5R5H"
+			]
+		}
+	},
+	"version": 1
+}
