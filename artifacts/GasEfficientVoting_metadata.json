@@ -34,7 +34,7 @@
 						"type": "uint8"
 					}
 				],
-				"name": "ProposalExcuted",
+				"name": "ProposalExecuted",
 				"type": "event"
 			},
 			{
@@ -60,7 +60,7 @@
 				"inputs": [
 					{
 						"internalType": "bytes32",
-						"name": "_name",
+						"name": "name",
 						"type": "bytes32"
 					},
 					{
@@ -82,7 +82,7 @@
 						"type": "uint8"
 					}
 				],
-				"name": "excuteProposal",
+				"name": "executeProposal",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -119,7 +119,7 @@
 					},
 					{
 						"internalType": "bool",
-						"name": "excuted",
+						"name": "executed",
 						"type": "bool"
 					},
 					{
@@ -219,7 +219,7 @@
 					},
 					{
 						"internalType": "bool",
-						"name": "excuted",
+						"name": "executed",
 						"type": "bool"
 					}
 				],
@@ -253,7 +253,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"submissions/Zora/Day15GasEfficientVoting.sol": "GasEfficientVoting"
+			"submissions/Oluwatomilola/day15/GasEfficientVoting.sol": "GasEfficientVoting"
 		},
 		"evmVersion": "prague",
 		"libraries": {},
@@ -267,12 +267,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"submissions/Zora/Day15GasEfficientVoting.sol": {
-			"keccak256": "0x11e09ef945771456937982e35a74532341fd1d7dc8fa844e9689fb440912ac0a",
+		"submissions/Oluwatomilola/day15/GasEfficientVoting.sol": {
+			"keccak256": "0x6fb8b312f5a235fdef8f8e0a698ee53c3da6f99ee495225826170010a73c1f5a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://0368c3aed46e6c78b39155a33655d9ec6082df579d3427f710dfc8a795a06be4",
-				"dweb:/ipfs/QmSAaU6UdpWiQw7syRU8h1jYZAkdw62oUYKS6ijr9rY41j"
+				"bzz-raw://f0eae59fbc5d67e563749a2d81b2ae37c7c3b0240529206298dfaea8e73f14cf",
+				"dweb:/ipfs/QmPpAUZRGkHwvZfN7B5ykM8G9Jkudg6DQrFRgeiBK564qE"
 			]
 		}
 	},

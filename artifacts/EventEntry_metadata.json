@@ -306,7 +306,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"submissions/Zora/EventEntry.sol": "EventEntry"
+			"submissions/Oluwatomilola/day19/EventEntry.sol": "EventEntry"
 		},
 		"evmVersion": "prague",
 		"libraries": {},
@@ -320,12 +320,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"submissions/Zora/EventEntry.sol": {
-			"keccak256": "0x56c1ab789a1c25ca86f0692f5b775da991bbaeacbb76dfd371911224aeac0a29",
+		"submissions/Oluwatomilola/day19/EventEntry.sol": {
+			"keccak256": "0x7024e33100f0bbb8b670a57751aa0a0e251e3a9098066bfc100d84715fcfc7e5",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://c61e5edb93f7c59db95c6a63008e8814f068ceeadd9298f9a471541b0dd30248",
-				"dweb:/ipfs/QmWf33bovfMU2koHHvmadNwXBABoL2oKEXfdwQvZXfYUy1"
+				"bzz-raw://f0efda8104a50688457cac7b4ef489238022ee645d3befe8a2e8fb3e1ed55f91",
+				"dweb:/ipfs/QmYYgkTn55ULPkitUnShsgsxiMsX6Qi11TkLHdWgePR5af"
 			]
 		}
 	},
