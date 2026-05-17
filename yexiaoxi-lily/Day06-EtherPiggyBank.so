@@ -1,0 +1,59 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract etherPiggyBank{
+    address public bankManager;
+    address[] members;
+    mapping (address => bool) public registeredMembers;
+    mapping (address => uint256) public balance;
+
+    constructor(){
+        bankManager =msg.sender;
+        members.push(msg.sender);
+    }
+
+    modifier onlyBankManager(){
+        require(msg.sender == bankManager,"only bank manager can perform this action");
+        _;
+    }
+
+    modifier onlyRegisteredMember(){
+        require(registeredMembers[msg.sender],"member not registered");
+        _;
+    }
+
+    function addMember(address _member)public onlyBankManager{
+        require(_member !=address(0),"invalid address");
+        require(_member !=msg.sender,"bank manager is already a member");//等于管理者地址，不执行
+        require(!registeredMembers[_member],"member already registered"); //不被批准
+        registeredMembers[_member] =true;
+        members.push(_member);
+    }
+
+    function getMembers() public view returns(address[] memory){
+        return members;
+    }
+    //存款（数字）
+    function desposit(uint256 _amount) public onlyRegisteredMember{
+        require( _amount >=0,"invalid amount");
+        balance[msg.sender] +=_amount;
+    } 
+    //取款
+    function withdraw(uint256 _amount) public onlyRegisteredMember{
+        require(_amount >0,"invalid amount");
+        require(balance[msg.sender] >=_amount,"insufficient balance");
+        balance[msg.sender] -=_amount;
+    }
+    //存款（以太币）
+
+    function despositAmountEther() public payable onlyRegisteredMember{
+        require(msg.value > 0,"invalid amount");
+        balance[msg.sender] = balance[msg.sender] +msg.value;
+    }
+    //查询金额
+    function getBalance(address _member) public view returns(uint256){
+        require(_member != address(0),"invalid address");
+        return balance[_member];
+    }
+
+}
