@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.31+commit.fd3a2265"
+		"version": "0.8.34+commit.80d5c536"
 	},
 	"language": "Solidity",
 	"output": {
@@ -154,7 +154,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"submissions/MeseretBirhanu/day3/PollStation.sol": "PollStation"
+			"submissions/MeseretBirhanu/day03/PollStation.sol": "PollStation"
 		},
 		"evmVersion": "osaka",
 		"libraries": {},
@@ -168,12 +168,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"submissions/MeseretBirhanu/day3/PollStation.sol": {
-			"keccak256": "0x3fb52c674ed617f34784413a82f6c50d0b1284ed51d4b097af8af2de7da69772",
+		"submissions/MeseretBirhanu/day03/PollStation.sol": {
+			"keccak256": "0x0caf60dad496237064c51e67ba02911150aa63a521a16cd818452cca8528c7ee",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://3da337ea9cdf6f654d9e9af99971b2ec3bcc5757df7a3af100ebd4e46aec20da",
-				"dweb:/ipfs/QmT8D2SQsVTWtgQU8wXjv1M9BbzXcf28zHiE3R8JQW2xbh"
+				"bzz-raw://4b517cbb38f1b768a1b526c25b626145fc44f4496bd67ebb3fe34ac354cec17b",
+				"dweb:/ipfs/QmPmrWyReoLUf9ziUkZu5UZhRNitdywHJuRNqrvnuC59Ek"
 			]
 		}
 	},

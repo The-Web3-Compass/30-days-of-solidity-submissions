@@ -1,0 +1,45 @@
+{
+	"compiler": {
+		"version": "0.8.34+commit.80d5c536"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"submissions/MeseretBirhanu/day16/Implementationv1.sol": "Implementationv1"
+		},
+		"evmVersion": "osaka",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"submissions/MeseretBirhanu/day16/Implementationv1.sol": {
+			"keccak256": "0x86a9b5c55e8041253f9a0935969a637baac7cab3b08d0ba36d742a10e5fe7e51",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://7480a4908bb4140d03b17de8f230800e9537ed7eae526cd9f1f457fc97391c22",
+				"dweb:/ipfs/QmUMAXzJ3sWLwwQuvKnfLJQedM2AgdX7Snf7HmBArQbPxK"
+			]
+		}
+	},
+	"version": 1
+}

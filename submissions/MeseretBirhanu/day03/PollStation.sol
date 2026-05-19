@@ -21,7 +21,7 @@ contract PollStation{
    currentCandidates[totalCandidtes] = Candidate(_name, totalCandidtes,0);
    }
 
-   //vote by ID
+ 
    function vote(uint32 _id)public{
     require(!hasVoted[msg.sender],"You already voted");
     require(_id>0 && _id<=totalCandidtes,"invalid candidate id");
