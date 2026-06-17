@@ -1,0 +1,45 @@
+{
+	"compiler": {
+		"version": "0.8.34+commit.80d5c536"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"submissions/MeseretBirhanu/day16/PluginStore.sol": "PluginStore"
+		},
+		"evmVersion": "osaka",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"submissions/MeseretBirhanu/day16/PluginStore.sol": {
+			"keccak256": "0x3de80f5bcd09147887ca74c12d61f8436a6bbfafb78d3aab2ebc0836be02bbf9",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://0a794ba4abd2886fd39e8cb7060114ae21748f8494f57b8ea638f0b294f33f55",
+				"dweb:/ipfs/QmVtCa3bXXds1ZnousajCa3ee4xZyGak3An41tma95oFC8"
+			]
+		}
+	},
+	"version": 1
+}

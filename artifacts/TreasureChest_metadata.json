@@ -13,14 +13,9 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint64",
+						"internalType": "uint256",
 						"name": "_amount",
-						"type": "uint64"
-					},
-					{
-						"internalType": "uint64",
-						"name": "_allow",
-						"type": "uint64"
+						"type": "uint256"
 					}
 				],
 				"name": "addTreasure",
@@ -29,13 +24,19 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
 				"name": "allowance",
 				"outputs": [
 					{
-						"internalType": "uint64",
+						"internalType": "uint256",
 						"name": "",
-						"type": "uint64"
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -45,11 +46,16 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "_addr",
+						"name": "_friend",
 						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
 					}
 				],
-				"name": "approveUser",
+				"name": "approveFriend",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -63,25 +69,6 @@
 					}
 				],
 				"name": "hasWithdrawn",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"name": "isAllowed",
 				"outputs": [
 					{
 						"internalType": "bool",
@@ -109,11 +96,11 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "_addr",
+						"name": "_user",
 						"type": "address"
 					}
 				],
-				"name": "resetWithdrawal",
+				"name": "resetUser",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -123,9 +110,9 @@
 				"name": "totalTreasure",
 				"outputs": [
 					{
-						"internalType": "uint64",
+						"internalType": "uint256",
 						"name": "",
-						"type": "uint64"
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -135,7 +122,7 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "_addr",
+						"name": "_newOwner",
 						"type": "address"
 					}
 				],
@@ -165,7 +152,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"submissions/MeseretBirhanu/day5/AdminOnly.sol": "AdminOnly"
+			"submissions/MeseretBirhanu/day5/AdminOnly.sol": "TreasureChest"
 		},
 		"evmVersion": "osaka",
 		"libraries": {},
@@ -180,11 +167,11 @@
 	},
 	"sources": {
 		"submissions/MeseretBirhanu/day5/AdminOnly.sol": {
-			"keccak256": "0x97bbe6befc711c2b418dea50faf7f3002c946f20bfbe4ada85c64d056db55a06",
+			"keccak256": "0x0731e6163f9d4fb95cf4d96446b3f53df3bf74bc6908f4a20859c5c524fea612",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://9da904cff6e7bcfaac2ae0e3b1398fe95d96bce2e181a64fbfb6140712a0042f",
-				"dweb:/ipfs/QmUSqck81z4S838fR67VfZkJeemwbuGjoK9Dc324gDjVan"
+				"bzz-raw://7c86a490273608f0d077e8e274fdfa09a04466499cd36cdf9d2111d24484fa32",
+				"dweb:/ipfs/QmeMmDAuuLJetqZxr4Qq8z7aPCbYrGHz4v1kTqtWRhyaSw"
 			]
 		}
 	},

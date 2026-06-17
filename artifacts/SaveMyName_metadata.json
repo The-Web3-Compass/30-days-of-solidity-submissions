@@ -1,31 +1,13 @@
 {
 	"compiler": {
-		"version": "0.8.30+commit.73712a01"
+		"version": "0.8.31+commit.fd3a2265"
 	},
 	"language": "Solidity",
 	"output": {
 		"abi": [
 			{
-				"inputs": [
-					{
-						"internalType": "string",
-						"name": "_name",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "_bio",
-						"type": "string"
-					}
-				],
-				"name": "add",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
 				"inputs": [],
-				"name": "retrieve",
+				"name": "get_profile",
 				"outputs": [
 					{
 						"internalType": "string",
@@ -36,9 +18,57 @@
 						"internalType": "string",
 						"name": "",
 						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					},
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
 					}
 				],
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_yourname",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_youremail",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_yourhomeaddress",
+						"type": "string"
+					},
+					{
+						"internalType": "bool",
+						"name": "_areyoustudent",
+						"type": "bool"
+					},
+					{
+						"internalType": "string",
+						"name": "_yourbio",
+						"type": "string"
+					}
+				],
+				"name": "set_profile",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			}
 		],
@@ -55,9 +85,9 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"submissions/Zora/Day2Savemyname.sol": "SaveMyName"
+			"submissions/MeseretBirhanu/day2/SaveMyName.sol": "SaveMyName"
 		},
-		"evmVersion": "prague",
+		"evmVersion": "osaka",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -69,12 +99,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"submissions/Zora/Day2Savemyname.sol": {
-			"keccak256": "0x16669b7f2040b419a0744f4b866d1133a7e2f4f5ad0cf4238bcfaca395532460",
+		"submissions/MeseretBirhanu/day2/SaveMyName.sol": {
+			"keccak256": "0x2af7947c0e1a24087fd8e0b5276483b97f2f084677c26a825c20ef49194254a2",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://8b26524823fec92e6ee29f2f088bb1bbccd2e069ec011236dd62559d6320815c",
-				"dweb:/ipfs/Qmb2W9iwBoAVrEL1QYMVFsQH5jHcKFfn1qxo9yuKPR1nmV"
+				"bzz-raw://294641678539399f7b5543b0b6f00bdb7b0f3b992a37f79d747827a3ba202615",
+				"dweb:/ipfs/QmUTiqkncXxSWCnX4wK1u8JaLyNa1Vbeq3cAuLrst3nB7p"
 			]
 		}
 	},

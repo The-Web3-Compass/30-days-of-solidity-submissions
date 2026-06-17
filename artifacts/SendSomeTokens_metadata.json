@@ -6,25 +6,19 @@
 	"output": {
 		"abi": [
 			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "_auctionDuration",
-						"type": "uint256"
-					}
-				],
+				"inputs": [],
 				"stateMutability": "nonpayable",
 				"type": "constructor"
 			},
 			{
 				"inputs": [
 					{
-						"internalType": "uint64",
-						"name": "_amount",
-						"type": "uint64"
+						"internalType": "address",
+						"name": "_addr",
+						"type": "address"
 					}
 				],
-				"name": "bid",
+				"name": "banAddress",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -32,17 +26,43 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint64",
+						"internalType": "address",
 						"name": "",
-						"type": "uint64"
+						"type": "address"
 					}
 				],
-				"name": "bids",
+				"name": "bannedAddresses",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
 				"outputs": [
 					{
 						"internalType": "address",
 						"name": "",
 						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "platformfee",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -51,59 +71,14 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"name": "bidsamount",
-				"outputs": [
-					{
-						"internalType": "uint64",
-						"name": "",
-						"type": "uint64"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "endtime",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "winner",
-				"outputs": [
-					{
 						"internalType": "address",
-						"name": "winnerAddress",
+						"name": "_to",
 						"type": "address"
 					}
 				],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "winnerbid",
-				"outputs": [
-					{
-						"internalType": "uint64",
-						"name": "",
-						"type": "uint64"
-					}
-				],
-				"stateMutability": "view",
+				"name": "transfer",
+				"outputs": [],
+				"stateMutability": "payable",
 				"type": "function"
 			}
 		],
@@ -120,7 +95,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"submissions/MeseretBirhanu/day4/AuctionHouse.sol": "AuctionHouse"
+			"submissions/MeseretBirhanu/day7/SendSomeTokens.sol": "SendSomeTokens"
 		},
 		"evmVersion": "osaka",
 		"libraries": {},
@@ -134,12 +109,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"submissions/MeseretBirhanu/day4/AuctionHouse.sol": {
-			"keccak256": "0x0de4f95019d1b940e41d0188237f375f7a1c205e78acb27b320c225fcfaab44c",
+		"submissions/MeseretBirhanu/day7/SendSomeTokens.sol": {
+			"keccak256": "0x4a4fe528e70db4194880875e37ad8d45ba08672b554bfa473277590e2d7928a1",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://d725a06e0256650b60e325c898e9cae7acf535c2fae0c4055fc2119a56a0b7da",
-				"dweb:/ipfs/QmUHD66z3Wj1Mg6VtTKHAWxVBGJkKjgbuA5McQ64QmsZzF"
+				"bzz-raw://2c51ba746e56dbdd4c35472cf4da10f359862cfba63b3d78c55c1e3901d40a00",
+				"dweb:/ipfs/QmQgxDTJRqinGoXbGy1sU9oHVsLt3RW7zvbe3VG9HXmYRn"
 			]
 		}
 	},

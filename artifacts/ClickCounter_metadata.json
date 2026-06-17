@@ -12,12 +12,33 @@
 			},
 			{
 				"inputs": [],
-				"name": "higherTipper",
+				"name": "clickdecrease",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "clickincrease",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "double",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "num",
 				"outputs": [
 					{
-						"internalType": "address",
+						"internalType": "uint256",
 						"name": "",
-						"type": "address"
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -38,46 +59,27 @@
 			},
 			{
 				"inputs": [],
-				"name": "tip",
+				"name": "reset",
 				"outputs": [],
-				"stateMutability": "payable",
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
 				"inputs": [
 					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"name": "tippers",
-				"outputs": [
-					{
 						"internalType": "uint256",
-						"name": "",
+						"name": "number",
 						"type": "uint256"
 					}
 				],
-				"stateMutability": "view",
+				"name": "setnumber",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
 				"inputs": [],
-				"name": "totalEarned",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "withdrawTip",
+				"name": "square",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -96,7 +98,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"submissions/MeseretBirhanu/day8/TipJar.sol": "TipJar"
+			"submissions/MeseretBirhanu/day1/ClickCounter.sol": "ClickCounter"
 		},
 		"evmVersion": "osaka",
 		"libraries": {},
@@ -110,12 +112,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"submissions/MeseretBirhanu/day8/TipJar.sol": {
-			"keccak256": "0x689b02528a822f29625b8e1b411dc5b2dcfff1e99610e43261e9b4ce39171e97",
+		"submissions/MeseretBirhanu/day1/ClickCounter.sol": {
+			"keccak256": "0x44786bab643824b355399b8c642b8071645ed94f12b33af149fc411a06ecc198",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://8e4572491f23cda4f9ae50f323cc2ea2bd91b9c7b96a9f8d2c749b59d30eba0c",
-				"dweb:/ipfs/QmZ6AQHW6YNRx2K4GsVMAEdRd4Laf6yxCHWE3dEgoPkJXB"
+				"bzz-raw://2eccf04d9b5a98013e07b3155cde0736a97727b1f95d4a52c515a4403fefe30e",
+				"dweb:/ipfs/QmcC29Q3NVcRkL5GrVxwHmHEDwzDTwaJ1ZP7iD5pzLBu2i"
 			]
 		}
 	},

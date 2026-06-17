@@ -6,41 +6,39 @@
 	"output": {
 		"abi": [
 			{
-				"anonymous": false,
 				"inputs": [
 					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "_addr",
-						"type": "address"
-					},
-					{
-						"indexed": false,
 						"internalType": "uint256",
-						"name": "amount",
+						"name": "_initialSupply",
 						"type": "uint256"
 					}
 				],
-				"name": "deposited",
-				"type": "event"
+				"stateMutability": "nonpayable",
+				"type": "constructor"
 			},
 			{
 				"anonymous": false,
 				"inputs": [
 					{
-						"indexed": false,
+						"indexed": true,
 						"internalType": "address",
-						"name": "_addr",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "to",
 						"type": "address"
 					},
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "amount",
+						"name": "value",
 						"type": "uint256"
 					}
 				],
-				"name": "withdrawn",
+				"name": "Transfer",
 				"type": "event"
 			},
 			{
@@ -51,7 +49,33 @@
 						"type": "address"
 					}
 				],
-				"name": "accounts",
+				"name": "balanceOf",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "decimals",
+				"outputs": [
+					{
+						"internalType": "uint8",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "maxSupply",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -65,64 +89,63 @@
 			{
 				"inputs": [
 					{
-						"internalType": "string",
-						"name": "_name",
-						"type": "string"
-					},
-					{
 						"internalType": "uint256",
-						"name": "_goal",
+						"name": "_amount",
 						"type": "uint256"
 					}
 				],
-				"name": "createSavingAcc",
+				"name": "mint",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
 				"inputs": [],
-				"name": "deposit",
-				"outputs": [],
-				"stateMutability": "payable",
+				"name": "name",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
 				"inputs": [],
-				"name": "depositToSavings",
-				"outputs": [],
-				"stateMutability": "payable",
-				"type": "function"
-			},
-			{
-				"inputs": [
+				"name": "owner",
+				"outputs": [
 					{
 						"internalType": "address",
 						"name": "",
 						"type": "address"
 					}
 				],
-				"name": "savings",
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "symbol",
 				"outputs": [
 					{
 						"internalType": "string",
-						"name": "username",
+						"name": "",
 						"type": "string"
-					},
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalSupply",
+				"outputs": [
 					{
 						"internalType": "uint256",
-						"name": "goal",
+						"name": "",
 						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "currentAmount",
-						"type": "uint256"
-					},
-					{
-						"internalType": "bool",
-						"name": "goalReached",
-						"type": "bool"
 					}
 				],
 				"stateMutability": "view",
@@ -131,27 +154,25 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "_amount",
-						"type": "uint256"
-					}
-				],
-				"name": "withdraw",
-				"outputs": [],
-				"stateMutability": "payable",
-				"type": "function"
-			},
-			{
-				"inputs": [
+						"internalType": "address",
+						"name": "_to",
+						"type": "address"
+					},
 					{
 						"internalType": "uint256",
 						"name": "_amount",
 						"type": "uint256"
 					}
 				],
-				"name": "withdrawFromSavings",
-				"outputs": [],
-				"stateMutability": "payable",
+				"name": "transfer",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			}
 		],
@@ -168,7 +189,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"submissions/MeseretBirhanu/day6/EtherPiggyBank.sol": "EtherPiggyBank"
+			"submissions/MeseretBirhanu/day12/AthenaToken.sol": "AthenaToken"
 		},
 		"evmVersion": "osaka",
 		"libraries": {},
@@ -182,12 +203,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"submissions/MeseretBirhanu/day6/EtherPiggyBank.sol": {
-			"keccak256": "0xb08ae86d3c3c0872008d0f5a5ad27746ccfa67b0620a793b8b255b5e10f45273",
+		"submissions/MeseretBirhanu/day12/AthenaToken.sol": {
+			"keccak256": "0x36311a073e6b5f8cef7b4e3c398b2b20109c8adef9509f0d9f9677c17000dd62",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://6defd514d8bb06e599a15a183038f942f932b4afdf339a13cf4136c99330bda6",
-				"dweb:/ipfs/QmRrEzEoRYhod4eqwP4hZiSjAmuRs6gjWbNgN58V5XVvEv"
+				"bzz-raw://473bf42108f1a74659342c2aef808817f89c5fd707f82b25e174d9d5df8c2d3e",
+				"dweb:/ipfs/QmSPeRR9PpvJcUgJdK5xE8tfqPC3NEACx65RNmGFT1E4N6"
 			]
 		}
 	},

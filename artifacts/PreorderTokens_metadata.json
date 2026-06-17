@@ -1,0 +1,143 @@
+{
+	"compiler": {
+		"version": "0.8.34+commit.80d5c536"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_addrsContract",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "buyer",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amountOfETH",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amountOfTokens",
+						"type": "uint256"
+					}
+				],
+				"name": "BuyTokens",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "buy",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "tokenContract",
+				"outputs": [
+					{
+						"internalType": "contract AthenaToken",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "tokenPerEth",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "withdraw",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"submissions/MeseretBirhanu/day13/PreorderTokens.sol": "PreorderTokens"
+		},
+		"evmVersion": "osaka",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"submissions/MeseretBirhanu/day12/AthenaToken.sol": {
+			"keccak256": "0x36311a073e6b5f8cef7b4e3c398b2b20109c8adef9509f0d9f9677c17000dd62",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://473bf42108f1a74659342c2aef808817f89c5fd707f82b25e174d9d5df8c2d3e",
+				"dweb:/ipfs/QmSPeRR9PpvJcUgJdK5xE8tfqPC3NEACx65RNmGFT1E4N6"
+			]
+		},
+		"submissions/MeseretBirhanu/day13/PreorderTokens.sol": {
+			"keccak256": "0x50c49484213564d1e6f527fbd3e8f53340458e915476d56dbdc054a30f0c9f0a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://5fb09a23bcced5ad78f9d6bf549eb589f90d9dd30bb9b421a7e51ba6d74102fb",
+				"dweb:/ipfs/QmW8EKKsK8uzqHFkvgBFHFWQcNKwD5hxE16ntf775V3w7P"
+			]
+		}
+	},
+	"version": 1
+}

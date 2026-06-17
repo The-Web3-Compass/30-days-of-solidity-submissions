@@ -1,18 +1,60 @@
 {
 	"compiler": {
-		"version": "0.8.31+commit.fd3a2265"
+		"version": "0.8.34+commit.80d5c536"
 	},
 	"language": "Solidity",
 	"output": {
 		"abi": [
 			{
-				"inputs": [],
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_logic",
+						"type": "address"
+					}
+				],
 				"stateMutability": "nonpayable",
 				"type": "constructor"
 			},
 			{
+				"stateMutability": "payable",
+				"type": "fallback"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "deposits",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [],
-				"name": "higherTipper",
+				"name": "fee",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "implementation",
 				"outputs": [
 					{
 						"internalType": "address",
@@ -37,47 +79,14 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "tip",
-				"outputs": [],
-				"stateMutability": "payable",
-				"type": "function"
-			},
-			{
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "",
+						"name": "_newLogic",
 						"type": "address"
 					}
 				],
-				"name": "tippers",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "totalEarned",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "withdrawTip",
+				"name": "upgrade",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -96,7 +105,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"submissions/MeseretBirhanu/day8/TipJar.sol": "TipJar"
+			"submissions/MeseretBirhanu/day16/vaultProxy.sol": "vaultProxy"
 		},
 		"evmVersion": "osaka",
 		"libraries": {},
@@ -110,12 +119,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"submissions/MeseretBirhanu/day8/TipJar.sol": {
-			"keccak256": "0x689b02528a822f29625b8e1b411dc5b2dcfff1e99610e43261e9b4ce39171e97",
+		"submissions/MeseretBirhanu/day16/vaultProxy.sol": {
+			"keccak256": "0xbdbf6fc675109f9a3d04abe50ce0a72a6a17efe4335fa1479fb8fe94436423ee",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://8e4572491f23cda4f9ae50f323cc2ea2bd91b9c7b96a9f8d2c749b59d30eba0c",
-				"dweb:/ipfs/QmZ6AQHW6YNRx2K4GsVMAEdRd4Laf6yxCHWE3dEgoPkJXB"
+				"bzz-raw://6b6f41ecc770f2ba716152b1e8e9eb6ae1b270f0851fa67e8d99b8b4512928f2",
+				"dweb:/ipfs/Qmd2sy49mZxkDU565rzxFcgYDAvSXfmxMdsjBEZxjL4ieP"
 			]
 		}
 	},
