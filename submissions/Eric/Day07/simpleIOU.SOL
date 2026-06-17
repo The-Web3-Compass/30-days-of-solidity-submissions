@@ -1,0 +1,135 @@
+// SPDX-License-Identifier:MIT
+pragma solidity ^0.8.20;
+
+/**
+ * @title Simple IOU
+ * @author Eric (https://github.com/0xxEric)
+ * @notice A simple IOU that record who debts and repay
+ * @custom:project 30-days-of-solidity-submissions: Day07
+ */
+
+contract SimpleIOU {
+    address public admin;
+    mapping(address => uint256) balance;
+    mapping(address => mapping(address => uint256)) private debtRecord; //creditor->debtor->amount
+    uint32 private debtNoteID;
+    mapping(uint32=>DebtNoteInfo) private debtNotes;
+
+    event SetDebtNote(address debtor,address creditor,uint256 amount);
+    event ConfirmDebt(address debtor,address creditor,uint256 amount);
+    event Repay(address debtor,address  creditor,uint256 amount);
+    event Withdraw(address receipt, uint256 amount);
+    event Liquidate(address debtor,address creditor);
+
+    struct DebtNoteInfo
+    {
+        address debtor;
+        address creditor;
+        uint256 amount;
+        uint32 id;
+        bool isConfirmed;
+    }
+
+    constructor() {
+        admin = msg.sender;
+    }
+    modifier Onlyadmin() {
+        require(msg.sender == admin, "Only admin can transfer the authority ");
+        _;
+    }
+
+    function setDebtNote(address debtor,uint256 amount) external{
+        require(debtor != address(0), "zero address");
+        require(debtor != msg.sender, "wrong address");        
+        require(amount > 0, "amount should >0");
+        debtNoteID++;
+        DebtNoteInfo memory note=DebtNoteInfo(debtor,msg.sender,amount,debtNoteID,false);
+        debtNotes[debtNoteID]=note;
+        emit SetDebtNote(debtor,msg.sender,amount);
+    }
+
+    // Debtor confirm the debt,(like signature)
+    function confirmDebt(uint32 id) external{
+        DebtNoteInfo storage d= debtNotes[id];
+        require(d.debtor == msg.sender, "wrong id");
+        require(!d.isConfirmed, "debtnote has confirmed!");
+        d.isConfirmed=true;
+        debtRecord[d.creditor][d.debtor]+=d.amount;
+        emit ConfirmDebt(d.debtor,d.creditor,d.amount);
+    }
+
+    //The debtor repay debt. If he repay more than debt,than deposit for him.
+    function repay(address creditor) payable external{
+        uint256 amount=msg.value;
+        uint256 a=debtRecord[creditor][msg.sender];
+        require(a>0,"no need repay");
+        require(amount > 0, "amount should >0");
+        if(amount<=a) //repay is less than the debt amount;
+        {
+        balance[creditor]+=amount;
+        debtRecord[creditor][msg.sender]-=amount;
+        emit Repay(msg.sender,creditor,amount);
+        }
+        else // if creditor repay more than his debt,than deposit the excess for him.
+        {
+        balance[msg.sender]=amount-a;
+        debtRecord[creditor][msg.sender]=0;
+        emit Repay(msg.sender,creditor,a);
+        }
+    }
+
+    // All the user can withdraw his balance form account.
+    function withdraw(uint256 amount) external {
+        require(balance[msg.sender]>0,"have no balance");
+        require(amount > 0, "amount should >0");
+        balance[msg.sender] -= amount;
+        (bool success, ) = msg.sender.call{value: amount}("");
+        require(success, "Withdrawal failed");
+        emit Withdraw(msg.sender, amount);
+    }
+    
+    // Liquidate the debt with debtor for creditor, search for all the record.
+    function  liquidate (address debtor) external {
+        uint256 a=debtRecord[msg.sender][debtor];
+        require(a>0,"have no debt");
+        uint256 b=debtRecord[debtor][msg.sender];
+        uint256 balanceOfDebtor=balance[debtor];
+        if(a>b)
+        {
+            uint256 settledDebt=a-b;
+            if(settledDebt>balanceOfDebtor) // the balance of debtor is insufficient for settle.
+            {
+                debtRecord[msg.sender][debtor]=settledDebt-balanceOfDebtor;
+                
+            }
+            else // the balance of debtor is sufficient for settle.
+            {
+                balance[debtor]=balanceOfDebtor-settledDebt;
+                debtRecord[msg.sender][debtor]=0;
+            }
+            debtRecord[debtor][msg.sender]=0;
+        }
+        else
+        {
+             debtRecord[msg.sender][debtor]=0;
+             debtRecord[debtor][msg.sender]=b-a;
+        }
+        emit Liquidate(debtor,msg.sender);
+    }
+
+    function getBalance() external view returns(uint256 amount){
+        return balance[msg.sender];
+    }
+
+    function getDebtRecord(address creditor) external view returns(uint256 debt,uint256 credit){
+        return (debtRecord[creditor][msg.sender],debtRecord[msg.sender][creditor]);
+    }
+
+    function getDebtNoteInfo(uint32 id) external view returns(DebtNoteInfo memory d){
+        DebtNoteInfo memory d= debtNotes[id];
+        require(d.debtor != address(0), "wrong id");
+        return d;
+    }
+}
+
+//address debtor,address creditor,uint256 amount,uint32 id,bool isConfirmed
