@@ -1,0 +1,9 @@
+[submodule "submissions/sauravkumar8178/day-9-solidity/injectiveToken/lib/forge-std"]
+	path = submissions/sauravkumar8178/day-9-solidity/injectiveToken/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "submissions/sauravkumar8178/day-9-solidity/injectiveToken/lib/openzeppelin-contracts"]
+	path = submissions/sauravkumar8178/day-9-solidity/injectiveToken/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
+[submodule "submissions/sauravkumar8178/day-16-solidity/lib/forge-std"]
+	path = submissions/sauravkumar8178/day-16-solidity/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
