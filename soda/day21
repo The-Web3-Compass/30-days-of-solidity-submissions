@@ -1,0 +1,68 @@
+    
+    function isApprovedForAll(address owner, address operator) public view returns (bool) {
+        return _operatorApprovals[owner][operator];
+    }
+    
+    function iakpprovedOfOwner(address spender, uint256 tokenId) internal view returns (bool) {
+        address owner = ownerOf(tokenId);
+        return (spender == owner || 
+                getApproved(tokenId) == spender || 
+                isApprovedForAll(owner, spender));
+    }
+    
+    function _transfer(address from, address to, uint256 tokenId) internal virtual {
+        require(ownerOf(tokenId) == from, "Not owner");
+        require(to != address(0), "Zero address");
+        _balances[from] -= 1;
+        _balances[to] += 1;
+        _owners[tokenId] = to;
+        
+        delete _tokenApprovals[tokenId];
+        emit Transfer(from, to, tokenId);
+    }
+    
+    function transferFrom(address from, address to, uint256 tokenId) public {
+        require(iakpprovedOfOwner(msg.sender, tokenId), "not authorized");
+        _transfer(from, to, tokenId);
+    }
+    
+    function safeTransferFrom(address from, address to, uint256 tokenId) public {
+        safeTransferFrom(from, to, tokenId, "");
+    }
+    
+    function safeTransferFrom(address from, address to, uint256 tokenId, bytes memory data) public {
+        require(iakpprovedOfOwner(msg.sender, tokenId), "Not authorized");
+        _safeTransfer(from, to, tokenId, data);
+    }
+    
+    function _safeTransfer(address from, address to, uint256 tokenId, bytes memory data) internal virtual {
+        _transfer(from, to, tokenId);
+        require(_checkOnERC721Received(from, to, tokenId, data), "Transfer to non ERC721Receiver");
+    }
+    
+    function _checkOnERC721Received(address from, address to, uint256 tokenId, bytes memory data) private returns (bool) {
+        if (to.code.length > 0) {
+            try IERC72iReceiver(to).onERC72iReceived(msg.sender, from, tokenId, data) returns (bytes4 retval) {
+                return retval == IERC72iReceiver.onERC72iReceived.selector;
+            } catch {
+                return false;
+            }
+        } else {
+            return true;
+        }
+    }
+    
+    function mint(address to, string memory url) public {
+        uint256 tokenId = _tokenIdCounter;
+        _tokenIdCounter++;
+        _owners[tokenId] = to;
+        _balances[to] += 1;
+        _tokenUNIs[tokenId] = url;
+        emit Transfer(address(0), to, tokenId);
+    }
+    
+    function tokenUNI(uint256 tokenId) public view returns (string memory) {
+        require(_owners[tokenId] != address(0), "Token does not exist");
+        return _tokenUNIs[tokenId];
+    }
+}
