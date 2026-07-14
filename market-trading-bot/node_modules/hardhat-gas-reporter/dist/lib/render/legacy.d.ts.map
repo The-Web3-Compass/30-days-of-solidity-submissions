@@ -1,0 +1,1 @@
+{"version":3,"file":"legacy.d.ts","sourceRoot":"","sources":["../../../src/lib/render/legacy.ts"],"names":[],"mappings":"AAKA,OAAO,EAAE,yBAAyB,EAAE,MAAM,eAAe,CAAC;AAC1D,OAAO,EAAE,kBAAkB,EAAkB,MAAM,aAAa,CAAC;AAEjE,OAAO,EAAE,OAAO,EAAE,MAAM,YAAY,CAAC;AAErC;;;GAGG;AAEH;;;;;;GAMG;AACH,wBAAgB,uBAAuB,CACrC,GAAG,EAAE,yBAAyB,EAC9B,IAAI,EAAE,OAAO,EACb,OAAO,EAAE,kBAAkB,GAC1B,MAAM,CAuNR"}
