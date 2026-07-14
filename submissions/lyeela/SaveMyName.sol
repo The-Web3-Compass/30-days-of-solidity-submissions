@@ -1,0 +1,19 @@
+// SPDX-License-Identifier:MIT
+
+pragma solidity ^0.9.0;
+
+contract SaveMyName{
+
+    string name;
+    string bio;
+
+    function add (string memory_name,string memory_bio )public {
+        name=_name;
+        bio=_bio
+    }
+
+    function retrieve() public view returns(string memory,string memory){
+        return (name,bio);
+    }
+
+}

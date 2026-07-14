@@ -1,0 +1,98 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract OnChainCustomerService is Ownable {
+    IERC20 public rewardToken; // 用于返现
+    uint256 public rewardRate = 5; // 0.5% -> 5 / 1000
+
+    struct Product {
+        string name;
+        uint256 price; // 单位 wei
+        bool exists;
+    }
+
+    struct Customer {
+        string shippingAddress;
+        bool confirmedDelivery;
+        bool rewarded;
+    }
+
+    mapping(uint256 => Product) public products;
+    mapping(uint256 => mapping(string => string)) public autoReplies; // productId -> keyword -> reply
+    mapping(uint256 => mapping(address => Customer)) public customers;
+
+    event ProductAdded(uint256 productId, string name, uint256 price);
+    event AutoReplySet(uint256 productId, string keyword, string reply);
+    event ShippingConfirmed(uint256 productId, address customer);
+    event ReviewSubmitted(uint256 productId, address customer, string reviewCID, string[] imageCIDs);
+    event RewardPaid(address customer, uint256 amount);
+
+    uint256 public nextProductId = 1;
+
+    constructor(address _rewardToken) {
+        rewardToken = IERC20(_rewardToken);
+    }
+
+    // 店主添加商品
+    function addProduct(string memory name, uint256 price) external onlyOwner {
+        products[nextProductId] = Product(name, price, true);
+        emit ProductAdded(nextProductId, name, price);
+        nextProductId++;
+    }
+
+    // 设置关键词对应回复
+    function setAutoReply(uint256 productId, string memory keyword, string memory reply) external onlyOwner {
+        require(products[productId].exists, "Product not exist");
+        autoReplies[productId][keyword] = reply;
+        emit AutoReplySet(productId, keyword, reply);
+    }
+
+    // 客户查询商品
+    function queryProduct(uint256 productId, string memory keyword) external view returns (string memory) {
+        require(products[productId].exists, "Product not exist");
+        string memory reply = autoReplies[productId][keyword];
+        if (bytes(reply).length == 0) {
+            return "Sorry, no info for this keyword";
+        }
+        return reply;
+    }
+
+    // 客户确认收货
+    function confirmDelivery(uint256 productId, string memory shippingAddress) external {
+        require(products[productId].exists, "Product not exist");
+        customers[productId][msg.sender].shippingAddress = shippingAddress;
+        customers[productId][msg.sender].confirmedDelivery = true;
+        emit ShippingConfirmed(productId, msg.sender);
+    }
+
+    // 客户提交评价，必须 >= 100字 + 至少5张图片 (CID数组)
+    function submitReview(
+        uint256 productId, 
+        string memory reviewCID, 
+        string[] memory imageCIDs
+    ) external {
+        require(products[productId].exists, "Product not exist");
+        Customer storage customer = customers[productId][msg.sender];
+        require(customer.confirmedDelivery, "Delivery not confirmed");
+        require(!customer.rewarded, "Already rewarded");
+        require(bytes(reviewCID).length >= 300, "Review too short"); // approx 100 chars
+        require(imageCIDs.length >= 5, "Not enough images");
+
+        customer.rewarded = true;
+
+        uint256 rewardAmount = (products[productId].price * rewardRate) / 1000;
+        require(rewardToken.balanceOf(address(this)) >= rewardAmount, "Insufficient reward balance");
+        rewardToken.transfer(msg.sender, rewardAmount);
+
+        emit ReviewSubmitted(productId, msg.sender, reviewCID, imageCIDs);
+        emit RewardPaid(msg.sender, rewardAmount);
+    }
+
+    // 店主给合约充值返现奖励
+    function fundRewards(uint256 amount) external onlyOwner {
+        rewardToken.transferFrom(msg.sender, address(this), amount);
+    }
+}
