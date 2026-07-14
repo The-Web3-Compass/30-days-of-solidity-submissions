@@ -1,0 +1,133 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+interface LinkTokenInterface {
+    function transfer(address to, uint256 value) external returns (bool);
+    function transferAndCall(address to, uint256 value, bytes calldata data) external returns (bool);
+}
+
+interface OracleInterface {
+    function requestData(address requester, bytes calldata payload) external returns (bytes32 requestId);
+}
+
+contract WeatherOracle {
+    event PolicyCreated(uint256 indexed policyId, address indexed farmer, uint256 insuredAmount, uint256 thresholdMm);
+    event RequestSent(uint256 indexed policyId, bytes32 indexed requestId);
+    event Fulfilled(uint256 indexed policyId, bytes32 indexed requestId, uint256 rainfallMm, bool paid);
+    event Paid(uint256 indexed policyId, address indexed farmer, uint256 amount);
+
+    address public owner;
+    address public oracle;
+    address public linkToken;
+    uint256 public requestFee;
+
+    constructor(address _oracle, address _linkToken, uint256 _requestFee) {
+        owner = msg.sender;
+        oracle = _oracle;
+        linkToken = _linkToken;
+        requestFee = _requestFee;
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "owner only");
+        _;
+    }
+
+    enum PolicyState { Active, Requested, Settled, Cancelled }
+
+    struct Policy {
+        address payable farmer;
+        uint256 insuredAmount;
+        uint256 thresholdMm;
+        uint256 startTimestamp;
+        uint256 endTimestamp;
+        PolicyState state;
+        bytes32 lastRequestId;
+        uint256 reportedRainfallMm;
+    }
+
+    Policy[] public policies;
+    mapping(bytes32 => uint256) public requestIdToPolicyId;
+
+    function createPolicy(
+        uint256 _thresholdMm,
+        uint256 _startTimestamp,
+        uint256 _endTimestamp
+    ) external payable returns (uint256) {
+        require(_endTimestamp > _startTimestamp, "bad season");
+        require(msg.value > 0, "insured amount required");
+
+        Policy memory p = Policy({
+            farmer: payable(msg.sender),
+            insuredAmount: msg.value,
+            thresholdMm: _thresholdMm,
+            startTimestamp: _startTimestamp,
+            endTimestamp: _endTimestamp,
+            state: PolicyState.Active,
+            lastRequestId: bytes32(0),
+            reportedRainfallMm: 0
+        });
+
+        policies.push(p);
+        uint256 id = policies.length - 1;
+        emit PolicyCreated(id, msg.sender, msg.value, _thresholdMm);
+        return id;
+    }
+
+    receive() external payable {}
+
+    function requestRainfall(uint256 policyId, bytes calldata requestPayload) external onlyOwner returns (bytes32) {
+        Policy storage p = policies[policyId];
+        require(p.state == PolicyState.Active, "not active");
+        require(block.timestamp >= p.endTimestamp, "season not finished");
+
+        if (requestFee > 0) {
+            require(linkToken != address(0), "link unset");
+            LinkTokenInterface(linkToken).transferAndCall(oracle, requestFee, requestPayload);
+            return bytes32(0);
+        } else {
+            bytes32 requestId = OracleInterface(oracle).requestData(address(this), requestPayload);
+            p.lastRequestId = requestId;
+            requestIdToPolicyId[requestId] = policyId;
+            p.state = PolicyState.Requested;
+            emit RequestSent(policyId, requestId);
+            return requestId;
+        }
+    }
+
+    function fulfill(bytes32 requestId, uint256 rainfallMm) external {
+        require(msg.sender == oracle, "only oracle");
+        uint256 policyId = requestIdToPolicyId[requestId];
+        require(policyId < policies.length, "unknown request");
+
+        Policy storage p = policies[policyId];
+        require(p.state == PolicyState.Requested || p.state == PolicyState.Active, "bad state");
+
+        p.reportedRainfallMm = rainfallMm;
+        p.state = PolicyState.Settled;
+
+        bool paid = false;
+        if (rainfallMm < p.thresholdMm) {
+            uint256 amount = p.insuredAmount;
+            p.insuredAmount = 0;
+            (bool ok, ) = p.farmer.call{value: amount}("");
+            require(ok, "payout failed");
+            paid = true;
+            emit Paid(policyId, p.farmer, amount);
+        }
+
+        emit Fulfilled(policyId, requestId, rainfallMm, paid);
+    }
+
+    function setOracle(address _oracle) external onlyOwner { oracle = _oracle; }
+    function setLinkToken(address _link) external onlyOwner { linkToken = _link; }
+    function setRequestFee(uint256 _fee) external onlyOwner { requestFee = _fee; }
+
+    function withdraw(uint256 amount) external onlyOwner {
+        (bool ok, ) = payable(owner).call{value: amount}("");
+        require(ok, "withdraw failed");
+    }
+
+    function policyCount() external view returns (uint256) { return policies.length; }
+    function getPolicy(uint256 id) external view returns (Policy memory) { return policies[id]; }
+}
