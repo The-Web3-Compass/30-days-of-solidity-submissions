@@ -1,0 +1,24 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract pollstation{
+    string[] public candidateNames;
+    mapping (string=> uint256) public votecount;
+
+    function addcandidate(string memory _candidateNames) public{
+      candidateNames.push(_candidateNames);
+      votecount[_candidateNames]=0;  
+
+    }
+    function vote(string memory _candidateNames) public {
+      votecount[_candidateNames]++;
+
+    }
+    
+    function getcandidateNames() public view returns (string[] memory){
+        return candidateNames;
+    }
+    function getvote(string memory _candidateNames) public view returns (uint256){
+        return votecount[_candidateNames];
+    }
+
