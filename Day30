@@ -1,0 +1,242 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.17;
+
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract MiniDex is ReentrancyGuard, Ownable {
+    using SafeERC20 for IERC20;
+
+    uint256 public constant FEE_NUM = 3; // 0.3% fee numerator
+    uint256 public constant FEE_DEN = 1000; // denominator (3/1000 = 0.3%)
+
+    struct Pool {
+        uint256 reserve0;
+        uint256 reserve1;
+        uint256 totalSupplyLP; // total LP shares
+        mapping(address => uint256) lpBalance; // provider => shares
+        bool exists;
+    }
+
+    // mapping hashed pair key => Pool
+    mapping(bytes32 => Pool) private pools;
+
+    event PoolCreated(address indexed token0, address indexed token1);
+    event LiquidityAdded(address indexed provider, address indexed tokenA, address indexed tokenB, uint256 amountA, uint256 amountB, uint256 sharesMinted);
+    event LiquidityRemoved(address indexed provider, address indexed tokenA, address indexed tokenB, uint256 amountA, uint256 amountB, uint256 sharesBurned);
+    event Swapped(address indexed trader, address indexed tokenIn, address indexed tokenOut, uint256 amountIn, uint256 amountOut);
+
+    // ----- Helpers/Keying -----
+    function _sortTokens(address tokenA, address tokenB) internal pure returns (address token0, address token1) {
+        require(tokenA != tokenB, "MiniDex: IDENTICAL_ADDRESSES");
+        (token0, token1) = tokenA < tokenB ? (tokenA, tokenB) : (tokenB, tokenA);
+    }
+
+    function _pairKey(address tokenA, address tokenB) internal pure returns (bytes32) {
+        (address token0, address token1) = _sortTokens(tokenA, tokenB);
+        return keccak256(abi.encodePacked(token0, token1));
+    }
+
+    // ----- Pool view -----
+    function getReserves(address tokenA, address tokenB) public view returns (uint256 reserveA, uint256 reserveB) {
+        (address token0, ) = _sortTokens(tokenA, tokenB);
+        bytes32 key = _pairKey(tokenA, tokenB);
+        Pool storage p = pools[key];
+        if (!p.exists) return (0, 0);
+        if (tokenA == token0) {
+            return (p.reserve0, p.reserve1);
+        } else {
+            return (p.reserve1, p.reserve0);
+        }
+    }
+
+    function lpBalanceOf(address tokenA, address tokenB, address who) external view returns (uint256) {
+        bytes32 key = _pairKey(tokenA, tokenB);
+        return pools[key].lpBalance[who];
+    }
+
+    function lpTotalSupply(address tokenA, address tokenB) external view returns (uint256) {
+        bytes32 key = _pairKey(tokenA, tokenB);
+        return pools[key].totalSupplyLP;
+    }
+
+    // ----- Pool creation -----
+    function createPool(address tokenA, address tokenB) external onlyOwner {
+        require(tokenA != address(0) && tokenB != address(0), "MiniDex: ZERO_ADDRESS");
+        bytes32 key = _pairKey(tokenA, tokenB);
+        Pool storage p = pools[key];
+        require(!p.exists, "MiniDex: POOL_EXISTS");
+        p.exists = true;
+        emit PoolCreated(tokenA < tokenB ? tokenA : tokenB, tokenA < tokenB ? tokenB : tokenA);
+    }
+
+    // ----- Add liquidity -----
+    function addLiquidity(address tokenA, address tokenB, uint256 amountADesired, uint256 amountBDesired) external nonReentrant returns (uint256 amountA, uint256 amountB, uint256 shares) {
+        require(amountADesired > 0 && amountBDesired > 0, "MiniDex: ZERO_AMOUNT");
+        bytes32 key = _pairKey(tokenA, tokenB);
+        Pool storage p = pools[key];
+        require(p.exists, "MiniDex: NO_POOL");
+
+        (address token0, ) = _sortTokens(tokenA, tokenB);
+        // map amounts to token0/token1 ordering
+        (uint256 amount0Desired, uint256 amount1Desired) = tokenA == token0 ? (amountADesired, amountBDesired) : (amountBDesired, amountADesired);
+
+        if (p.totalSupplyLP == 0) {
+            // Initial liquidity sets the ratio
+            amount0 = amount0Desired;
+            amount1 = amount1Desired;
+            // shares = sqrt(amount0 * amount1) - simple approach: use geometric mean
+            shares = _sqrt(amount0 * amount1);
+            require(shares > 0, "MiniDex: INSUFFICIENT_SHARES");
+        } else {
+            // Maintain ratio: amount1 = amount0 * reserve1 / reserve0 (floor)
+            uint256 amount1Optimal = (amount0Desired * p.reserve1) / p.reserve0;
+            if (amount1Optimal <= amount1Desired) {
+                amount0 = amount0Desired;
+                amount1 = amount1Optimal;
+            } else {
+                uint256 amount0Optimal = (amount1Desired * p.reserve0) / p.reserve1;
+                require(amount0Optimal <= amount0Desired, "MiniDex: INSUFFICIENT_LIQUIDITY_PROVIDED");
+                amount0 = amount0Optimal;
+                amount1 = amount1Desired;
+            }
+            // shares proportional to liquidity added
+            shares = (amount0 * p.totalSupplyLP) / p.reserve0; // using reserve0 as reference
+        }
+
+        // Transfer tokens from provider to contract
+        address token0Addr = token0;
+        address token1Addr = tokenA == token0 ? tokenB : tokenA;
+        IERC20(token0Addr).safeTransferFrom(msg.sender, address(this), amount0);
+        IERC20(token1Addr).safeTransferFrom(msg.sender, address(this), amount1);
+
+        // Update reserves and LP accounting
+        if (tokenA == token0) {
+            p.reserve0 += amount0;
+            p.reserve1 += amount1;
+        } else {
+            p.reserve1 += amount0;
+            p.reserve0 += amount1;
+        }
+
+        p.totalSupplyLP += shares;
+        p.lpBalance[msg.sender] += shares;
+
+        emit LiquidityAdded(msg.sender, tokenA, tokenB, amountA = amountADesired, amountB = amountBDesired, shares);
+        return (amount0, amount1, shares);
+    }
+
+    // ----- Remove liquidity -----
+    function removeLiquidity(address tokenA, address tokenB, uint256 shares) external nonReentrant returns (uint256 amountA, uint256 amountB) {
+        require(shares > 0, "MiniDex: ZERO_SHARES");
+        bytes32 key = _pairKey(tokenA, tokenB);
+        Pool storage p = pools[key];
+        require(p.exists, "MiniDex: NO_POOL");
+        require(p.lpBalance[msg.sender] >= shares, "MiniDex: INSUFFICIENT_SHARES");
+
+        (address token0, ) = _sortTokens(tokenA, tokenB);
+        // compute amounts in token0/token1 ordering
+        uint256 amount0 = (shares * p.reserve0) / p.totalSupplyLP;
+        uint256 amount1 = (shares * p.reserve1) / p.totalSupplyLP;
+
+        // update reserves and LP accounting
+        p.reserve0 -= amount0;
+        p.reserve1 -= amount1;
+        p.totalSupplyLP -= shares;
+        p.lpBalance[msg.sender] -= shares;
+
+        // transfer out in original token order
+        address token0Addr = token0;
+        address token1Addr = tokenA == token0 ? tokenB : tokenA;
+
+        if (tokenA == token0) {
+            amountA = amount0;
+            amountB = amount1;
+        } else {
+            amountA = amount1;
+            amountB = amount0;
+        }
+
+        IERC20(tokenA).safeTransfer(msg.sender, amountA);
+        IERC20(tokenB).safeTransfer(msg.sender, amountB);
+
+        emit LiquidityRemoved(msg.sender, tokenA, tokenB, amountA, amountB, shares);
+        return (amountA, amountB);
+    }
+
+    // ----- Swaps -----
+    // Swaps exact amountIn of tokenIn for as much tokenOut as possible
+    function swapExactTokensForTokens(address tokenIn, address tokenOut, uint256 amountIn, uint256 minAmountOut) external nonReentrant returns (uint256 amountOut) {
+        require(amountIn > 0, "MiniDex: ZERO_IN");
+        bytes32 key = _pairKey(tokenIn, tokenOut);
+        Pool storage p = pools[key];
+        require(p.exists, "MiniDex: NO_POOL");
+
+        (address token0, ) = _sortTokens(tokenIn, tokenOut);
+        // map reserves depending on order
+        (uint256 reserveIn, uint256 reserveOut) = tokenIn == token0 ? (p.reserve0, p.reserve1) : (p.reserve1, p.reserve0);
+        require(reserveIn > 0 && reserveOut > 0, "MiniDex: INSUFFICIENT_LIQUIDITY");
+
+        // transfer tokenIn into contract
+        IERC20(tokenIn).safeTransferFrom(msg.sender, address(this), amountIn);
+
+        // apply fee
+        uint256 amountInWithFee = amountIn * (FEE_DEN - FEE_NUM) / FEE_DEN; // (amount * 997) / 1000 for 0.3%
+
+        // constant product formula: amountOut = reserveOut - (reserveIn * reserveOut) / (reserveIn + amountInWithFee)
+        uint256 numerator = amountInWithFee * reserveOut;
+        uint256 denominator = reserveIn + amountInWithFee;
+        amountOut = numerator / denominator;
+        require(amountOut >= minAmountOut, "MiniDex: INSUFFICIENT_OUTPUT_AMOUNT");
+
+        // update reserves
+        if (tokenIn == token0) {
+            p.reserve0 += amountIn;
+            p.reserve1 -= amountOut;
+        } else {
+            p.reserve1 += amountIn;
+            p.reserve0 -= amountOut;
+        }
+
+        // transfer tokenOut to msg.sender
+        IERC20(tokenOut).safeTransfer(msg.sender, amountOut);
+
+        emit Swapped(msg.sender, tokenIn, tokenOut, amountIn, amountOut);
+        return amountOut;
+    }
+
+    // ----- Price helpers -----
+    function getAmountOut(uint256 amountIn, uint256 reserveIn, uint256 reserveOut) public pure returns (uint256) {
+        require(amountIn > 0, "MiniDex: INSUFFICIENT_INPUT_AMOUNT");
+        require(reserveIn > 0 && reserveOut > 0, "MiniDex: INSUFFICIENT_LIQUIDITY");
+        uint256 amountInWithFee = amountIn * (FEE_DEN - FEE_NUM) / FEE_DEN;
+        uint256 numerator = amountInWithFee * reserveOut;
+        uint256 denominator = reserveIn + amountInWithFee;
+        return numerator / denominator;
+    }
+
+    function quote(uint256 amountA, uint256 reserveA, uint256 reserveB) public pure returns (uint256 amountB) {
+        require(amountA > 0, "MiniDex: INSUFFICIENT_AMOUNT");
+        require(reserveA > 0 && reserveB > 0, "MiniDex: INSUFFICIENT_LIQUIDITY");
+        amountB = (amountA * reserveB) / reserveA;
+    }
+
+    // ----- Admin utilities -----
+    // Rescue tokens accidentally sent to contract
+    function rescueTokens(address token, uint256 amount, address to) external onlyOwner {
+        IERC20(token).safeTransfer(to, amount);
+    }
+
+    // ----- Math -----
+    function _sqrt(uint256 y) internal pure returns (uint256 z) {
+        if (y == 0) return 0;
+        uint256 x = y / 2 + 1;
+        z = y;
+        while (x < z) {
+            z = x;
+            x = (y / x + x) / 2;
+        }
+    }
+}
