@@ -1,5 +1,4 @@
-.deps/
-.git/
-.states/
-submissions/artifacts/
-submissions/Nabemh/artifacts
+node_modules/
+package-lock.json
+package.json
+remappings.txt
