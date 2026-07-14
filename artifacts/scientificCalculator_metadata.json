@@ -62,7 +62,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"submissions/Zora/ScientificCalculator.sol": "scientificCalculator"
+			"submissions/Zora/ScientificCalculator.sol": "ScientificCalculator"
 		},
 		"evmVersion": "prague",
 		"libraries": {},
@@ -77,11 +77,11 @@
 	},
 	"sources": {
 		"submissions/Zora/ScientificCalculator.sol": {
-			"keccak256": "0x04a965ff6a16cbe61c004a8882b6cfe4277e75db89170448e6b52c2fc171a796",
+			"keccak256": "0x143e2f9a1f14ae2effc67a92c690078b9da74c02469195214a8d5f9901fc0e12",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b3ba03fe685e4252fc2d3bc21e577597f9d32b106657acd9e950367aba9bd232",
-				"dweb:/ipfs/QmbCGJCD6agHAKKwPpP1ZSn4sumXMts6oentJKZSbQtfmn"
+				"bzz-raw://2f2f2abd2bb53de8b6e4c24edd61311818f94d8e769de2cb9bb0ad7e805e62bb",
+				"dweb:/ipfs/QmTdYjpSwydCiEoPTzgnFRHGQ85aHFVRXSU3iDzHJ1CRzE"
 			]
 		}
 	},
